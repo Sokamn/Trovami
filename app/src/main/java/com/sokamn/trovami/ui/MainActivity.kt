@@ -1,7 +1,8 @@
-package com.sokamn.trovami
+package com.sokamn.trovami.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.sokamn.trovami.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
