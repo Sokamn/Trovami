@@ -7,4 +7,6 @@ object FirebaseConstants {
     const val JOB_REFERENCE = "posts"
     const val PRESENCE_REFERENCE = "presence"
     const val FULLNAME_REFERENCE = "fullName"
+    const val PROFILE_PICTURE_JPG = "profile.jpg"
+
 }
