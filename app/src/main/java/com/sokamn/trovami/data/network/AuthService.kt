@@ -42,15 +42,15 @@ class AuthService @Inject constructor(private val firebaseClient: FirebaseClient
         } while (firebaseClient.currentUser?.email == null)
     }
 
-    val existUserConnected: Flow<Boolean> = flow {
+    val userConnectedExist: Flow<Boolean> = flow {
         do {
             emit(firebaseClient.currentUser != null)
             delay(1000)
         } while (firebaseClient.currentUser == null)
     }
 
-    suspend fun emailExist(email: String): Flow<Boolean> = flow {
-        try {
+    suspend fun emailExist(email: String): Resource<Boolean> {
+        return try {
             var exists = false
             firebaseClient.auth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task ->
                 exists = if (task.isSuccessful) {
@@ -59,21 +59,21 @@ class AuthService @Inject constructor(private val firebaseClient: FirebaseClient
                     false
                 }
             }.await()
-            emit(exists)
+            Resource.Success(exists)
         } catch (e: Exception) {
-            emit(false)
+            Resource.Error(e.toString())
         }
     }
 
-    suspend fun sendPasswordRecovery(email: String): Flow<Boolean> = flow {
-        try {
+    suspend fun sendPasswordRecovery(email: String): Resource<Boolean> {
+        return try {
             var isSuccessful = false
             firebaseClient.auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener { isSuccessful = it.isSuccessful }
                 .await()
-            emit(isSuccessful)
+            Resource.Success(isSuccessful)
         } catch (e: Exception) {
-            emit(false)
+            Resource.Error(e.toString())
         }
 
     }
