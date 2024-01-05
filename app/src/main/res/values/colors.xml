@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="primaryColor">#1C0A00</color>
+    <color name="secundaryColor">#CC9544</color>
+    <color name="tertiaryColor">#361500</color>
+    <color name="quaternaryColor">#603601</color>
+    <color name="bg">#F4F6F8</color>
+
+    <color name="textColor">#86878E</color>
+    <color name="dividerColor">#E4E4E4</color>
+    <color name="shimmerColor">#c8c8c9</color>
 </resources>

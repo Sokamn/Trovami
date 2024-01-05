@@ -1,3 +1,151 @@
 <resources>
     <string name="app_name">Trovami</string>
+
+    <!--> IntroductionView <-->
+    <string name="app_desc">Encuentra quien puede solucionar tus\nproblemas, o sé quien los soluciona!</string>
+    <string name="register_now">Registrate ahora</string>
+
+    <!--> LoginView <-->
+    <string name="arent_member">¿No tienes cuenta? <b>Registrate</b></string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="login_with_trovami">Inicia sesión con tu cuenta de <b>Trovami</b></string>
+    <string name="recovery_pass">Recuperar contraseña</string>
+    <string name="email">Correo Electronico</string>
+    <string name="pass">Contraseña</string>
+
+    <!--> PassRecoveryView <-->
+
+    <!--> SignUpView <-->
+    <string name="register">Registro</string>
+    <string name="name">Nombre</string>
+    <string name="surname">Apellido</string>
+    <string name="document">Documento</string>
+    <string name="next">Continuar</string>
+    <string name="repeat_pass">Repetir contraseña</string>
+    <string name="send_instructions">Enviar Instrucciones</string>
+    <string name="phone">Télefono</string>
+    <string name="area_code">Cod. Área</string>
+    <string name="terms">Al seleccionar "siguiente", acepta nuestra\n<b>Política de privacidad</b> y <b>Acuerdo de Usuario</b></string>
+    <string name="cancel">Cancelar</string>
+    <string name="select_master">Por ultimo, selecciona tus aptitudes\n(En caso de solicitar servicios ignorar)</string>
+    <string name="are_member">¿Ya eres miembro? <b>Inicia sesión</b></string>
+
+
+    <!--> VerificationView <-->
+    <string name="resend_email">¿No te llegó el Email? Click para reeenviar</string>
+
+    <!--> HomeView <-->
+    <string name="welcome">Bienvenido</string>
+    <string name="findJob">Encuentra tu primer trabajo</string>
+    <string name="kindJob">Qué tipo de trabajo estás buscando?</string>
+    <string name="recommendation">Recomendaciones</string>
+    <string name="seeAll">Ver todo</string>
+    <string name="mkPublication">Crear Publicación</string>
+
+    <!--> MASTER <-->
+    <string name="locksmith">Cerrajería</string>
+    <string name="plumber">Plomería</string>
+    <string name="painter">Pinturería</string>
+    <string name="air_service">Servicio de Aire</string>
+    <string name="gardener">Jardinería</string>
+    <string name="truck_moving">Mudanza</string>
+    <string name="truck_freight">Flete</string>
+    <string name="mason">Albañilería</string>
+    <string name="nanny">Niñera</string>
+    <string name="gas">Gasista</string>
+    <string name="pc_technician">Servicio Técnico</string>
+    <string name="electrician">Electricista</string>
+    <string name="carpenter">Carpintero</string>
+
+    <!--> MAPBOX <-->
+    <string name="mapbox_access_token">pk.eyJ1Ijoic29rYW1uIiwiYSI6ImNsYnJsNWFzaDF3aTAzdXF4NjY3ZnRvc24ifQ.aBHa5O63V9Ao30c2UlauUw</string>
+
+    <!--> TEST <-->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+
+
+
+
+
+    <string name="desc">Descripción</string>
+    <string name="applyJob">Postularme</string>
+    <string name="owner">Propietario</string>
+    <string name="home">Inicio</string>
+    <string name="saved">Guardados</string>
+    <string name="messages">Mensajes</string>
+    <string name="profile">Perfil</string>
+    <string name="editProfile">Editar Perfil</string>
+    <string name="specialties">Maestrías</string>
+    <string name="jobs">Trabajos</string>
+    <string name="valoration">Valoración</string>
+    <string name="dollar">$</string>
+    <string name="descJob">Describe el trabajo a realizar</string>
+    <string name="selectImage">Selecciona una imagen</string>
+    <string name="address">Calle, número, departamento, piso</string>
+    <string name="selectCategory">Selecciona una categoría</string>
+    <string name="adressTitle">Dirección</string>
+    <string name="province">Provincia</string>
+    <string name="zone">Zona</string>
+    <string name="municipality">Municipio</string>
+    <string name="saveChanges">Guardar Cambios</string>
+    <string name="finishRegister">Finalizar Registro</string>
+    <string name="descExperince">Describe tu experiencia</string>
+    <string name="confirm">Confirmar</string>
+
+    <string name="recoveryPass">Ingresa al <b>E-Mail</b> asociado con tu cuenta y nosotros te enviarémos un email con instrucciones para que recuperes tu contraseña</string>
+    <string name="titleRecoveryPass">Recuperar Contraseña</string>
+    <string name="jobChat">Chat de Trabajo</string>
+    <string name="selectProvince">Selecciona la provincia</string>
+    <string name="paymentMethod">Selecciona el período de pago</string>
+    <string name="search">Buscador</string>
+    <string name="searchJob">Buscar trabajo</string>
+    <string name="filters">Filtros</string>
+    <string name="cleanFilter">Limpiar Filtros</string>
+    <string name="orderBy">Ordenar por</string>
+    <string name="paymentRange">Rango de Honorarios</string>
+    <string name="showResults">Mostrar Resultados</string>
+    <string name="periodPayment">Período de pago</string>
+    <string name="searchUser">Buscar chat</string>
+    <string name="imageSent">🖼 Imagen</string>
+    <string name="eliminatedMessage">🚫 𝐸𝑠𝑡𝑒 𝑚𝑒𝑛𝑠𝑎𝑗𝑒 ℎ𝑎 𝑠𝑖𝑑𝑜 𝑒𝑙𝑖𝑚𝑖𝑛𝑎𝑑𝑜 𝑝𝑎𝑟𝑎 𝑡𝑜𝑑𝑜𝑠.</string>
+    <string name="writeMessage">Escribir mensaje…</string>
+    <string name="recommended">Recomendados</string>
+    <string name="registerDescr">Date de alta llenando los siguientes datos.</string>
+    <string name="selectMasters">Por ultimo, selecciona tus especialidades.\n<b>En caso de solicitar servicios, continuar.</b></string>
+    <string name="fullName">Nombre Completo</string>
+
+    <string name="signin_error_mail">El email no es válido</string>
+    <string name="signin_error_fullname">El nombre no debe contener palabras ofensivas.</string>
+    <string name="signin_error_password">Las 2 contraseñas debes ser iguales</string>
+    <string name="signin_error_document">El documento debe ser de 8 digitos. Rellenar con 0 desde la izquierda en caso de faltar digitos.</string>
+    <string name="signin_error_province">Debe contener al menos 6 caracteres</string>
+    <string name="signin_error_municipality">Debe contener al menos 6 caracteres</string>
+    <string name="signin_error_address">Debe contener al menos 6 caracteres</string>
+    <string name="signin_error_phone">Debe contener al menos 6 caracteres</string>
+    <string name="notReceivedMail">¿No te llegó el email? <b>Reenviar</b></string>
+    <string name="sendEmailRecovery">Enviar Email de Recuperación</string>
+    <string name="verifyEmail">Verificación de Correo</string>
+    <string name="verifyEmailSubtitle">Verifica tu nueva cuenta de <b>Trovami</b></string>
+    <string name="haveVerified">Ya he verificado mi cuenta</string>
+    <string name="login_error_mail">El email no es válido</string>
+    <string name="login_error_password">Debe contener al menos 6 caracteres</string>
+    <string name="login_error_dialog_title">No hemos encontrado el usuario</string>
+    <string name="login_error_dialog_body">Verifique los datos o vuelva a intentarlo</string>
+    <string name="login_error_dialog_negative_action">Cancelar</string>
+    <string name="login_error_dialog_positive_action">Reintentar</string>
+    <string name="defaultAddress">Dirección Predeterminada</string>
+    <string name="myMaster">Mis Maestrías</string>
+    <string name="editprofile_error_biography">La biografía debe contener menos de 150 caracteres.</string>
+    <string name="makejob_error_description">La descripción debe contener menos de 150 caracteres.</string>
+
+    <string name="biography">Biografía</string>
+    <string name="jobData">Rellena los datos del lugar</string>
+    <string name="paymentAmount">Monto de Pago</string>
+    <string name="checkPhoneCall">Permites llamadas télefonicas de postulantes?</string>
+    <string name="postJob">Publicar Trabajo</string>
+    <string name="accept">Aceptar</string>
+
 </resources>
