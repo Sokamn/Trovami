@@ -40,6 +40,7 @@
         <item name="android:textColor">@color/primaryColor</item>
         <item name="android:backgroundTint">@color/white</item>
         <item name="strokeColor">@color/shimmerColor</item>
+        <item name="strokeWidth">1dp</item>
     </style>
 
     <style name="TabFont" parent="TextAppearance.Design.Tab">
