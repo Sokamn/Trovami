@@ -74,15 +74,19 @@ class SplashViewModel @Inject constructor(
                     if (verification) {
                         _navigateToMain.value = Event(true)
                     } else {
-                        existsUserConnectedUseCase().collect { existUser ->
-                            if (existUser) {
-                                _navigateToVerification.value = Event(true)
-                            } else {
-                                _navigateToIntroduction.value = Event(true)
-                            }
+                        existsUserConnectedUseCase().collect { existsUser ->
+                            navigateIfExistsUserUnverified(existsUser)
                         }
                     }
                 }
+        }
+    }
+
+    private fun navigateIfExistsUserUnverified(existsUser: Boolean) {
+        if (existsUser) {
+            _navigateToVerification.value = Event(true)
+        } else {
+            _navigateToIntroduction.value = Event(true)
         }
     }
 
@@ -92,14 +96,18 @@ class SplashViewModel @Inject constructor(
 
             }.collect { currentUserDS ->
                 delay(3000)
-                if (currentUserDS == "{}") {
-                    _navigateToIntroduction.value = Event(true)
-                } else {
-                    val user: UserModel = Gson().fromJson(currentUserDS, UserModel::class.java)
-                    _currentUser.value = user.uid
-                    _navigateToMain.value = Event(true)
-                }
+                navigateIfExistsStoredUser(currentUserDS)
             }
+        }
+    }
+
+    private fun navigateIfExistsStoredUser(currentUserDS: String) {
+        if (currentUserDS != "{}") {
+            val user: UserModel = Gson().fromJson(currentUserDS, UserModel::class.java)
+            _currentUser.value = user.uid
+            _navigateToMain.value = Event(true)
+        } else {
+            _navigateToIntroduction.value = Event(true)
         }
     }
 }

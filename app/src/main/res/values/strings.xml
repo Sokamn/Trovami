@@ -124,8 +124,8 @@
     <string name="verifyEmail">Verificación de Correo</string>
     <string name="verifyEmailSubtitle">Verifica tu nueva cuenta de <b>Trovami</b></string>
     <string name="haveVerified">Ya he verificado mi cuenta</string>
-    <string name="login_error_mail">El email no es válido</string>
-    <string name="login_error_password">Debe contener al menos 6 caracteres</string>
+    <string name="login_error_mail">El correo no es válido</string>
+    <string name="login_error_password">Contraseña incorrecta. Inténtelo de nuevo.</string>
     <string name="login_error_dialog_title">No hemos encontrado el usuario</string>
     <string name="login_error_dialog_body">Verifique los datos o vuelva a intentarlo</string>
     <string name="login_error_dialog_negative_action">Cancelar</string>

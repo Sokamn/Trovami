@@ -89,35 +89,47 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
         }
     }
 
-    suspend fun getUser(uid: String,currentUser: Boolean): Resource<UserModel> {
+    suspend fun getUserByUid(uid: String): Resource<UserModel> {
         firebase.currentUser?.reload()?.await()
         var userResponse: UserModel? = null
         try{
-            if (currentUser){
-                firebase.dbRealtime
-                    .child(USER_REFERENCE)
-                    .child(firebase.currentUser!!.uid)
-                    .get()
-                    .addOnCompleteListener {
-                        userResponse = if (it.isSuccessful){
-                            it.result.getValue(UserModel::class.java)
-                        }else{
-                            null
-                        }
-                    }.await()
+            firebase.dbRealtime
+                .child(USER_REFERENCE)
+                .child(uid)
+                .get()
+                .addOnCompleteListener {
+                    userResponse = if (it.isSuccessful){
+                        it.result.getValue(UserModel::class.java)
+                    }else{
+                        null
+                    }
+                }.await()
+
+            return if (userResponse != null){
+                Resource.Success(userResponse!!)
             }else{
-                firebase.dbRealtime
-                    .child(USER_REFERENCE)
-                    .child(uid)
-                    .get()
-                    .addOnCompleteListener {
-                        userResponse = if (it.isSuccessful){
-                            it.result.getValue(UserModel::class.java)
-                        }else{
-                            null
-                        }
-                    }.await()
+                Resource.Error("null")
             }
+        }catch (e: Exception){
+            return Resource.Error(e.toString())
+        }
+    }
+
+    suspend fun getCurrentUser(): Resource<UserModel> {
+        firebase.currentUser?.reload()?.await()
+        var userResponse: UserModel? = null
+        try{
+            firebase.dbRealtime
+                .child(USER_REFERENCE)
+                .child(firebase.currentUser!!.uid)
+                .get()
+                .addOnCompleteListener {
+                    userResponse = if (it.isSuccessful){
+                        it.result.getValue(UserModel::class.java)
+                    }else{
+                        null
+                    }
+                }.await()
             return if (userResponse != null){
                 Resource.Success(userResponse!!)
             }else{

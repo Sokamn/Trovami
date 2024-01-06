@@ -62,16 +62,16 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
 
     }
 
-    suspend fun loginGoogle(account: GoogleSignInAccount): Resource<Unit> = runCatching {
+    suspend fun loginGoogle(account: GoogleSignInAccount): Resource<UserResponse> = runCatching {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         firebase.auth.signInWithCredential(credential).await()
     }.toResourceResponse()
 
-    suspend fun login(email: String, password: String): Resource<Unit> = runCatching {
+    suspend fun login(email: String, password: String): Resource<UserResponse> = runCatching {
         firebase.auth.signInWithEmailAndPassword(email, password).await()
     }.toResourceResponse()
 
-    suspend fun createAccount(email: String, password: String): Resource<Unit> = kotlin.runCatching {
+    suspend fun createAccount(email: String, password: String): Resource<UserResponse> = runCatching {
         firebase.auth.createUserWithEmailAndPassword(email, password).await()
     }.toResourceResponse()
 

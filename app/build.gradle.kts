@@ -58,6 +58,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     // NavComponents
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
