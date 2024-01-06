@@ -3,10 +3,18 @@ package com.sokamn.trovami.ui.auth.login
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.Window
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -55,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setUIComponents() {
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
 
     private fun initObservers() {
@@ -102,11 +110,16 @@ class LoginActivity : AppCompatActivity() {
     private fun initListeners() {
         with(binding){
 
-            txpEmailAL.loseFocusAfterAction(EditorInfo.IME_ACTION_NEXT)
+            txpEmailAL.setOnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) scrollViewAL.smoothScrollTo(view.left, view.bottom)
+            }
             txpEmailAL.onTextChanged { onFieldChanged() }
 
-            txpPasswordAL.loseFocusAfterAction(EditorInfo.IME_ACTION_DONE)
-            txpPasswordAL.setOnFocusChangeListener { _, hasFocus -> onFieldChanged(hasFocus) }
+            txpPasswordAL.loseFocusAfterAction(EditorInfo.IME_ACTION_DONE, scrollViewAL)
+            txpPasswordAL.setOnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) scrollViewAL.smoothScrollTo(view.left, view.bottom+150)
+                onFieldChanged(hasFocus)
+            }
             txpPasswordAL.onTextChanged { onFieldChanged() }
 
             txvRecoveryPassAL.setOnClickListener { loginViewModel.onForgotPasswordSelected() }

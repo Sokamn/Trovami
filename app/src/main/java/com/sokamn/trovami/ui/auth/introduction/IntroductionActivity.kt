@@ -2,8 +2,11 @@ package com.sokamn.trovami.ui.auth.introduction
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -42,7 +45,7 @@ class IntroductionActivity : AppCompatActivity() {
     }
 
     private fun initDesign() {
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
 
     private fun initListeners() {

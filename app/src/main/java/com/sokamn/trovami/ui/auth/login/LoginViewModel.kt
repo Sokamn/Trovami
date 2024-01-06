@@ -78,16 +78,10 @@ class LoginViewModel @Inject constructor(
 
     fun onGoogleSelected(account: GoogleSignInAccount){
         viewModelScope.launch {
-
+            _viewState.value = LoginViewState(isLoading = true)
             when(val result = googleLoginUseCase(account)){
                 is Resource.Error -> {
                     _showErrorDialog.value = UserLogin("","",true)
-                }
-                Resource.Finished -> {
-                    _viewState.value = LoginViewState(isLoading = false)
-                }
-                Resource.Loading -> {
-                    _viewState.value = LoginViewState(isLoading = true)
                 }
                 is Resource.Success -> {
                     if (result.data.isVerified) {
@@ -95,8 +89,7 @@ class LoginViewModel @Inject constructor(
                             _navigateToMain.value = Event(result.data.userUID)
                         } else {
                             if (result.data.userUID == "ERROR") {
-                                _showErrorDialog.value =
-                                    UserLogin("", "", true)
+                                _showErrorDialog.value = UserLogin("", "", true)
                             } else {
                                 //_nName.value = account.displayName.toString()
                                 //_gMail.value = account.email.toString()
@@ -108,17 +101,16 @@ class LoginViewModel @Inject constructor(
                     }
                 }
             }
+            _viewState.value = LoginViewState(isLoading = false)
         }
     }
 
     private fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             Log.e("soki","hola prro")
+            _viewState.value = LoginViewState(isLoading = true)
             when (val result = emailLoginUseCase(email, password)) {
-                is Resource.Error -> _showErrorDialog.value =
-                    UserLogin(email = email, password = password, showErrorDialog = true)
-                Resource.Finished -> _viewState.value = LoginViewState(isLoading = false)
-                Resource.Loading -> _viewState.value = LoginViewState(isLoading = true)
+                is Resource.Error -> _showErrorDialog.value = UserLogin(email = email, password = password, showErrorDialog = true)
                 is Resource.Success ->{
                     if (result.data.isVerified) {
                         _navigateToMain.value = Event(result.data.userUID)

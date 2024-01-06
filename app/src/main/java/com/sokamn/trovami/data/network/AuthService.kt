@@ -62,16 +62,16 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
 
     }
 
-    suspend fun loginGoogle(account: GoogleSignInAccount): Resource<UserResponse> = runCatching {
+    suspend fun loginGoogle(account: GoogleSignInAccount) = runCatching {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         firebase.auth.signInWithCredential(credential).await()
     }.toResourceResponse()
 
-    suspend fun login(email: String, password: String): Resource<UserResponse> = runCatching {
+    suspend fun login(email: String, password: String) = runCatching {
         firebase.auth.signInWithEmailAndPassword(email, password).await()
     }.toResourceResponse()
 
-    suspend fun createAccount(email: String, password: String): Resource<UserResponse> = runCatching {
+    suspend fun createAccount(email: String, password: String) = runCatching {
         firebase.auth.createUserWithEmailAndPassword(email, password).await()
     }.toResourceResponse()
 
@@ -88,7 +88,6 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
     private fun Result<AuthResult>.toResourceResponse() = when (val result = getOrNull()) {
         null -> Resource.Error("Null Pointer Exception")
         else -> {
-            Resource.Loading
             val userId = result.user
             checkNotNull(userId)
             Resource.Success(
@@ -97,7 +96,6 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
                     result.user?.uid ?: "ERROR"
                 )
             )
-            Resource.Finished
         }
     }
 

@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/pass"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -162,7 +162,7 @@
                 android:id="@+id/crdGoogleAL"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="150dp"
                 android:focusable="true"
                 android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -183,7 +183,7 @@
                 android:id="@+id/crdFacebookAL"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="150dp"
                 android:focusable="true"
                 android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
