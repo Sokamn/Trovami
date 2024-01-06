@@ -13,7 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthService @Inject constructor(private val firebaseClient: FirebaseClient){
+class AuthService @Inject constructor(private val firebase: FirebaseClient){
     val verifiedAccount: Flow<Boolean> = flow {
         while (true) {
             val verified = verifyEmailIsVerified()
@@ -22,37 +22,21 @@ class AuthService @Inject constructor(private val firebaseClient: FirebaseClient
         }
     }
 
-    val currentUserUID: Flow<String> = flow {
-        do {
-            val userUID = firebaseClient.currentUser?.uid
-            if (userUID != null) {
-                emit(userUID)
-            }
-            delay(1000)
-        } while (firebaseClient.currentUser?.uid == null)
-    }
 
     val emailVerified: Flow<String> = flow {
         do {
-            val email = firebaseClient.currentUser?.email
+            val email = firebase.currentUser?.email
             if (email != null) {
                 emit(email)
             }
             delay(1000)
-        } while (firebaseClient.currentUser?.email == null)
-    }
-
-    val userConnectedExist: Flow<Boolean> = flow {
-        do {
-            emit(firebaseClient.currentUser != null)
-            delay(1000)
-        } while (firebaseClient.currentUser == null)
+        } while (firebase.currentUser?.email == null)
     }
 
     suspend fun emailExist(email: String): Resource<Boolean> {
         return try {
             var exists = false
-            firebaseClient.auth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task ->
+            firebase.auth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task ->
                 exists = if (task.isSuccessful) {
                     !task.result.signInMethods.isNullOrEmpty()
                 } else {
@@ -68,7 +52,7 @@ class AuthService @Inject constructor(private val firebaseClient: FirebaseClient
     suspend fun sendPasswordRecovery(email: String): Resource<Boolean> {
         return try {
             var isSuccessful = false
-            firebaseClient.auth.sendPasswordResetEmail(email)
+            firebase.auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener { isSuccessful = it.isSuccessful }
                 .await()
             Resource.Success(isSuccessful)
@@ -80,25 +64,25 @@ class AuthService @Inject constructor(private val firebaseClient: FirebaseClient
 
     suspend fun loginGoogle(account: GoogleSignInAccount): Resource<Unit> = runCatching {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        firebaseClient.auth.signInWithCredential(credential).await()
+        firebase.auth.signInWithCredential(credential).await()
     }.toResourceResponse()
 
     suspend fun login(email: String, password: String): Resource<Unit> = runCatching {
-        firebaseClient.auth.signInWithEmailAndPassword(email, password).await()
+        firebase.auth.signInWithEmailAndPassword(email, password).await()
     }.toResourceResponse()
 
     suspend fun createAccount(email: String, password: String): Resource<Unit> = kotlin.runCatching {
-        firebaseClient.auth.createUserWithEmailAndPassword(email, password).await()
+        firebase.auth.createUserWithEmailAndPassword(email, password).await()
     }.toResourceResponse()
 
     suspend fun sendVerificationEmail() = runCatching {
-        firebaseClient.currentUser?.sendEmailVerification()?.await() ?: false
+        firebase.currentUser?.sendEmailVerification()?.await() ?: false
     }.isSuccess
 
 
     private suspend fun verifyEmailIsVerified(): Boolean {
-        firebaseClient.currentUser?.reload()?.await()
-        return firebaseClient.currentUser?.isEmailVerified ?: false
+        firebase.currentUser?.reload()?.await()
+        return firebase.currentUser?.isEmailVerified ?: false
     }
 
     private fun Result<AuthResult>.toResourceResponse() = when (val result = getOrNull()) {

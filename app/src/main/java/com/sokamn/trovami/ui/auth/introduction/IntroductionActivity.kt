@@ -49,7 +49,7 @@ class IntroductionActivity : AppCompatActivity() {
             btnLogInAI.setOnClickListener { introductionViewModel.onLoginSelected() }
             btnRegisterNowAI.setOnClickListener { introductionViewModel.onSignUpSelected() }
             imvGoogleAI.setOnClickListener {  }
-            imvFacebookAI.setOnClickListener { toast("Facebook será implementado en próximas versiones") }
+            //imvFacebookAI.setOnClickListener { toast("Facebook será implementado en próximas versiones") }
         }
     }
 

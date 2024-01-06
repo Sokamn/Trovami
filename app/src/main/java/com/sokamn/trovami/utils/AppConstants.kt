@@ -20,6 +20,8 @@ class AppConstants {
         const val MIN_TEXT_CONTENT = 5
         const val CLIENT_ID =
             "250852353586-ocuoefabfk8fl5luokcpq0h1uksa60ta.apps.googleusercontent.com"
+        const val USER_KEY_PREFS = "current_user"
+
 
         // JOBS
         const val INIT_JOB_WORD = "---"

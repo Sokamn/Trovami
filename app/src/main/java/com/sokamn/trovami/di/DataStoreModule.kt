@@ -1,7 +1,8 @@
 package com.sokamn.trovami.di
 
 import android.content.Context
-import androidx.datastore.core.DataStore
+import com.sokamn.trovami.data.source.datastore.DataStore
+import com.sokamn.trovami.data.source.datastore.DataStoreImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,10 +12,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataStoreModule {/*
+object DataStoreModule {
     @Singleton
     @Provides
     fun providesDatastore(
         @ApplicationContext context: Context
-    ): DataStore = DataStoreImpl(context)*/
+    ): DataStore = DataStoreImpl(context)
 }

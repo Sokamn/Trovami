@@ -9,6 +9,9 @@ import com.sokamn.trovami.data.network.FirebaseConstants.PROFILE_PICTURE_JPG
 import com.sokamn.trovami.data.network.FirebaseConstants.USER_REFERENCE
 import com.sokamn.trovami.domain.model.UserModel
 import com.sokamn.trovami.utils.Resource
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -20,6 +23,23 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
         }catch (e: Exception){
             Resource.Error(e.toString())
         }
+    }
+
+    val currentUserUID: Flow<String> = flow {
+        do {
+            val userUID = firebase.currentUser?.uid
+            if (userUID != null) {
+                emit(userUID)
+            }
+            delay(1000)
+        } while (firebase.currentUser?.uid == null)
+    }
+
+    val existsUserConnected: Flow<Boolean> = flow {
+        do {
+            emit(firebase.currentUser != null)
+            delay(1000)
+        } while (firebase.currentUser == null)
     }
 
     suspend fun getUserName(uid: String): Resource<String>{

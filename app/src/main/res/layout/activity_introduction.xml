@@ -29,54 +29,20 @@
         app:layout_constraintTop_toBottomOf="@+id/imvBGAI"
         app:shapeAppearanceOverlay="@style/circle" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/crdGoogleAI"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/google"
-        android:scaleType="fitCenter"
-        android:src="@drawable/google"
-        android:focusable="true"
-        android:clickable="true"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/crdFacebookAI"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/shimmerColor"
-        app:strokeColor="@color/textColor"
-        app:strokeWidth="1dp">
 
-        <ImageView
-            android:id="@+id/imvGoogleAI"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:src="@drawable/google" />
-    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/AuthCardButton"
         android:id="@+id/crdFacebookAI"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="50dp"
-        android:background="@drawable/google"
-        android:src="@drawable/google"
         android:focusable="true"
         android:clickable="true"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/crdGoogleAI"
-        app:rippleColor="@color/shimmerColor"
-        app:strokeColor="@color/textColor"
-        app:strokeWidth="1dp">
+        app:layout_constraintStart_toEndOf="@+id/crdGoogleAI" >
 
         <ImageView
             android:id="@+id/imvFacebookAI"
@@ -84,7 +50,33 @@
             android:layout_height="match_parent"
             android:padding="9dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/facebook" />
+            android:src="@drawable/facebook"
+            android:elevation="0dp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/AuthCardButton"
+        android:id="@+id/crdGoogleAI"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        android:focusable="true"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/crdFacebookAI"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imvGoogleAI"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/google"
+            android:elevation="0dp" />
+
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
@@ -95,24 +87,20 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="15dp"
-        android:fontFamily="@font/semibold"
         android:text="@string/register_now"
-        app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btnLogInAI"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/shimmerColor" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
+        style="@style/PrimaryOutlinedButton"
         android:id="@+id/btnLogInAI"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="40dp"
-        android:fontFamily="@font/semibold"
         android:text="@string/login"
-        style="@style/PrimaryOutlinedButton"
         app:layout_constraintBottom_toTopOf="@+id/crdGoogleAI"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
