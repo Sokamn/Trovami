@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.sokamn.trovami.R
 import com.sokamn.trovami.core.ex.toast
 import com.sokamn.trovami.databinding.ActivityIntroductionBinding
+import com.sokamn.trovami.ui.auth.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -73,6 +74,6 @@ class IntroductionActivity : AppCompatActivity() {
     }
 
     private fun goToLogin() {
-        //startActivity(LoginActivity.create(this))
+        startActivity(LoginActivity.create(this))
     }
 }
