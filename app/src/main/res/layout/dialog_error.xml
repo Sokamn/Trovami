@@ -6,10 +6,9 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog_inset">
 
-
     <com.google.android.material.textview.MaterialTextView
+        style="@style/AuthTitleTextView.DialogTitle"
         android:id="@+id/tvTitleDE"
-        style="@style/TitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -19,11 +18,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Título" />
+        tools:text="Title" />
 
     <com.google.android.material.textview.MaterialTextView
+        style="@style/AuthDescriptionTextView"
+
         android:id="@+id/tvDescriptionDE"
-        style="@style/BodyText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -36,14 +36,13 @@
         tools:text="Body" />
 
     <com.google.android.material.button.MaterialButton
+        style="@style/PrimaryButton.DialogButton"
         android:id="@+id/btnPositiveDE"
-        style="@style/PrimaryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="30dp"
-        android:fontFamily="@font/semibold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tvDescriptionDE"
         app:layout_constraintStart_toEndOf="@+id/btnNegativeDE"
@@ -51,15 +50,13 @@
         tools:text=":Reintentar" />
 
     <com.google.android.material.button.MaterialButton
+        style="@style/PrimaryOutlinedButton.DialogButton"
         android:id="@+id/btnNegativeDE"
-        style="@style/PrimaryOutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="30dp"
-        android:fontFamily="@font/semibold"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvDescriptionDE"
         app:layout_constraintTop_toBottomOf="@+id/tvDescriptionDE"
