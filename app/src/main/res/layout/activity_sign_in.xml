@@ -48,43 +48,37 @@
             android:layout_height="wrap_content">
 
             <TextView
+                style="@style/AuthTitleTextView"
                 android:id="@+id/txvTitleAR"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
-                android:fontFamily="@font/bold"
                 android:text="@string/register"
-                android:textColor="@color/primaryColor"
-                android:textSize="22sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                style="@style/AuthDescriptionTextView"
                 android:id="@+id/txvSubtitleASU"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/medium"
                 android:text="@string/registerDescr"
-                android:textColor="@color/primaryColor"
-                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txvTitleAR" />
 
             <TextView
+                style="@style/AuthDescriptionTextView"
                 android:id="@+id/txvPolicyASU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="20dp"
-                android:fontFamily="@font/medium"
                 android:text="@string/terms"
                 android:textAlignment="center"
-                android:textColor="@color/primaryColor"
-                android:textSize="12sp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/btnContinueAR"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -326,7 +320,6 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="20dp"
-                android:fontFamily="@font/semibold"
                 android:text="@string/next"
                 app:layout_constraintBottom_toTopOf="@+id/txvHaveAccountAR"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -335,32 +328,24 @@
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
+                style="@style/AuthDescriptionTextView"
                 android:id="@+id/txvHaveAccountAR"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
-                android:fontFamily="@font/medium"
                 android:text="@string/are_member"
-                android:textColor="@color/primaryColor"
-                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvCarpenterASU"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toStartOf="@+id/imvPlumberASU"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -373,17 +358,11 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvPlumberASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toStartOf="@+id/imvPainterASU"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imvCarpenterASU"
@@ -396,17 +375,11 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvPainterASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toStartOf="@+id/imvElectricianASU"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imvPlumberASU"
@@ -419,18 +392,12 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvElectricianASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="30dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imvPainterASU"
@@ -443,18 +410,12 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvGardenerASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toStartOf="@+id/imvTruckMovingASU"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imvAirServiceASU"
@@ -467,19 +428,13 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvMasonASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imvTruckMovingASU"
@@ -492,18 +447,12 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvTruckMovingASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toStartOf="@+id/imvMasonASU"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imvGardenerASU"
@@ -516,19 +465,13 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvAirServiceASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toStartOf="@+id/imvGardenerASU"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -541,18 +484,12 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvGasASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toStartOf="@+id/imvPCTechnicianASU"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imvNannyASU"
@@ -565,19 +502,13 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvPCTechnicianASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imvGasASU"
@@ -590,18 +521,12 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvNannyASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toStartOf="@+id/imvGasASU"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imvTruckFreightASU"
@@ -614,19 +539,13 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardMasterButton"
                 android:id="@+id/imvTruckFreightASU"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardElevation="0dp"
-                app:contentPadding="10dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textColor"
-                app:rippleColor="@color/shimmerColor"
                 app:layout_constraintEnd_toStartOf="@+id/imvNannyASU"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
