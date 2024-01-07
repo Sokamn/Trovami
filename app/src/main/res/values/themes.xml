@@ -25,11 +25,6 @@
         <item name="cornerRadius">10dp</item>
     </style>
 
-    <style name="SecundaryButton" parent="Button">
-        <item name="android:textColor">@color/primaryColor</item>
-        <item name="android:backgroundTint">@color/white</item>
-    </style>
-
     <style name="PrimaryButton" parent="Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:backgroundTint">@color/secundaryColor</item>
@@ -41,6 +36,21 @@
         <item name="strokeColor">@color/shimmerColor</item>
         <item name="strokeWidth">1dp</item>
     </style>
+
+    <style name="SecundaryButton" parent="Button">
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+    
+    <style name="PrimaryButton.DialogButton" parent="PrimaryButton">
+        <item name="cornerRadius">20dp</item>
+    </style>
+
+    <style name="PrimaryOutlinedButton.DialogButton" parent="PrimaryOutlinedButton">
+        <item name="cornerRadius">20dp</item>
+    </style>
+
+    
 
     <style name="TabFont" parent="TextAppearance.Design.Tab">
         <item name="android:fontFamily">@font/semibold</item>
@@ -229,6 +239,11 @@
         <item name="android:textSize">22sp</item>
     </style>
 
+    <style name="AuthTitleTextView.DialogTitle" parent="AuthTitleTextView">
+        <item name="android:fontFamily">@font/semibold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="DefaultCardButton" parent="Widget.Material3.CardView.Filled">
         <item name="cardBackgroundColor">@color/white</item>
         <item name="cardCornerRadius">10dp</item>
@@ -245,5 +260,7 @@
     <style name="CardMasterButton" parent="DefaultCardButton">
         <item name="contentPadding">10dp</item>
     </style>
+
+
 
 </resources>

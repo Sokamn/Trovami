@@ -7,33 +7,27 @@
     android:layout_height="wrap_content">
 
     <Button
+        style="@style/PrimaryButton.DialogButton"
         android:id="@+id/btnConfirmPCM"
-        android:layout_width="115dp"
+        android:layout_width="125dp"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="25dp"
-        android:fontFamily="@font/medium"
-        style="@style/PrimaryButton"
         android:text="@string/confirm"
-        app:cornerRadius="20dp"
-        app:rippleColor="@color/shimmerColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txpDescriptionPCM" />
 
     <Button
+        style="@style/PrimaryOutlinedButton.DialogButton"
         android:id="@+id/btnCancelPCM"
-        android:layout_width="115dp"
+        android:layout_width="125dp"
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="25dp"
-        android:fontFamily="@font/medium"
         android:text="@string/cancel"
-        style="@style/PrimaryOutlinedButton"
-        app:cornerRadius="20dp"
-        app:rippleColor="@color/shimmerColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txpDescriptionPCM" />
@@ -59,14 +53,12 @@
         app:layout_constraintTop_toBottomOf="@+id/txvTitlePCM" />
 
     <TextView
+        style="@style/AuthTitleTextView.DialogTitle"
         android:id="@+id/txvTitlePCM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:fontFamily="@font/semibold"
         android:text="@string/plumber"
-        android:textColor="@color/black"
-        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
