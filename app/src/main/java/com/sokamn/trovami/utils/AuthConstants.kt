@@ -18,4 +18,6 @@ object AuthConstants {
     const val NAME_KEY_EXTRA = "nName"
     const val LOGIN_METHOD_KEY_EXTRA = "loginMethod"
     const val LAST_ACTIVITY_KEY_EXTRA = "lastActivity"
+    const val LOGIN_ACTIVITY = "LoginActivity"
+    const val INTRODUCTION_ACTIVITY = "IntroductionActivity"
 }

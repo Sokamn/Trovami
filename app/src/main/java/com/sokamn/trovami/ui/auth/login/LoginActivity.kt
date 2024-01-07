@@ -6,7 +6,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
-import android.view.inputmethod.EditorInfo
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -23,9 +22,7 @@ import com.sokamn.trovami.core.ex.toast
 import com.sokamn.trovami.databinding.ActivityLoginBinding
 import com.sokamn.trovami.domain.model.UserLogin
 import com.sokamn.trovami.ui.MainActivity
-import com.sokamn.trovami.utils.AppConstants
-import com.sokamn.trovami.utils.AuthConstants.EMAIL
-import com.sokamn.trovami.utils.AuthConstants.GOOGLE
+import com.sokamn.trovami.ui.auth.signin.SignInActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -63,8 +60,13 @@ class LoginActivity : AppCompatActivity() {
     private fun initObservers() {
 
         loginViewModel.navigateToSignIn.observe(this) {
-            it.getContentIfNotHandled()?.let {
-                //goToSignUp(this.loginMethod, this.lastActivity,this.nName,this.gMail,this.profilePicture,this.currentUser)
+            it.getContentIfNotHandled()?.let { params->
+                goToSignIn( // ULTRA NEGRADA MÁXIMA CORREGIR CON OBJETO EN ALGUN MOMENTO
+                    loginMethod = params[0].toInt(),
+                    lastActivity = params[1],
+                    nName = params[2],
+                    gMail = params[3]
+                )
             }
         }
 
@@ -118,11 +120,11 @@ class LoginActivity : AppCompatActivity() {
 
             txvRecoveryPassAL.setOnClickListener { loginViewModel.onForgotPasswordSelected() }
 
-            txvRegisterNowAL.setOnClickListener { loginViewModel.onSignUpSelected(EMAIL, "LoginActivity",this@LoginActivity) }
+            txvRegisterNowAL.setOnClickListener { loginViewModel.onEmailSignInSelected() }
 
             //imvFacebookAL.setOnClickListener { loginViewModel.onSignInSelected(FACEBOOK, "LoginActivity") }
 
-            crdGoogleAL.setOnClickListener { loginViewModel.onSignUpSelected(GOOGLE, "LoginActivity",this@LoginActivity) }
+            crdGoogleAL.setOnClickListener { loginViewModel.onGoogleSignInSelected(this@LoginActivity) }
             crdFacebookAL.setOnClickListener { toast("Facebook será implementado en próximas versiones") }
 
             btnLoginAL.setOnClickListener {
@@ -178,15 +180,13 @@ class LoginActivity : AppCompatActivity() {
         //startActivity(PasswordRecoveryActivity.create(this))
     }
 
-    private fun goToSignUp(
+    private fun goToSignIn(
         loginMethod: Int,
         lastActivity: String,
         nName: String,
-        gMail: String,
-        profilePicture: String,
-        currentUser: String
+        gMail: String
     ) {
-        //startActivity(SignUpActivity.create(this,loginMethod,lastActivity,nName,gMail,profilePicture, currentUser))
+        startActivity(SignInActivity.create(this,loginMethod,lastActivity,nName,gMail))
     }
 
     private fun goToMain(currentUser: String) {
@@ -204,7 +204,7 @@ class LoginActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 val account = task.result
                 if (account != null) {
-                    loginViewModel.onGoogleSelected(task.result)
+                    loginViewModel.googleSignIn(task.result)
                 } else {
                     toast("Ocurrió un error inesperado. Por favor, intentelo más tarde...")
                 }

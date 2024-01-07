@@ -28,6 +28,7 @@ import com.sokamn.trovami.ui.auth.login.LoginActivity
 import com.sokamn.trovami.utils.AuthConstants.EMAIL
 import com.sokamn.trovami.utils.AuthConstants.GMAIL_KEY_EXTRA
 import com.sokamn.trovami.utils.AuthConstants.GOOGLE
+import com.sokamn.trovami.utils.AuthConstants.INTRODUCTION_ACTIVITY
 import com.sokamn.trovami.utils.AuthConstants.LAST_ACTIVITY_KEY_EXTRA
 import com.sokamn.trovami.utils.AuthConstants.LOGIN_METHOD_KEY_EXTRA
 import com.sokamn.trovami.utils.AuthConstants.NAME_KEY_EXTRA
@@ -631,7 +632,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun goToLogin(lastActivity: String) {
-        if(lastActivity=="IntroductionActivity"){
+        if(lastActivity == INTRODUCTION_ACTIVITY){
             startActivity(LoginActivity.create(this))
             finish()
         }else{

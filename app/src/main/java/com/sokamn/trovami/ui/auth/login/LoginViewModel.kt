@@ -16,10 +16,10 @@ import com.sokamn.trovami.domain.model.UserLogin
 import com.sokamn.trovami.domain.usecase.auth.EmailLoginUseCase
 import com.sokamn.trovami.domain.usecase.auth.GoogleLoginUseCase
 import com.sokamn.trovami.domain.usecase.user.GetUserModelByUidUseCase
-import com.sokamn.trovami.utils.AppConstants
 import com.sokamn.trovami.utils.AuthConstants.CLIENT_ID
 import com.sokamn.trovami.utils.AuthConstants.EMAIL
 import com.sokamn.trovami.utils.AuthConstants.GOOGLE
+import com.sokamn.trovami.utils.AuthConstants.LOGIN_ACTIVITY
 import com.sokamn.trovami.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,9 +50,9 @@ class LoginViewModel @Inject constructor(
     val navigateToForgotPassword: LiveData<Event<Boolean>>
         get() = _navigateToForgotPassword
 
-    private val _navigateToSignUp = MutableLiveData<Event<Boolean>>()
-    val navigateToSignIn: LiveData<Event<Boolean>>
-        get() = _navigateToSignUp
+    private val _navigateToSignIn = MutableLiveData<Event<Array<String>>>()
+    val navigateToSignIn: LiveData<Event<Array<String>>>
+        get() = _navigateToSignIn
 
     private val _navigateToVerifyAccount = MutableLiveData<Event<String>>()
     val navigateToVerifyAccount: LiveData<Event<String>>
@@ -71,7 +71,6 @@ class LoginViewModel @Inject constructor(
         get() = _googleClient
 
     fun onLoginSelected(email: String, password: String) {
-        Log.e("soki","llegue")
         if (isValidEmail(email) && isValidPassword(password)) {
             loginUser(email, password)
         } else {
@@ -79,7 +78,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onGoogleSelected(account: GoogleSignInAccount){
+    fun googleSignIn(account: GoogleSignInAccount){
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
             when(val result = googleLoginUseCase(account)){
@@ -94,11 +93,7 @@ class LoginViewModel @Inject constructor(
                             if (result.data.userUID == "AUTH ERROR") {
                                 _showErrorDialog.value = UserLogin("", "", true)
                             } else {
-                                //_nName.value = account.displayName.toString()
-                                //_gMail.value = account.email.toString()
-                                //_profilePicture.value = account.photoUrl.toString()
-                                //_currentUser.value = result.data.userUID
-                                _navigateToSignUp.value = Event(true)
+                                _navigateToSignIn.value = Event(arrayOf(GOOGLE.toString(), LOGIN_ACTIVITY, account.displayName.toString(), account.email.toString()))
                             }
                         }
                     }
@@ -137,19 +132,12 @@ class LoginViewModel @Inject constructor(
         _navigateToForgotPassword.value = Event(true)
     }
 
-    fun onSignUpSelected(loginMethod: Int, lastActivity: String, activity: Activity) {
-        when(loginMethod){
-            EMAIL ->{
-                //_loginMethod.value = loginMethod
-                //_lastActivity.value = lastActivity
-                _navigateToSignUp.value = Event(true)
-            }
-            GOOGLE ->{
-                //_loginMethod.value = loginMethod
-                //_lastActivity.value = lastActivity
-                _googleClient.value = GoogleSignIn.getClient(activity, gso)
-            }
-        }
+    fun onEmailSignInSelected(){
+        _navigateToSignIn.value = Event(arrayOf(EMAIL.toString(), LOGIN_ACTIVITY,"",""))
+    }
+
+    fun onGoogleSignInSelected(activity: Activity){
+        _googleClient.value = GoogleSignIn.getClient(activity, gso)
     }
 
     private fun isValidEmail(email: String) =

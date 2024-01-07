@@ -124,7 +124,7 @@ class SignInViewModel @Inject constructor(
         (PASSWORD_REGEX.matcher(password).matches()) || password.isEmpty()
 
     private fun isValidName(name: String): Boolean =
-        name.isEmpty()
+        name.isNotEmpty()
 
     private fun UserModel.toSignInViewState(passwordConfirmation: String): SignInViewState {
         return SignInViewState(
