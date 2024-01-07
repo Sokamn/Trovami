@@ -15,7 +15,7 @@
 
     <!--> PassRecoveryView <-->
 
-    <!--> SignUpView <-->
+    <!--> SignInView <-->
     <string name="register">Registro</string>
     <string name="name">Nombre</string>
     <string name="surname">Apellido</string>
@@ -29,7 +29,9 @@
     <string name="cancel">Cancelar</string>
     <string name="select_master">Por ultimo, selecciona tus aptitudes\n(En caso de solicitar servicios ignorar)</string>
     <string name="are_member">¿Ya eres miembro? <b>Inicia sesión</b></string>
-
+    <string name="signin_network_error_description">Verifica tu conexión a la red</string>
+    <string name="signin_email_has_been_used_error_description">Este correo ya ha sido utilizado</string>
+    <string name="signin_error_title">Ha ocurrido un error</string>
 
     <!--> VerificationView <-->
     <string name="resend_email">¿No te llegó el Email? Click para reeenviar</string>

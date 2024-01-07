@@ -93,7 +93,7 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
             Resource.Success(
                 UserResponse(
                     result.user?.isEmailVerified ?: false,
-                    result.user?.uid ?: "ERROR"
+                    result.user?.uid ?: "AUTH ERROR"
                 )
             )
         }

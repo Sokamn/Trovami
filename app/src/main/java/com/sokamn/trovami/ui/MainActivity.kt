@@ -10,9 +10,9 @@ import com.sokamn.trovami.utils.AppConstants
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        fun create(context: Context, currentUserUID: String): Intent =
+        fun create(context: Context, currentUserUid: String): Intent =
             Intent(context, MainActivity::class.java).apply {
-                putExtra(AppConstants.USER_KEY_PREFS, currentUserUID)
+                putExtra(AppConstants.USER_KEY_PREFS, currentUserUid)
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             }
     }

@@ -88,7 +88,7 @@ class LoginViewModel @Inject constructor(
                         if (getUserModelByUidUseCase(result.data.userUID) != null) {
                             _navigateToMain.value = Event(result.data.userUID)
                         } else {
-                            if (result.data.userUID == "ERROR") {
+                            if (result.data.userUID == "AUTH ERROR") {
                                 _showErrorDialog.value = UserLogin("", "", true)
                             } else {
                                 //_nName.value = account.displayName.toString()
