@@ -85,7 +85,11 @@ class SignInViewModel @Inject constructor(
                                         if (createAccountResult.data.isVerified) {
                                             _navigateToMain.value = Event(createAccountResult.data.userUID)
                                         }else{
-                                            _navigateToVerifyEmail.value = Event(createAccountResult.data.userUID)
+                                            if(createAccountResult.data.userUID == "AUTH ERROR"){
+                                                _showErrorDialog.value = Event(R.string.signin_network_error_description)
+                                            }else{
+                                                _navigateToVerifyEmail.value = Event(createAccountResult.data.userUID)
+                                            }
                                         }
                                     }
                                 }
@@ -117,15 +121,6 @@ class SignInViewModel @Inject constructor(
         _viewState.value = userSignIn.toSignInViewState(passwordConfirmation)
     }
 
-    private fun isValidOrEmptyEmail(email: String) =
-        Patterns.EMAIL_ADDRESS.matcher(email).matches() || email.isEmpty()
-
-    private fun isValidOrEmptyPassword(password: String): Boolean =
-        (PASSWORD_REGEX.matcher(password).matches()) || password.isEmpty()
-
-    private fun isValidName(name: String): Boolean =
-        name.isNotEmpty()
-
     private fun UserModel.toSignInViewState(passwordConfirmation: String): SignInViewState {
         return SignInViewState(
             isValidEmail = isValidOrEmptyEmail(email),
@@ -140,24 +135,32 @@ class SignInViewModel @Inject constructor(
         )
     }
 
+    private fun isValidOrEmptyEmail(email: String) =
+        Patterns.EMAIL_ADDRESS.matcher(email).matches() || email.isEmpty()
+
+    private fun isValidOrEmptyPassword(password: String): Boolean =
+        (PASSWORD_REGEX.matcher(password).matches()) || password.isEmpty()
+
+    private fun isValidName(name: String): Boolean =
+        name.length >= MIN_TEXT_CONTENT || name.isEmpty()
+
     private fun isValidOrEmptyPasswordConfirmation(password: String,passwordConfirmation: String): Boolean =
         password == passwordConfirmation || passwordConfirmation.isEmpty()
-
 
     private fun isValidOrEmptyDocument(document: String) =
         document.length == 8 || document.isEmpty()
 
     private fun isValidOrEmptyProvince(province: String) =
-        province.isEmpty() || province.length >= MIN_TEXT_CONTENT
+        province.length >= MIN_TEXT_CONTENT || province.isEmpty()
 
     private fun isValidOrEmptyMunicipality(municipality: String) =
-        municipality.isEmpty() || municipality.length >= MIN_TEXT_CONTENT
+        municipality.length >= MIN_TEXT_CONTENT || municipality.isEmpty()
 
     private fun isValidOrEmptyAddress(address: String) =
-        address.isEmpty() || address.length >= MIN_TEXT_CONTENT
+        address.length >= MIN_TEXT_CONTENT || address.isEmpty()
 
     private fun isValidOrEmptyPhone(phone: String) =
-        phone.isNotEmpty()
+        phone.length >= MIN_TEXT_CONTENT || phone.isEmpty()
 
 
 }

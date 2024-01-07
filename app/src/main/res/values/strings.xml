@@ -114,7 +114,7 @@
     <string name="fullName">Nombre Completo</string>
 
     <string name="signin_error_mail">El email no es válido</string>
-    <string name="signin_error_fullname">El nombre no debe contener palabras ofensivas.</string>
+    <string name="signin_error_fullname">El nombre debe contener almenos 6 caracteres.</string>
     <string name="signin_error_password">Las 2 contraseñas debes ser iguales</string>
     <string name="signin_error_document">El documento debe ser de 8 digitos. Rellenar con 0 desde la izquierda en caso de faltar digitos.</string>
     <string name="signin_error_province">Debe contener al menos 6 caracteres</string>

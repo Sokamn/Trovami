@@ -298,7 +298,7 @@ class SignInActivity : AppCompatActivity() {
             tilPasswordASU.error =
                 if (viewState.isValidPassword) null else getString(R.string.signin_error_password)
             tilRepeatPasswordASU.error =
-                if (viewState.isValidPassword) null else getString(R.string.signin_error_password)
+                if (viewState.isValidPasswordConfirmation) null else getString(R.string.signin_error_password)
         }
     }
 

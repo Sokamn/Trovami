@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.sokamn.trovami.R
@@ -89,8 +90,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel.showErrorDialog.observe(this) { userLogin ->
-            if (userLogin.showErrorDialog) showErrorDialog(userLogin)
+            if (userLogin.showErrorDialog) showCantFindErrorDialog(userLogin)
         }
+
+        loginViewModel.showNetworkErrorDialog.observe(this, Observer {
+            it.getContentIfNotHandled()?.let{
+                showNetworkErrorDialog()
+            }
+        })
 
         loginViewModel.googleClient.observe(this) { client ->
             launcher.launch(client.signInIntent)
@@ -159,7 +166,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showErrorDialog(userLogin: UserLogin) {
+    private fun showCantFindErrorDialog(userLogin: UserLogin) {
         ErrorDialog.create(
             title = getString(R.string.login_error_dialog_title),
             description = getString(R.string.login_error_dialog_body),
@@ -171,6 +178,20 @@ class LoginActivity : AppCompatActivity() {
                     userLogin.email,
                     userLogin.password
                 )
+                it.dismiss()
+            }
+        ).show(dialogLauncher, this)
+    }
+
+    private fun showNetworkErrorDialog() {
+        ErrorDialog.create(
+            title = getString(R.string.signin_error_title),
+            description = getString(R.string.signin_network_error_description),
+            negativeAction = ErrorDialog.Action(getString(R.string.login_error_dialog_negative_action)) {
+                it.dismiss()
+            },
+            positiveAction = ErrorDialog.Action(getString(R.string.login_error_dialog_positive_action)) {
+                loginViewModel.onGoogleSignInSelected(this@LoginActivity)
                 it.dismiss()
             }
         ).show(dialogLauncher, this)

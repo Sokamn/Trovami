@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.sokamn.trovami.R
 import com.sokamn.trovami.core.Event
 import com.sokamn.trovami.domain.model.UserLogin
 import com.sokamn.trovami.domain.usecase.auth.GoogleLoginUseCase
@@ -55,9 +56,9 @@ class IntroductionViewModel @Inject constructor(
     val viewState: StateFlow<LoginViewState>
         get() = _viewState
 
-    private var _showErrorDialog = MutableLiveData(UserLogin())
-    val showErrorDialog: LiveData<UserLogin>
-        get() = _showErrorDialog
+    private var _showNetworkErrorDialog = MutableLiveData<Event<Boolean>>()
+    val showNetworkErrorDialog: LiveData<Event<Boolean>>
+        get() = _showNetworkErrorDialog
 
     private val _googleClient = MutableLiveData<GoogleSignInClient>()
     val googleClient: LiveData<GoogleSignInClient>
@@ -66,26 +67,29 @@ class IntroductionViewModel @Inject constructor(
     fun googleSignIn(account: GoogleSignInAccount){
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
-            when(val result = googleLoginUseCase(account)){
-                is Resource.Error -> { // ULTRA ERRRORRRRRRR NO DEBERIA SER ASÏ DEBERIA TENER UNO INDIVIDUAL: SHOW GOOGLE ERROR DIALOG
-                    _showErrorDialog.value = UserLogin("","",true)
-                }
+            when(val googleLoginResult = googleLoginUseCase(account)){
+                is Resource.Error ->
+                    _showNetworkErrorDialog.value = Event(true)
                 is Resource.Success -> {
-                    if (result.data.isVerified) {
-                        if (getUserModelByUidUseCase(result.data.userUID) != null) {
-                            _navigateToMain.value = Event(result.data.userUID)
-                        } else {
-                            if (result.data.userUID == "AUTH ERROR") {// ULTRA ERRRORRRRRRR NO DEBERIA SER ASÏ DEBERIA TENER UNO INDIVIDUAL: SHOW GOOGLE ERROR DIALOG
-                                _showErrorDialog.value = UserLogin("", "", true)
-                                // TENER CUIDADO QUE HAY Q ARREGLAR EN LOGIN TAMBIEN
-                            } else {
-                                _navigateToSignIn.value = Event(arrayOf(
-                                    GOOGLE.toString(),
-                                    LOGIN_ACTIVITY,
-                                    account.displayName.toString(),
-                                    account.email.toString()))
+                    if (googleLoginResult.data.userUID != "AUTH ERROR"){
+                        when(val getUserModelByUidResult = getUserModelByUidUseCase(googleLoginResult.data.userUID)){
+                            is Resource.Error -> {
+                                if(getUserModelByUidResult.message == "null"){
+                                    _navigateToSignIn.value = Event(arrayOf(
+                                        GOOGLE.toString(),
+                                        LOGIN_ACTIVITY,
+                                        account.displayName.toString(),
+                                        account.email.toString()))
+                                }else{
+                                    _showNetworkErrorDialog.value = Event(true)
+                                }
+                            }
+                            is Resource.Success -> {
+                                _navigateToMain.value = Event(googleLoginResult.data.userUID)
                             }
                         }
+                    }else{
+                        _showNetworkErrorDialog.value = Event(true)
                     }
                 }
             }

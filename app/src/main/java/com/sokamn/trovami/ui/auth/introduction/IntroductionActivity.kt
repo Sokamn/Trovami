@@ -16,6 +16,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.sokamn.trovami.R
+import com.sokamn.trovami.core.dialog.DialogFragmentLauncher
+import com.sokamn.trovami.core.dialog.ErrorDialog
+import com.sokamn.trovami.core.ex.show
 import com.sokamn.trovami.core.ex.toast
 import com.sokamn.trovami.databinding.ActivityIntroductionBinding
 import com.sokamn.trovami.ui.MainActivity
@@ -23,6 +26,7 @@ import com.sokamn.trovami.ui.auth.login.LoginActivity
 import com.sokamn.trovami.ui.auth.login.LoginViewState
 import com.sokamn.trovami.ui.auth.signin.SignInActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -37,6 +41,9 @@ class IntroductionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityIntroductionBinding
     private val introductionViewModel: IntroductionViewModel by viewModels()
+
+    @Inject
+    lateinit var dialogLauncher: DialogFragmentLauncher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityIntroductionBinding.inflate(layoutInflater)
@@ -94,9 +101,11 @@ class IntroductionActivity : AppCompatActivity() {
             launcher.launch(client.signInIntent)
         }
 
-        introductionViewModel.showErrorDialog.observe(this) { userLogin ->
-            //if (userLogin.showErrorDialog) showErrorDialog(userLogin)
-        }
+        introductionViewModel.showNetworkErrorDialog.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {
+                showNetworkErrorDialog()
+            }
+        })
 
         lifecycleScope.launchWhenStarted {
             introductionViewModel.viewState.collect { viewState ->
@@ -109,7 +118,19 @@ class IntroductionActivity : AppCompatActivity() {
         binding.pgbProgressIntroduction.isVisible = viewState.isLoading
     }
 
-
+    private fun showNetworkErrorDialog() {
+        ErrorDialog.create(
+            title = getString(R.string.signin_error_title),
+            description = getString(R.string.signin_network_error_description),
+            negativeAction = ErrorDialog.Action(getString(R.string.login_error_dialog_negative_action)) {
+                it.dismiss()
+            },
+            positiveAction = ErrorDialog.Action(getString(R.string.login_error_dialog_positive_action)) {
+                introductionViewModel.onGoogleSignInSelected(this@IntroductionActivity)
+                it.dismiss()
+            }
+        ).show(dialogLauncher, this)
+    }
 
     private fun goToMain(currentUserUid: String) {
         startActivity(MainActivity.create(this, currentUserUid))

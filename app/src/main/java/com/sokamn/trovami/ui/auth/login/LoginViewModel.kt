@@ -66,6 +66,10 @@ class LoginViewModel @Inject constructor(
     val showErrorDialog: LiveData<UserLogin>
         get() = _showErrorDialog
 
+    private var _showNetworkErrorDialog = MutableLiveData<Event<Boolean>>()
+    val showNetworkErrorDialog: LiveData<Event<Boolean>>
+        get() = _showNetworkErrorDialog
+
     private val _googleClient = MutableLiveData<GoogleSignInClient>()
     val googleClient: LiveData<GoogleSignInClient>
         get() = _googleClient
@@ -81,21 +85,29 @@ class LoginViewModel @Inject constructor(
     fun googleSignIn(account: GoogleSignInAccount){
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
-            when(val result = googleLoginUseCase(account)){
-                is Resource.Error -> {
-                    _showErrorDialog.value = UserLogin("","",true)
-                }
+            when(val googleLoginResult = googleLoginUseCase(account)){
+                is Resource.Error ->
+                    _showNetworkErrorDialog.value = Event(true)
                 is Resource.Success -> {
-                    if (result.data.isVerified) {
-                        if (getUserModelByUidUseCase(result.data.userUID) != null) {
-                            _navigateToMain.value = Event(result.data.userUID)
-                        } else {
-                            if (result.data.userUID == "AUTH ERROR") {
-                                _showErrorDialog.value = UserLogin("", "", true)
-                            } else {
-                                _navigateToSignIn.value = Event(arrayOf(GOOGLE.toString(), LOGIN_ACTIVITY, account.displayName.toString(), account.email.toString()))
+                    if (googleLoginResult.data.userUID != "AUTH ERROR"){
+                        when(val getUserModelByUidResult = getUserModelByUidUseCase(googleLoginResult.data.userUID)){
+                            is Resource.Error -> {
+                                if(getUserModelByUidResult.message == "null"){
+                                    _navigateToSignIn.value = Event(arrayOf(
+                                        GOOGLE.toString(),
+                                        LOGIN_ACTIVITY,
+                                        account.displayName.toString(),
+                                        account.email.toString()))
+                                }else{
+                                    _showNetworkErrorDialog.value = Event(true)
+                                }
+                            }
+                            is Resource.Success -> {
+                                _navigateToMain.value = Event(googleLoginResult.data.userUID)
                             }
                         }
+                    }else{
+                        _showNetworkErrorDialog.value = Event(true)
                     }
                 }
             }
