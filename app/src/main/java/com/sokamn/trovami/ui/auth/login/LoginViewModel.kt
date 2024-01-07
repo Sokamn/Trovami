@@ -17,6 +17,9 @@ import com.sokamn.trovami.domain.usecase.auth.EmailLoginUseCase
 import com.sokamn.trovami.domain.usecase.auth.GoogleLoginUseCase
 import com.sokamn.trovami.domain.usecase.user.GetUserModelByUidUseCase
 import com.sokamn.trovami.utils.AppConstants
+import com.sokamn.trovami.utils.AuthConstants.CLIENT_ID
+import com.sokamn.trovami.utils.AuthConstants.EMAIL
+import com.sokamn.trovami.utils.AuthConstants.GOOGLE
 import com.sokamn.trovami.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +37,7 @@ class LoginViewModel @Inject constructor(
     private companion object {
         const val MIN_PASSWORD_LENGTH = 6
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(AppConstants.CLIENT_ID)
+            .requestIdToken(CLIENT_ID)
             .requestEmail()
             .build()
     }
@@ -136,12 +139,12 @@ class LoginViewModel @Inject constructor(
 
     fun onSignUpSelected(loginMethod: Int, lastActivity: String, activity: Activity) {
         when(loginMethod){
-            AppConstants.EMAIL ->{
+            EMAIL ->{
                 //_loginMethod.value = loginMethod
                 //_lastActivity.value = lastActivity
                 _navigateToSignUp.value = Event(true)
             }
-            AppConstants.GOOGLE ->{
+            GOOGLE ->{
                 //_loginMethod.value = loginMethod
                 //_lastActivity.value = lastActivity
                 _googleClient.value = GoogleSignIn.getClient(activity, gso)

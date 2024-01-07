@@ -16,14 +16,6 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class UserService @Inject constructor(private val firebase: FirebaseClient) {
-    fun logOut(){
-        try{
-            firebase.auth.signOut()
-            Resource.Success(Unit)
-        }catch (e: Exception){
-            Resource.Error(e.toString())
-        }
-    }
 
     val currentUserUID: Flow<String> = flow {
         do {
@@ -67,7 +59,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
         }
     }
 
-    suspend fun createUserTable(userSignUp: UserModel) : Resource<Unit> {
+    suspend fun createUserTable(userSignUp: UserModel) : Resource<String> {
         return try {
             var isSuccesful = true
             firebase.dbRealtime
@@ -80,7 +72,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
                 .await()
 
             if (isSuccesful){
-                Resource.Success(Unit)
+                Resource.Success(userSignUp.uid)
             }else{
                 Resource.Error("Network Error")
             }

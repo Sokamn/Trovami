@@ -3,18 +3,10 @@ package com.sokamn.trovami.ui.auth.login
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.Window
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.TextView.OnEditorActionListener
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -24,7 +16,7 @@ import com.sokamn.trovami.R
 import com.sokamn.trovami.core.dialog.DialogFragmentLauncher
 import com.sokamn.trovami.core.dialog.ErrorDialog
 import com.sokamn.trovami.core.ex.dismissKeyboard
-import com.sokamn.trovami.core.ex.loseFocusAfterAction
+import com.sokamn.trovami.core.ex.loseFocusAfterActionDone
 import com.sokamn.trovami.core.ex.onTextChanged
 import com.sokamn.trovami.core.ex.show
 import com.sokamn.trovami.core.ex.toast
@@ -32,6 +24,8 @@ import com.sokamn.trovami.databinding.ActivityLoginBinding
 import com.sokamn.trovami.domain.model.UserLogin
 import com.sokamn.trovami.ui.MainActivity
 import com.sokamn.trovami.utils.AppConstants
+import com.sokamn.trovami.utils.AuthConstants.EMAIL
+import com.sokamn.trovami.utils.AuthConstants.GOOGLE
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -115,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
             }
             txpEmailAL.onTextChanged { onFieldChanged() }
 
-            txpPasswordAL.loseFocusAfterAction(EditorInfo.IME_ACTION_DONE, scrollViewAL)
+            txpPasswordAL.loseFocusAfterActionDone(scrollViewAL)
             txpPasswordAL.setOnFocusChangeListener { view, hasFocus ->
                 if (hasFocus) scrollViewAL.smoothScrollTo(view.left, view.bottom+150)
                 onFieldChanged(hasFocus)
@@ -124,11 +118,11 @@ class LoginActivity : AppCompatActivity() {
 
             txvRecoveryPassAL.setOnClickListener { loginViewModel.onForgotPasswordSelected() }
 
-            txvRegisterNowAL.setOnClickListener { loginViewModel.onSignUpSelected(AppConstants.EMAIL, "LoginActivity",this@LoginActivity) }
+            txvRegisterNowAL.setOnClickListener { loginViewModel.onSignUpSelected(EMAIL, "LoginActivity",this@LoginActivity) }
 
             //imvFacebookAL.setOnClickListener { loginViewModel.onSignInSelected(FACEBOOK, "LoginActivity") }
 
-            crdGoogleAL.setOnClickListener { loginViewModel.onSignUpSelected(AppConstants.GOOGLE, "LoginActivity",this@LoginActivity) }
+            crdGoogleAL.setOnClickListener { loginViewModel.onSignUpSelected(GOOGLE, "LoginActivity",this@LoginActivity) }
             crdFacebookAL.setOnClickListener { toast("Facebook será implementado en próximas versiones") }
 
             btnLoginAL.setOnClickListener {

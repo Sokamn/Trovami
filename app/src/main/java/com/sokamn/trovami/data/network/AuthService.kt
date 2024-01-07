@@ -22,6 +22,14 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
         }
     }
 
+    fun logOut(): Resource<Unit> =
+        try{
+            firebase.auth.signOut()
+            Resource.Success(Unit)
+        }catch (e: Exception){
+            Resource.Error(e.toString())
+        }
+
 
     val emailVerified: Flow<String> = flow {
         do {

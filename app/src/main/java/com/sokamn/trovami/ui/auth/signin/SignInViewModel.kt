@@ -11,7 +11,10 @@ import com.sokamn.trovami.domain.model.UserModel
 import com.sokamn.trovami.domain.usecase.auth.CreateAccountUseCase
 import com.sokamn.trovami.domain.usecase.auth.CreateUserTableUseCase
 import com.sokamn.trovami.domain.usecase.auth.HasBeenEmailUsedUseCase
-import com.sokamn.trovami.utils.AppConstants
+import com.sokamn.trovami.utils.AuthConstants.EMAIL
+import com.sokamn.trovami.utils.AuthConstants.GOOGLE
+import com.sokamn.trovami.utils.AuthConstants.MIN_TEXT_CONTENT
+import com.sokamn.trovami.utils.AuthConstants.PASSWORD_REGEX
 import com.sokamn.trovami.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +26,7 @@ import javax.inject.Inject
 class SignInViewModel @Inject constructor(
     private val createAccountUseCase: CreateAccountUseCase,
     private val createUserTableUseCase: CreateUserTableUseCase,
-    private val hasBeenEmailUsedUseCase: HasBeenEmailUsedUseCase
+    private val hasBeenEmailUsedUseCase: HasBeenEmailUsedUseCase,
 ) :
     ViewModel() {
 
@@ -31,21 +34,13 @@ class SignInViewModel @Inject constructor(
     val navigateToLogin: LiveData<Event<Boolean>>
         get() = _navigateToLogin
 
-    private val _navigateToVerifyEmail = MutableLiveData<Event<Boolean>>()
-    val navigateToVerifyEmail: LiveData<Event<Boolean>>
+    private val _navigateToVerifyEmail = MutableLiveData<Event<String>>()
+    val navigateToVerifyEmail: LiveData<Event<String>>
         get() = _navigateToVerifyEmail
 
-    private val _navigateToMain = MutableLiveData<Event<Boolean>>()
-    val navigateToMain: LiveData<Event<Boolean>>
+    private val _navigateToMain = MutableLiveData<Event<String>>()
+    val navigateToMain: LiveData<Event<String>>
         get() = _navigateToMain
-
-    private val _currentUserUid = MutableLiveData<String>()
-    val currentUserUid: LiveData<String>
-        get() = _currentUserUid
-
-    private val _postAccountState: MutableLiveData<Resource<Unit>> = MutableLiveData()
-    val postAccountState: LiveData<Resource<Unit>>
-        get() = _postAccountState
 
     private val _viewState = MutableStateFlow(SignInViewState())
     val viewState: StateFlow<SignInViewState>
@@ -59,62 +54,57 @@ class SignInViewModel @Inject constructor(
     val showErrorInputs: LiveData<Boolean>
         get() = _showErrorInputs
 
-    fun onSignUpSelected(userSignIn: UserModel, passwordConfirmation: String?, loginMethod: Int) {
-        if (loginMethod == AppConstants.GOOGLE){
-            signUpUser(userSignIn,loginMethod)
-        }
-        else{
-            val viewState = userSignIn.toSignInViewState(passwordConfirmation)
-            if (viewState.userValidated() && userSignIn.isNotEmpty()) {
-                signUpUser(userSignIn,loginMethod)
-            } else {
-                onFieldsChanged(userSignIn, passwordConfirmation)
-                _showErrorInputs.value = true
-            }
+    fun onGoogleSignInSelected(userSignIn: UserModel){
+        signUpUser(userSignIn, GOOGLE)
+    }
+
+    fun onEmailSignInSelected(userSignIn: UserModel, passwordConfirmation: String) {
+        val viewState = userSignIn.toSignInViewState(passwordConfirmation)
+        if (viewState.userValidated() && userSignIn.isNotEmpty()) {
+            signUpUser(userSignIn, EMAIL)
+        } else {
+            onFieldsChanged(userSignIn, passwordConfirmation)
+            _showErrorInputs.value = true
         }
     }
 
-    private fun signUpUser(userSignIn: UserModel,loginMethod: Int) {
+    private fun signUpUser(userSignIn: UserModel,loginMethod: Int) { // REFACTORIZAR POR SEPARADO
         viewModelScope.launch {
             _viewState.value = SignInViewState(isLoading = true)
             when(val emailUsedResult = hasBeenEmailUsedUseCase(userSignIn.email)){
                 is Resource.Error -> _showErrorDialog.value = Event(R.string.signin_network_error_description)
                 is Resource.Success ->{
                     var emailExist = emailUsedResult.data
-                    if (loginMethod == AppConstants.GOOGLE) emailExist = false
+                    if (loginMethod == GOOGLE) emailExist = false
                     if (!emailExist){
                         when(loginMethod){
-                            AppConstants.EMAIL ->{
+                            EMAIL ->{
                                 when(val createAccountResult = createAccountUseCase(userSignIn)){
                                     is Resource.Error -> _showErrorDialog.value = Event(R.string.signin_network_error_description)
                                     is Resource.Success -> {
-                                        _currentUserUid.value = createAccountResult.data.userUID
                                         if (createAccountResult.data.isVerified) {
-                                            _navigateToMain.value = Event(true)
+                                            _navigateToMain.value = Event(createAccountResult.data.userUID)
                                         }else{
-                                            _navigateToVerifyEmail.value = Event(true)
+                                            _navigateToVerifyEmail.value = Event(createAccountResult.data.userUID)
                                         }
                                     }
                                 }
                             }
-                            AppConstants.GOOGLE ->{
+                            GOOGLE ->{
                                 when(val createUserTableResult = createUserTableUseCase(userSignIn)){
                                     is Resource.Error -> _showErrorDialog.value = Event(R.string.signin_network_error_description)
                                     is Resource.Success -> {
-                                        _currentUserUid.value = createUserTableResult.data
-
+                                        _navigateToMain.value = Event(createUserTableResult.data)
                                     }
                                 }
                             }
                         }
                     }else{
-                        _showErrorEmailExists.value = true
+                        _showErrorDialog.value = Event(R.string.signin_email_has_been_used_error_description)
                         _viewState.value  = SignInViewState(isValidEmail = false)
                     }
                 }
             }
-
-
             _viewState.value = SignInViewState(isLoading = false)
         }
     }
@@ -123,20 +113,20 @@ class SignInViewModel @Inject constructor(
         _navigateToLogin.value = Event(true)
     }
 
-    fun onFieldsChanged(userSignIn: UserModel, passwordConfirmation: String?) {
+    fun onFieldsChanged(userSignIn: UserModel, passwordConfirmation: String) {
         _viewState.value = userSignIn.toSignInViewState(passwordConfirmation)
     }
 
     private fun isValidOrEmptyEmail(email: String) =
         Patterns.EMAIL_ADDRESS.matcher(email).matches() || email.isEmpty()
 
-    private fun isValidOrEmptyPassword(password: String, passwordConfirmation: String): Boolean =
-        (AppConstants.PASSWORD_REGEX.matcher(password).matches() && password == passwordConfirmation) || password.isEmpty() || passwordConfirmation.isEmpty()
+    private fun isValidOrEmptyPassword(password: String): Boolean =
+        (PASSWORD_REGEX.matcher(password).matches()) || password.isEmpty()
 
     private fun isValidName(name: String): Boolean =
         name.isEmpty()
 
-    private fun UserModel.toSignInViewState(passwordConfirmation: String?): SignInViewState {
+    private fun UserModel.toSignInViewState(passwordConfirmation: String): SignInViewState {
         return SignInViewState(
             isValidEmail = isValidOrEmptyEmail(email),
             isValidFullName = isValidName(fullName),
@@ -145,22 +135,29 @@ class SignInViewModel @Inject constructor(
             isValidMunicipality = isValidOrEmptyMunicipality(municipality),
             isValidAddress = isValidOrEmptyAddress(defaultAdress),
             isValidPhone = isValidOrEmptyPhone(phoneNumber),
-            isValidPassword = isValidOrEmptyPassword(password, passwordConfirmation.toString()),
+            isValidPassword = isValidOrEmptyPassword(password),
+            isValidPasswordConfirmation = isValidOrEmptyPasswordConfirmation(password, passwordConfirmation)
         )
     }
+
+    private fun isValidOrEmptyPasswordConfirmation(password: String,passwordConfirmation: String): Boolean =
+        password == passwordConfirmation || passwordConfirmation.isEmpty()
+
 
     private fun isValidOrEmptyDocument(document: String) =
         document.length == 8 || document.isEmpty()
 
     private fun isValidOrEmptyProvince(province: String) =
-        province.isEmpty() || province.length >= MIN_SIGNUP_LENGTH
+        province.isEmpty() || province.length >= MIN_TEXT_CONTENT
 
     private fun isValidOrEmptyMunicipality(municipality: String) =
-        municipality.isEmpty() || municipality.length >= MIN_SIGNUP_LENGTH
+        municipality.isEmpty() || municipality.length >= MIN_TEXT_CONTENT
 
     private fun isValidOrEmptyAddress(address: String) =
-        address.isEmpty() || address.length >= MIN_SIGNUP_LENGTH
+        address.isEmpty() || address.length >= MIN_TEXT_CONTENT
 
     private fun isValidOrEmptyPhone(phone: String) =
         phone.isNotEmpty()
+
+
 }

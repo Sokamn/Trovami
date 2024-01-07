@@ -2,8 +2,8 @@ package com.sokamn.trovami.core.ex
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.HorizontalScrollView
 import android.widget.ScrollView
 
 fun EditText.onTextChanged(listener: (String) -> Unit) {
@@ -17,9 +17,9 @@ fun EditText.onTextChanged(listener: (String) -> Unit) {
     })
 }
 
-fun EditText.loseFocusAfterAction(action: Int, scrollView: ScrollView) {
+fun EditText.loseFocusAfterActionDone(scrollView: ScrollView) {
     this.setOnEditorActionListener { v, actionId, _ ->
-        if (actionId == action) {
+        if (actionId == EditorInfo.IME_ACTION_DONE){
             this.dismissKeyboard()
             v.clearFocus()
             scrollView.smoothScrollTo(0,0)

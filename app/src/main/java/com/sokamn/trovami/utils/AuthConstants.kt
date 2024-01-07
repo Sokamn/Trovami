@@ -11,8 +11,6 @@ object AuthConstants {
     const val PASO4 = 3
     const val EMAIL = 12
     const val GOOGLE = 13
-    const val SELECTED = 77
-    const val UNSELECTED = 88
     const val MIN_TEXT_CONTENT = 5
     const val CURRENT_USER_UID_KEY_EXTRA = "current_user"
     const val PROFILE_PICTURE_KEY_EXTRA = "profilePicture"

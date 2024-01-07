@@ -6,5 +6,5 @@ import com.sokamn.trovami.utils.Resource
 import javax.inject.Inject
 
 class CreateUserTableUseCase @Inject constructor(private val userService: UserService){
-    suspend operator fun invoke(userSignIn: UserModel): Resource<Unit> = userService.createUserTable(userSignIn)
+    suspend operator fun invoke(userSignIn: UserModel): Resource<String> = userService.createUserTable(userSignIn)
 }
