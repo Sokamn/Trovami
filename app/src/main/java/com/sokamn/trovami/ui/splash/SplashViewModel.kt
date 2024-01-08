@@ -9,19 +9,20 @@ import com.google.gson.Gson
 import com.sokamn.trovami.core.Event
 import com.sokamn.trovami.data.source.datastore.DataStore
 import com.sokamn.trovami.domain.model.UserModel
-import com.sokamn.trovami.domain.usecase.auth.IsEmailVerifiedUseCase
+import com.sokamn.trovami.domain.usecase.auth.IsUserVerifiedUseCase
 import com.sokamn.trovami.domain.usecase.network.CheckInternetConnectionUseCase
-import com.sokamn.trovami.domain.usecase.user.GetCurrentUserUidUseCase
 import com.sokamn.trovami.domain.usecase.user.ExistsUserConnectedUseCase
+import com.sokamn.trovami.domain.usecase.user.GetCurrentUserUidUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val isEmailVerifiedUseCase: IsEmailVerifiedUseCase,
+    private val isUserVerifiedUseCase: IsUserVerifiedUseCase,
     private val checkNetworkConnectionUseCase: CheckInternetConnectionUseCase,
     private val getCurrentUserUidUseCase: GetCurrentUserUidUseCase,
     private val existsUserConnectedUseCase: ExistsUserConnectedUseCase,
@@ -42,8 +43,10 @@ class SplashViewModel @Inject constructor(
 
     init {
         if (checkNetworkConnectionUseCase()) { // There is Connection
+            Log.e("SOKI", "HAY INTERNET")
             verifyEmail()
         } else { // There is not Connection
+            Log.e("SOKI", "NO HAY INTERNET")
             getCurrentUserWithoutConnection()
         }
     }
@@ -51,22 +54,28 @@ class SplashViewModel @Inject constructor(
 
     private fun verifyEmail() {
         viewModelScope.launch {
-            isEmailVerifiedUseCase()
+            isUserVerifiedUseCase()
                 .catch {
                     Log.e("SOKI", "Verification error: ${it.message}")
                 }
                 .collect { verificated ->
-                    getCurrentUserUidUseCase().catch {
-                        Log.e("SOKAMN", "Verification error: ${it.message}")
-                    }.collect { userUID ->
-                        if (verificated) {
+                    delay(3000)
+                    if (verificated){
+                        getCurrentUserUidUseCase().catch {
+
+                        }.collect{ userUID ->
                             _navigateToMain.value = Event(userUID)
-                        } else {
-                            if (existsUserConnectedUseCase()) {
+                        }
+
+                    }else{
+                        if (existsUserConnectedUseCase()) {
+                            getCurrentUserUidUseCase().catch {
+
+                            }.collect{ userUID ->
                                 _navigateToVerification.value = Event(userUID)
-                            } else {
-                                _navigateToIntroduction.value = Event(true)
                             }
+                        } else {
+                            _navigateToIntroduction.value = Event(true)
                         }
                     }
                 }

@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.sokamn.trovami.R
 import com.sokamn.trovami.core.dialog.DialogFragmentLauncher
 import com.sokamn.trovami.core.ex.spanSecondBold
@@ -36,6 +38,7 @@ class VerificationActivity : AppCompatActivity() {
     lateinit var dialogLauncher: DialogFragmentLauncher
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        binding = ActivityVerificationBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verification)
         initUI()
@@ -85,9 +88,12 @@ class VerificationActivity : AppCompatActivity() {
             }
         }
 
-        verificationViewModel.emailVerified.observe(this) { email ->
-            updateDescription(email)
-        }
+        verificationViewModel.emailVerified.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { email ->
+                binding.txvInstructionsAV.spanSecondBold(this, "Hemos enviado un email a\n",email,"\nPor favor, verifica tu correo electrónico.")
+
+            }
+        })
 
     }
 
@@ -97,9 +103,7 @@ class VerificationActivity : AppCompatActivity() {
         binding.imvBackAV.setOnClickListener { verificationViewModel.onGoToBackSelected() }
     }
 
-    private fun updateDescription(email: String) {
-        binding.txvInstructionsAV.text = spanSecondBold( this, "Hemos enviado un email a\n",email,"\nPor favor, verifica tu correo electrónico.")
-    }
+
 
     private fun goBack() {
         onBackPressedDispatcher.onBackPressed()

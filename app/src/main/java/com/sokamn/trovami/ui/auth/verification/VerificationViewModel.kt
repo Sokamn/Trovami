@@ -6,18 +6,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sokamn.trovami.core.Event
-import com.sokamn.trovami.domain.usecase.auth.IsEmailVerifiedUseCase
+import com.sokamn.trovami.domain.usecase.auth.IsUserVerifiedUseCase
 import com.sokamn.trovami.domain.usecase.auth.SendEmailVerificationUseCase
 import com.sokamn.trovami.domain.usecase.user.GetCurrentUserEmail
 import com.sokamn.trovami.domain.usecase.user.GetCurrentUserUidUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class VerificationViewModel @Inject constructor(
     private val sendEmailVerificationUseCase: SendEmailVerificationUseCase,
-    private val isEmailVerifiedUseCase: IsEmailVerifiedUseCase,
+    private val isUserVerifiedUseCase: IsUserVerifiedUseCase,
     private val getCurrentUserEmailUseCase: GetCurrentUserEmail,
     private val getCurrentUserUidUseCase: GetCurrentUserUidUseCase
 ) : ViewModel() {
@@ -34,8 +36,8 @@ class VerificationViewModel @Inject constructor(
     val sendEmail: LiveData<Event<Boolean>>
         get() = _sendEmail
 
-    private val _emailVerified = MutableLiveData<String>()
-    val emailVerified: LiveData<String>
+    private val _emailVerified = MutableLiveData<Event<String>>()
+    val emailVerified: LiveData<Event<String>>
         get() = _emailVerified
 
     private val _navigateToBack = MutableLiveData<Event<Boolean>>()
@@ -43,9 +45,9 @@ class VerificationViewModel @Inject constructor(
         get() = _navigateToBack
 
     init {
-        sendEmailVerification()
+        //sendEmailVerification()
         getCurrentEmail()
-        verifyIfMailVerified()
+        //verifyIfMailVerified()
     }
 
     fun onGoToMainSelected() {
@@ -71,14 +73,14 @@ class VerificationViewModel @Inject constructor(
             getCurrentUserEmailUseCase().catch {
 
             }.collect{ emailVerified ->
-                _emailVerified.value = emailVerified
+                _emailVerified.value = Event(emailVerified)
             }
         }
     }
 
     private fun verifyIfMailVerified(){
         viewModelScope.launch {
-            isEmailVerifiedUseCase()
+            isUserVerifiedUseCase()
                 .catch {
                     Log.e("SOKI", "Verification error: ${it.message}")
                 }
