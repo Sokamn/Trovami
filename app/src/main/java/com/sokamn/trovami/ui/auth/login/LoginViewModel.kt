@@ -117,15 +117,18 @@ class LoginViewModel @Inject constructor(
 
     private fun loginUser(email: String, password: String) {
         viewModelScope.launch {
-            Log.e("soki","hola prro")
             _viewState.value = LoginViewState(isLoading = true)
             when (val result = emailLoginUseCase(email, password)) {
                 is Resource.Error -> _showErrorDialog.value = UserLogin(email = email, password = password, showErrorDialog = true)
                 is Resource.Success ->{
-                    if (result.data.isVerified) {
-                        _navigateToMain.value = Event(result.data.userUID)
-                    } else {
-                        _navigateToVerifyAccount.value = Event(result.data.userUID)
+                    if(result.data.userUID == "AUTH ERROR"){
+                        _showNetworkErrorDialog.value = Event(true)
+                    }else{
+                        if (result.data.isVerified) {
+                            _navigateToMain.value = Event(result.data.userUID)
+                        } else {
+                            _navigateToVerifyAccount.value = Event(result.data.userUID)
+                        }
                     }
                 }
             }
