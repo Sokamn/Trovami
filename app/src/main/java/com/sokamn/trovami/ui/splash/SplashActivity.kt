@@ -8,13 +8,13 @@ import com.sokamn.trovami.R
 import com.sokamn.trovami.databinding.ActivitySplashBinding
 import com.sokamn.trovami.ui.MainActivity
 import com.sokamn.trovami.ui.auth.introduction.IntroductionActivity
+import com.sokamn.trovami.ui.auth.verification.VerificationActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
-    private var currentUser = ""
     private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,14 +57,14 @@ class SplashActivity : AppCompatActivity() {
 
     private fun initObservers() {
         splashViewModel.navigateToMain.observe(this, Observer {
-            it.getContentIfNotHandled()?.let {
-                goToMain()
+            it.getContentIfNotHandled()?.let { currentUserUid ->
+                goToMain(currentUserUid)
             }
         })
 
         splashViewModel.navigateToVerification.observe(this, Observer {
-            it.getContentIfNotHandled()?.let {
-                goToVerification()
+            it.getContentIfNotHandled()?.let { currentUserUid ->
+                goToVerification(currentUserUid)
             }
         })
 
@@ -73,15 +73,11 @@ class SplashActivity : AppCompatActivity() {
                 goToIntroduction()
             }
         })
-
-        splashViewModel.currentUser.observe(this){ userUID ->
-            this.currentUser = userUID
-        }
     }
 
-    private fun goToMain() {
+    private fun goToMain(currentUserUid: String) {
         finish()
-        startActivity(MainActivity.create(this, currentUser))
+        startActivity(MainActivity.create(this, currentUserUid))
     }
 
     private fun goToIntroduction(){
@@ -89,8 +85,8 @@ class SplashActivity : AppCompatActivity() {
         startActivity(IntroductionActivity.create(this))
     }
 
-    private fun goToVerification() {
-        //finish()
-        //startActivity(VerificationActivity.create(this,currentUser))
+    private fun goToVerification(currentUserUid: String) {
+        finish()
+        startActivity(VerificationActivity.create(this,currentUserUid))
     }
 }

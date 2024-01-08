@@ -30,17 +30,6 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
             Resource.Error(e.toString())
         }
 
-
-    val emailVerified: Flow<String> = flow {
-        do {
-            val email = firebase.currentUser?.email
-            if (email != null) {
-                emit(email)
-            }
-            delay(1000)
-        } while (firebase.currentUser?.email == null)
-    }
-
     suspend fun emailExist(email: String): Resource<Boolean> {
         return try {
             var exists = false

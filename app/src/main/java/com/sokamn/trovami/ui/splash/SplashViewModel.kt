@@ -9,7 +9,7 @@ import com.google.gson.Gson
 import com.sokamn.trovami.core.Event
 import com.sokamn.trovami.data.source.datastore.DataStore
 import com.sokamn.trovami.domain.model.UserModel
-import com.sokamn.trovami.domain.usecase.auth.VerifyEmailUseCase
+import com.sokamn.trovami.domain.usecase.auth.IsEmailVerifiedUseCase
 import com.sokamn.trovami.domain.usecase.network.CheckInternetConnectionUseCase
 import com.sokamn.trovami.domain.usecase.user.GetCurrentUserUidUseCase
 import com.sokamn.trovami.domain.usecase.user.ExistsUserConnectedUseCase
@@ -21,74 +21,58 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val verifyEmailUseCase: VerifyEmailUseCase,
+    private val isEmailVerifiedUseCase: IsEmailVerifiedUseCase,
     private val checkNetworkConnectionUseCase: CheckInternetConnectionUseCase,
     private val getCurrentUserUidUseCase: GetCurrentUserUidUseCase,
     private val existsUserConnectedUseCase: ExistsUserConnectedUseCase,
     private val dataStore: DataStore
-    ) : ViewModel() {
+) : ViewModel() {
 
-    private val _navigateToVerification = MutableLiveData<Event<Boolean>>()
-    val navigateToVerification: LiveData<Event<Boolean>>
+    private val _navigateToVerification = MutableLiveData<Event<String>>()
+    val navigateToVerification: LiveData<Event<String>>
         get() = _navigateToVerification
 
-    private val _navigateToMain = MutableLiveData<Event<Boolean>>()
-    val navigateToMain: LiveData<Event<Boolean>>
+    private val _navigateToMain = MutableLiveData<Event<String>>()
+    val navigateToMain: LiveData<Event<String>>
         get() = _navigateToMain
 
     private val _navigateToIntroduction = MutableLiveData<Event<Boolean>>()
     val navigateToIntroduction: LiveData<Event<Boolean>>
         get() = _navigateToIntroduction
 
-    private val _currentUser = MutableLiveData<String>()
-    val currentUser: LiveData<String>
-        get() = _currentUser
-
     init {
         if (checkNetworkConnectionUseCase()) { // There is Connection
-            getCurrentUserUID()
             verifyEmail()
-        } else {// There is not Connection
+        } else { // There is not Connection
             getCurrentUserWithoutConnection()
         }
     }
 
-    private fun getCurrentUserUID() {
-        viewModelScope.launch {
-            getCurrentUserUidUseCase().catch {
-                Log.e("SOKAMN", "Verification error: ${it.message}")
-            }.collect { userUID ->
-                _currentUser.value = userUID
-            }
-        }
-    }
 
     private fun verifyEmail() {
         viewModelScope.launch {
-            verifyEmailUseCase()
+            isEmailVerifiedUseCase()
                 .catch {
-                    Log.e("SOKI","Verification error: ${it.message}")
+                    Log.e("SOKI", "Verification error: ${it.message}")
                 }
-                .collect { verification ->
-                    delay(3000)
-                    if (verification) {
-                        _navigateToMain.value = Event(true)
-                    } else {
-                        existsUserConnectedUseCase().collect { existsUser ->
-                            navigateIfExistsUserUnverified(existsUser)
+                .collect { verificated ->
+                    getCurrentUserUidUseCase().catch {
+                        Log.e("SOKAMN", "Verification error: ${it.message}")
+                    }.collect { userUID ->
+                        if (verificated) {
+                            _navigateToMain.value = Event(userUID)
+                        } else {
+                            if (existsUserConnectedUseCase()) {
+                                _navigateToVerification.value = Event(userUID)
+                            } else {
+                                _navigateToIntroduction.value = Event(true)
+                            }
                         }
                     }
                 }
         }
     }
 
-    private fun navigateIfExistsUserUnverified(existsUser: Boolean) {
-        if (existsUser) {
-            _navigateToVerification.value = Event(true)
-        } else {
-            _navigateToIntroduction.value = Event(true)
-        }
-    }
 
     private fun getCurrentUserWithoutConnection() {
         viewModelScope.launch {
@@ -104,8 +88,7 @@ class SplashViewModel @Inject constructor(
     private fun navigateIfExistsStoredUser(currentUserDS: String) {
         if (currentUserDS != "{}") {
             val user: UserModel = Gson().fromJson(currentUserDS, UserModel::class.java)
-            _currentUser.value = user.uid
-            _navigateToMain.value = Event(true)
+            _navigateToMain.value = Event(user.uid)
         } else {
             _navigateToIntroduction.value = Event(true)
         }

@@ -27,11 +27,16 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
         } while (firebase.currentUser?.uid == null)
     }
 
-    val existsUserConnected: Flow<Boolean> = flow {
+    val existsUserConnected: Boolean = firebase.currentUser != null
+
+    val currentUserEmail: Flow<String> = flow {
         do {
-            emit(firebase.currentUser != null)
+            val email = firebase.currentUser?.email
+            if (email != null) {
+                emit(email)
+            }
             delay(1000)
-        } while (firebase.currentUser == null)
+        } while (firebase.currentUser?.email == null)
     }
 
     suspend fun getUserName(uid: String): Resource<String>{

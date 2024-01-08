@@ -25,6 +25,7 @@ import com.sokamn.trovami.domain.model.MasterModel
 import com.sokamn.trovami.domain.model.UserModel
 import com.sokamn.trovami.ui.MainActivity
 import com.sokamn.trovami.ui.auth.login.LoginActivity
+import com.sokamn.trovami.ui.auth.verification.VerificationActivity
 import com.sokamn.trovami.utils.AuthConstants.EMAIL
 import com.sokamn.trovami.utils.AuthConstants.GMAIL_KEY_EXTRA
 import com.sokamn.trovami.utils.AuthConstants.GOOGLE
@@ -628,7 +629,7 @@ class SignInActivity : AppCompatActivity() {
 
     private fun goToVerifyEmail(currentUserUid: String) {
         finish()
-        //startActivity(VerificationActivity.create(this, currentUserUid))
+        startActivity(VerificationActivity.create(this, currentUserUid))
     }
 
     private fun goToLogin(lastActivity: String) {

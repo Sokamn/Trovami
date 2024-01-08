@@ -49,7 +49,7 @@
 
             <Button
                 style="@style/PrimaryButton"
-                android:id="@+id/btnLoginAV"
+                android:id="@+id/btnConfirmVerification"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginStart="30dp"
@@ -57,13 +57,13 @@
                 android:layout_marginBottom="10dp"
                 android:text="@string/haveVerified"
                 android:enabled="false"
-                app:layout_constraintBottom_toTopOf="@+id/txvRegisterNowAV"
+                app:layout_constraintBottom_toTopOf="@+id/txvResendEmail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 style="@style/AuthDescriptionTextView"
-                android:id="@+id/txvRegisterNowAV"
+                android:id="@+id/txvResendEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"
@@ -113,7 +113,7 @@
                 android:id="@+id/imvEmailVerificationAV"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:layout_constraintBottom_toTopOf="@+id/btnLoginAV"
+                app:layout_constraintBottom_toTopOf="@+id/btnConfirmVerification"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txvInstructionsAV"
