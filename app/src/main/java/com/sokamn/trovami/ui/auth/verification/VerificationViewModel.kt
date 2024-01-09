@@ -21,11 +21,10 @@ class VerificationViewModel @Inject constructor(
     private val sendEmailVerificationUseCase: SendEmailVerificationUseCase,
     private val isUserVerifiedUseCase: IsUserVerifiedUseCase,
     private val getCurrentUserEmailUseCase: GetCurrentUserEmail,
-    private val getCurrentUserUidUseCase: GetCurrentUserUidUseCase
 ) : ViewModel() {
 
-    private val _navigateToMain = MutableLiveData<Event<String>>()
-    val navigateToMain: LiveData<Event<String>>
+    private val _navigateToMain = MutableLiveData<Event<Boolean>>()
+    val navigateToMain: LiveData<Event<Boolean>>
         get() = _navigateToMain
 
     private val _showContinueButton = MutableLiveData<Event<Boolean>>()
@@ -51,13 +50,7 @@ class VerificationViewModel @Inject constructor(
     }
 
     fun onGoToMainSelected() {
-        viewModelScope.launch {
-            getCurrentUserUidUseCase().catch{
-
-            }.collect{ currentUserUid ->
-                _navigateToMain.value = Event(currentUserUid)
-            }
-        }
+        _navigateToMain.value = Event(true)
     }
 
     fun onSendEmail(){

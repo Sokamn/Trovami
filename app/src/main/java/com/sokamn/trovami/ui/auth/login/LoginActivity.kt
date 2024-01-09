@@ -24,6 +24,7 @@ import com.sokamn.trovami.databinding.ActivityLoginBinding
 import com.sokamn.trovami.domain.model.UserLogin
 import com.sokamn.trovami.ui.MainActivity
 import com.sokamn.trovami.ui.auth.signin.SignInActivity
+import com.sokamn.trovami.ui.auth.verification.VerificationActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -93,11 +94,11 @@ class LoginActivity : AppCompatActivity() {
             if (userLogin.showErrorDialog) showCantFindErrorDialog(userLogin)
         }
 
-        loginViewModel.showNetworkErrorDialog.observe(this, Observer {
+        loginViewModel.showNetworkErrorDialog.observe(this) {
             it.getContentIfNotHandled()?.let{
                 showNetworkErrorDialog()
             }
-        })
+        }
 
         loginViewModel.googleClient.observe(this) { client ->
             launcher.launch(client.signInIntent)
@@ -215,7 +216,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToVerify(currentUser: String) {
-        //startActivity(VerificationActivity.create(this, currentUser))
+        startActivity(VerificationActivity.create(this, currentUser))
     }
 
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){

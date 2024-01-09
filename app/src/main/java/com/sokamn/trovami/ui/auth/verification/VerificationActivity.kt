@@ -4,21 +4,15 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import com.sokamn.trovami.R
-import com.sokamn.trovami.core.dialog.DialogFragmentLauncher
 import com.sokamn.trovami.core.ex.spanSecondBold
 import com.sokamn.trovami.core.ex.toast
 import com.sokamn.trovami.data.source.datastore.DataStoreConstants.USER_KEY_PREFS
 import com.sokamn.trovami.databinding.ActivityVerificationBinding
 import com.sokamn.trovami.ui.MainActivity
-import com.sokamn.trovami.ui.auth.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class VerificationActivity : AppCompatActivity() {
@@ -34,13 +28,10 @@ class VerificationActivity : AppCompatActivity() {
 
     private val verificationViewModel: VerificationViewModel by viewModels()
 
-    @Inject
-    lateinit var dialogLauncher: DialogFragmentLauncher
-
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityVerificationBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_verification)
+        setContentView(binding.root)
         initUI()
 
     }
@@ -59,8 +50,8 @@ class VerificationActivity : AppCompatActivity() {
         var tries = 4
 
         verificationViewModel.navigateToMain.observe(this) {
-            it.getContentIfNotHandled()?.let { currentUserUid ->
-                goToMain(currentUserUid)
+            it.getContentIfNotHandled()?.let {
+                goToMain(intent.getStringExtra(USER_KEY_PREFS).toString())
             }
         }
 
@@ -88,12 +79,12 @@ class VerificationActivity : AppCompatActivity() {
             }
         }
 
-        verificationViewModel.emailVerified.observe(this, Observer {
+        verificationViewModel.emailVerified.observe(this) {
             it.getContentIfNotHandled()?.let { email ->
-                binding.txvInstructionsAV.spanSecondBold(this, "Hemos enviado un email a\n",email,"\nPor favor, verifica tu correo electrónico.")
-
+                binding.txvInstructionsAV.spanSecondBold( this, "Hemos enviado un email a\n",
+                    email, "\nPor favor, verifica tu correo electrónico.")
             }
-        })
+        }
 
     }
 
