@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sokamn.trovami.core.Event
+import com.sokamn.trovami.data.source.datastore.DataStore
 import com.sokamn.trovami.domain.usecase.auth.IsUserVerifiedUseCase
+import com.sokamn.trovami.domain.usecase.auth.LogOutUseCase
 import com.sokamn.trovami.domain.usecase.auth.SendEmailVerificationUseCase
 import com.sokamn.trovami.domain.usecase.user.GetCurrentUserEmail
 import com.sokamn.trovami.domain.usecase.user.GetCurrentUserUidUseCase
@@ -21,6 +23,8 @@ class VerificationViewModel @Inject constructor(
     private val sendEmailVerificationUseCase: SendEmailVerificationUseCase,
     private val isUserVerifiedUseCase: IsUserVerifiedUseCase,
     private val getCurrentUserEmailUseCase: GetCurrentUserEmail,
+    private val logOutUseCase: LogOutUseCase,
+    private val dataStore: DataStore
 ) : ViewModel() {
 
     private val _navigateToMain = MutableLiveData<Event<Boolean>>()
@@ -44,9 +48,9 @@ class VerificationViewModel @Inject constructor(
         get() = _navigateToBack
 
     init {
-        //sendEmailVerification()
         getCurrentEmail()
-        //verifyIfMailVerified()
+        sendEmailVerification()
+        verifyIfMailVerified()
     }
 
     fun onGoToMainSelected() {
@@ -79,7 +83,9 @@ class VerificationViewModel @Inject constructor(
                 }
                 .collect { verification ->
                     if(verification){
-                        _showContinueButton.value = Event(verification)
+                        _showContinueButton.value = Event(true)
+                    }else{
+                        Log.e("SOKIEAAA", "No anda po wn")
                     }
                 }
         }
@@ -87,6 +93,10 @@ class VerificationViewModel @Inject constructor(
 
     fun onGoToBackSelected(){
         // BORRAR DATASTORE
-        _navigateToBack.value = Event(true)
+        viewModelScope.launch {
+            dataStore.clearAllPreferences()
+            logOutUseCase()
+            _navigateToBack.value = Event(true)
+        }
     }
 }

@@ -36,6 +36,9 @@
     <!--> VerificationView <-->
     <string name="resend_email">¿No te llegó el Email? Click para reeenviar</string>
     <string name="check_your_email">Hemos enviado un email a tu correo\nPor favor, verifica tu correo electrónico</string>
+    <string name="verification_precaution_title">Precaución</string>
+    <string name="verification_precaution_description">Al volver atrás, cerrará su sesión y su cuenta no será verificada</string>
+
 
     <!--> HomeView <-->
     <string name="welcome">Bienvenido</string>
@@ -144,5 +147,7 @@
     <string name="checkPhoneCall">Permites llamadas télefonicas de postulantes?</string>
     <string name="postJob">Publicar Trabajo</string>
     <string name="accept">Aceptar</string>
+
+
 
 </resources>

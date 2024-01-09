@@ -92,7 +92,8 @@ class IntroductionActivity : AppCompatActivity() {
                     loginMethod = params[0].toInt(),
                     lastActivity = params[1],
                     nName = params[2],
-                    gMail = params[3]
+                    gMail = params[3],
+                    userUid = params[4]
                 )
             }
         }
@@ -140,9 +141,10 @@ class IntroductionActivity : AppCompatActivity() {
         loginMethod: Int,
         lastActivity: String,
         nName: String,
-        gMail: String
+        gMail: String,
+        userUid: String
     ) {
-        startActivity(SignInActivity.create(this,loginMethod,lastActivity,nName,gMail))
+        startActivity(SignInActivity.create(this,loginMethod,lastActivity,nName,gMail,userUid))
     }
 
     private fun goToLogin() {

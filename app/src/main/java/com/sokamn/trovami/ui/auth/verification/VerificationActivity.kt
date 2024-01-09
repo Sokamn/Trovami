@@ -7,12 +7,18 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.sokamn.trovami.R
+import com.sokamn.trovami.core.dialog.DialogFragmentLauncher
+import com.sokamn.trovami.core.dialog.ErrorDialog
+import com.sokamn.trovami.core.ex.show
 import com.sokamn.trovami.core.ex.spanSecondBold
 import com.sokamn.trovami.core.ex.toast
 import com.sokamn.trovami.data.source.datastore.DataStoreConstants.USER_KEY_PREFS
 import com.sokamn.trovami.databinding.ActivityVerificationBinding
 import com.sokamn.trovami.ui.MainActivity
+import com.sokamn.trovami.ui.auth.introduction.IntroductionActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class VerificationActivity : AppCompatActivity() {
@@ -27,6 +33,9 @@ class VerificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVerificationBinding
 
     private val verificationViewModel: VerificationViewModel by viewModels()
+
+    @Inject
+    lateinit var dialogLauncher: DialogFragmentLauncher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityVerificationBinding.inflate(layoutInflater)
@@ -57,7 +66,7 @@ class VerificationActivity : AppCompatActivity() {
 
         verificationViewModel.showContinueButton.observe(this) {
             it.getContentIfNotHandled()?.let { isEnabled ->
-                binding.btnConfirmVerification.isEnabled = isEnabled
+                binding.btnConfirmVerification.show()
             }
         }
 
@@ -91,18 +100,30 @@ class VerificationActivity : AppCompatActivity() {
     private fun initListeners() {
         binding.btnConfirmVerification.setOnClickListener { verificationViewModel.onGoToMainSelected() }
         binding.txvResendEmail.setOnClickListener { verificationViewModel.onSendEmail() }
-        binding.imvBackAV.setOnClickListener { verificationViewModel.onGoToBackSelected() }
+        binding.imvBackAV.setOnClickListener { showGoToBackDialog() }
     }
 
 
 
     private fun goBack() {
-        onBackPressedDispatcher.onBackPressed()
+        startActivity(IntroductionActivity.create(this))
     }
 
     private fun goToMain(currentUserUid: String) {
         startActivity(MainActivity.create(this, currentUserUid))
     }
 
-
+    private fun showGoToBackDialog() {
+        ErrorDialog.create(
+            title = getString(R.string.verification_precaution_title),
+            description = getString(R.string.verification_precaution_description),
+            negativeAction = ErrorDialog.Action(getString(R.string.login_error_dialog_negative_action)) {
+                it.dismiss()
+            },
+            positiveAction = ErrorDialog.Action(getString(R.string.accept)) {
+                verificationViewModel.onGoToBackSelected()
+                it.dismiss()
+            }
+        ).show(dialogLauncher, this)
+    }
 }

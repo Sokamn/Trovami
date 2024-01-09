@@ -9,7 +9,7 @@ import com.sokamn.trovami.R
 import com.sokamn.trovami.core.Event
 import com.sokamn.trovami.domain.model.UserModel
 import com.sokamn.trovami.domain.usecase.auth.CreateAccountUseCase
-import com.sokamn.trovami.domain.usecase.auth.CreateUserTableUseCase
+import com.sokamn.trovami.domain.usecase.user.CreateUserTableUseCase
 import com.sokamn.trovami.domain.usecase.auth.HasBeenEmailUsedUseCase
 import com.sokamn.trovami.utils.AuthConstants.EMAIL
 import com.sokamn.trovami.utils.AuthConstants.GOOGLE
@@ -26,7 +26,7 @@ import javax.inject.Inject
 class SignInViewModel @Inject constructor(
     private val createAccountUseCase: CreateAccountUseCase,
     private val createUserTableUseCase: CreateUserTableUseCase,
-    private val hasBeenEmailUsedUseCase: HasBeenEmailUsedUseCase,
+    private val hasBeenEmailUsedUseCase: HasBeenEmailUsedUseCase
 ) :
     ViewModel() {
 
@@ -55,15 +55,16 @@ class SignInViewModel @Inject constructor(
         get() = _showErrorInputs
 
     fun onGoogleSignInSelected(userSignIn: UserModel){
+        val viewState = userSignIn.toSignInViewState("", GOOGLE)
         signUpUser(userSignIn, GOOGLE)
     }
 
     fun onEmailSignInSelected(userSignIn: UserModel, passwordConfirmation: String) {
-        val viewState = userSignIn.toSignInViewState(passwordConfirmation)
+        val viewState = userSignIn.toSignInViewState(passwordConfirmation, EMAIL)
         if (viewState.userValidated() && userSignIn.isNotEmpty()) {
             signUpUser(userSignIn, EMAIL)
         } else {
-            onFieldsChanged(userSignIn, passwordConfirmation)
+            onFieldsChanged(userSignIn, passwordConfirmation, EMAIL)
             _showErrorInputs.value = true
         }
     }
@@ -117,22 +118,35 @@ class SignInViewModel @Inject constructor(
         _navigateToLogin.value = Event(true)
     }
 
-    fun onFieldsChanged(userSignIn: UserModel, passwordConfirmation: String) {
-        _viewState.value = userSignIn.toSignInViewState(passwordConfirmation)
+    fun onFieldsChanged(userSignIn: UserModel, passwordConfirmation: String, loginMethod: Int) {
+        _viewState.value = userSignIn.toSignInViewState(passwordConfirmation, loginMethod)
     }
 
-    private fun UserModel.toSignInViewState(passwordConfirmation: String): SignInViewState {
-        return SignInViewState(
-            isValidEmail = isValidOrEmptyEmail(email),
-            isValidFullName = isValidName(fullName),
-            isValidDocument = isValidOrEmptyDocument(document),
-            isValidProvince = isValidOrEmptyProvince(province),
-            isValidMunicipality = isValidOrEmptyMunicipality(municipality),
-            isValidAddress = isValidOrEmptyAddress(defaultAdress),
-            isValidPhone = isValidOrEmptyPhone(phoneNumber),
-            isValidPassword = isValidOrEmptyPassword(password),
-            isValidPasswordConfirmation = isValidOrEmptyPasswordConfirmation(password, passwordConfirmation)
-        )
+    private fun UserModel.toSignInViewState(passwordConfirmation: String, loginMethod: Int): SignInViewState {
+        return if (loginMethod == GOOGLE){
+            SignInViewState(
+                isValidEmail = isValidOrEmptyEmail(email),
+                isValidFullName = isValidName(fullName),
+                isValidDocument = isValidOrEmptyDocument(document),
+                isValidProvince = isValidOrEmptyProvince(province),
+                isValidMunicipality = isValidOrEmptyMunicipality(municipality),
+                isValidAddress = isValidOrEmptyAddress(defaultAdress),
+                isValidPhone = isValidOrEmptyPhone(phoneNumber),
+                isValidPassword = true,
+                isValidPasswordConfirmation = true)
+        }else{
+            SignInViewState(
+                isValidEmail = isValidOrEmptyEmail(email),
+                isValidFullName = isValidName(fullName),
+                isValidDocument = isValidOrEmptyDocument(document),
+                isValidProvince = isValidOrEmptyProvince(province),
+                isValidMunicipality = isValidOrEmptyMunicipality(municipality),
+                isValidAddress = isValidOrEmptyAddress(defaultAdress),
+                isValidPhone = isValidOrEmptyPhone(phoneNumber),
+                isValidPassword = isValidOrEmptyPassword(password),
+                isValidPasswordConfirmation = isValidOrEmptyPasswordConfirmation(password, passwordConfirmation)
+            )
+        }
     }
 
     private fun isValidOrEmptyEmail(email: String) =

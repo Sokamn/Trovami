@@ -79,7 +79,9 @@ class IntroductionViewModel @Inject constructor(
                                         GOOGLE.toString(),
                                         LOGIN_ACTIVITY,
                                         account.displayName.toString(),
-                                        account.email.toString()))
+                                        account.email.toString(),
+                                        googleLoginResult.data.userUID)
+                                    )
                                 }else{
                                     _showNetworkErrorDialog.value = Event(true)
                                 }
@@ -106,7 +108,7 @@ class IntroductionViewModel @Inject constructor(
     }
 
     fun onEmailSignInSelected() {
-        _navigateToSignIn.value = Event(arrayOf(EMAIL.toString(), INTRODUCTION_ACTIVITY, "", ""))
+        _navigateToSignIn.value = Event(arrayOf(EMAIL.toString(), INTRODUCTION_ACTIVITY, "", "", ""))
     }
 
 }

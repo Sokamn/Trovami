@@ -1,4 +1,4 @@
-package com.sokamn.trovami.domain.usecase.auth
+package com.sokamn.trovami.domain.usecase.user
 
 import com.sokamn.trovami.data.network.UserService
 import com.sokamn.trovami.domain.model.UserModel

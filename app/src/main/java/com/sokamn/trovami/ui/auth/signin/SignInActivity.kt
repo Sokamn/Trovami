@@ -26,6 +26,7 @@ import com.sokamn.trovami.domain.model.UserModel
 import com.sokamn.trovami.ui.MainActivity
 import com.sokamn.trovami.ui.auth.login.LoginActivity
 import com.sokamn.trovami.ui.auth.verification.VerificationActivity
+import com.sokamn.trovami.utils.AuthConstants.CURRENT_USER_UID_KEY_EXTRA
 import com.sokamn.trovami.utils.AuthConstants.EMAIL
 import com.sokamn.trovami.utils.AuthConstants.GMAIL_KEY_EXTRA
 import com.sokamn.trovami.utils.AuthConstants.GOOGLE
@@ -58,7 +59,7 @@ import javax.inject.Inject
 class SignInActivity : AppCompatActivity() {
 
     companion object {
-        fun create(context: Context, loginMethod: Int, lastActivity: String, nName: String, gMail: String): Intent {
+        fun create(context: Context, loginMethod: Int, lastActivity: String, nName: String, gMail: String, userUid: String): Intent {
             return Intent(context, SignInActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
@@ -66,6 +67,7 @@ class SignInActivity : AppCompatActivity() {
                 putExtra(LOGIN_METHOD_KEY_EXTRA, loginMethod)
                 putExtra(NAME_KEY_EXTRA,nName)
                 putExtra(GMAIL_KEY_EXTRA,gMail)
+                putExtra(CURRENT_USER_UID_KEY_EXTRA, userUid)
             }
         }
     }
@@ -101,6 +103,7 @@ class SignInActivity : AppCompatActivity() {
             GOOGLE ->{
                 val nName = intent.getStringExtra(NAME_KEY_EXTRA)
                 val gMail = intent.getStringExtra(GMAIL_KEY_EXTRA)
+
                 if(!nName.isNullOrEmpty()){
                     binding.txpFullNameASU.setText(nName)
                 }
@@ -418,7 +421,7 @@ class SignInActivity : AppCompatActivity() {
                 it.dismiss()
             },
             positiveAction = ErrorDialog.Action(getString(R.string.login_error_dialog_positive_action)) {
-                val finalUserModel = UserModel("",
+                val finalUserModel = UserModel(intent.getStringExtra(CURRENT_USER_UID_KEY_EXTRA).toString(),
                     fullName = binding.txpFullNameASU.text.toString(),
                     "",
                     document = binding.txpDocumentASU.text.toString(),
@@ -447,7 +450,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun finishButton() {
-        val finalUserModel = UserModel("",
+        val finalUserModel = UserModel(intent.getStringExtra(CURRENT_USER_UID_KEY_EXTRA).toString(),
             fullName = binding.txpFullNameASU.text.toString(),
             "",
             document = binding.txpDocumentASU.text.toString(),
@@ -612,7 +615,7 @@ class SignInActivity : AppCompatActivity() {
     internal fun onFieldChanged(hasFocus: Boolean = false) {
         if (!hasFocus) {
             signInViewModel.onFieldsChanged(userSignIn = UserModel(
-                "",
+                intent.getStringExtra(CURRENT_USER_UID_KEY_EXTRA).toString(),
                 fullName = binding.txpFullNameASU.text.toString(),
                 "",
                 document = binding.txpDocumentASU.text.toString(),
@@ -623,7 +626,8 @@ class SignInActivity : AppCompatActivity() {
                 province = binding.txpProvinceASU.text.toString(),
                 municipality = binding.txpMunicipalityASU.text.toString(),
                 masterList = masterList),
-                passwordConfirmation = binding.txpRepeatPasswordASU.text.toString())
+                passwordConfirmation = binding.txpRepeatPasswordASU.text.toString(),
+                loginMethod = intent.getIntExtra(LOGIN_METHOD_KEY_EXTRA, EMAIL))
         }
     }
 
