@@ -1,8 +1,8 @@
 package com.sokamn.trovami.ui.splash
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.sokamn.trovami.R
 import com.sokamn.trovami.databinding.ActivitySplashBinding
@@ -36,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun setUpVideoView() {
         val videoPath = "android.resource://$packageName/raw/splash_screen"
-        with(binding){
+        with(binding) {
             vvwSplash.setOnPreparedListener { mediaPlayer ->
                 val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()
                 val screenRatio = vvwSplash.width / vvwSplash.height.toFloat()
@@ -80,13 +80,13 @@ class SplashActivity : AppCompatActivity() {
         startActivity(MainActivity.create(this, currentUserUid))
     }
 
-    private fun goToIntroduction(){
+    private fun goToIntroduction() {
         finish()
         startActivity(IntroductionActivity.create(this))
     }
 
     private fun goToVerification(currentUserUid: String) {
         finish()
-        startActivity(VerificationActivity.create(this,currentUserUid))
+        startActivity(VerificationActivity.create(this, currentUserUid))
     }
 }

@@ -2,11 +2,11 @@ package com.sokamn.trovami.ui.auth.verification
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.sokamn.trovami.R
 import com.sokamn.trovami.core.dialog.DialogFragmentLauncher
 import com.sokamn.trovami.core.dialog.ErrorDialog
@@ -52,7 +52,10 @@ class VerificationActivity : AppCompatActivity() {
     }
 
     private fun setUIComponents() {
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
     private fun initObservers() {
@@ -66,7 +69,7 @@ class VerificationActivity : AppCompatActivity() {
 
         verificationViewModel.showContinueButton.observe(this) {
             it.getContentIfNotHandled()?.let { isEnabled ->
-                if(isEnabled){
+                if (isEnabled) {
                     binding.btnConfirmVerification.show()
                 }
             }
@@ -74,12 +77,18 @@ class VerificationActivity : AppCompatActivity() {
 
         verificationViewModel.sendEmail.observe(this) {
             it.getContentIfNotHandled()?.let {
-                if (tries in 1..4){
+                if (tries in 1..4) {
                     verificationViewModel.sendEmailVerification()
                     tries--
-                    toast("Hemos enviado un correo de verificación, le quedan $tries intentos", Toast.LENGTH_LONG)
-                }else{
-                    toast("No te quedan más intentos para enviar un correo de verificación, intentalo más tarde", Toast.LENGTH_LONG)
+                    toast(
+                        "Hemos enviado un correo de verificación, le quedan $tries intentos",
+                        Toast.LENGTH_LONG
+                    )
+                } else {
+                    toast(
+                        "No te quedan más intentos para enviar un correo de verificación, intentalo más tarde",
+                        Toast.LENGTH_LONG
+                    )
                 }
             }
         }
@@ -92,8 +101,10 @@ class VerificationActivity : AppCompatActivity() {
 
         verificationViewModel.emailVerified.observe(this) {
             it.getContentIfNotHandled()?.let { email ->
-                binding.txvInstructionsAV.spanSecondBold( this, "Hemos enviado un email a\n",
-                    email, "\nPor favor, verifica tu correo electrónico.")
+                binding.txvInstructionsAV.spanSecondBold(
+                    this, "Hemos enviado un email a\n",
+                    email, "\nPor favor, verifica tu correo electrónico."
+                )
             }
         }
 
@@ -104,7 +115,6 @@ class VerificationActivity : AppCompatActivity() {
         binding.txvResendEmail.setOnClickListener { verificationViewModel.onSendEmail() }
         binding.imvBackAV.setOnClickListener { showGoToBackDialog() }
     }
-
 
 
     private fun goBack() {

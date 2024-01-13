@@ -9,8 +9,8 @@ import com.sokamn.trovami.R
 import com.sokamn.trovami.core.Event
 import com.sokamn.trovami.domain.model.UserModel
 import com.sokamn.trovami.domain.usecase.auth.CreateAccountUseCase
-import com.sokamn.trovami.domain.usecase.user.CreateUserTableUseCase
 import com.sokamn.trovami.domain.usecase.auth.HasBeenEmailUsedUseCase
+import com.sokamn.trovami.domain.usecase.user.CreateUserTableUseCase
 import com.sokamn.trovami.utils.AuthConstants.EMAIL
 import com.sokamn.trovami.utils.AuthConstants.GOOGLE
 import com.sokamn.trovami.utils.AuthConstants.MIN_TEXT_CONTENT
@@ -54,7 +54,7 @@ class SignInViewModel @Inject constructor(
     val showErrorInputs: LiveData<Boolean>
         get() = _showErrorInputs
 
-    fun onGoogleSignInSelected(userSignIn: UserModel){
+    fun onGoogleSignInSelected(userSignIn: UserModel) {
         val viewState = userSignIn.toSignInViewState("", GOOGLE)
         signUpUser(userSignIn, GOOGLE)
     }
@@ -69,44 +69,56 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    private fun signUpUser(userSignIn: UserModel,loginMethod: Int) { // REFACTORIZAR POR SEPARADO
+    private fun signUpUser(userSignIn: UserModel, loginMethod: Int) { // REFACTORIZAR POR SEPARADO
         viewModelScope.launch {
             _viewState.value = SignInViewState(isLoading = true)
-            when(val emailUsedResult = hasBeenEmailUsedUseCase(userSignIn.email)){
-                is Resource.Error -> _showErrorDialog.value = Event(R.string.signin_network_error_description)
-                is Resource.Success ->{
+            when (val emailUsedResult = hasBeenEmailUsedUseCase(userSignIn.email)) {
+                is Resource.Error -> _showErrorDialog.value =
+                    Event(R.string.signin_network_error_description)
+
+                is Resource.Success -> {
                     var emailExist = emailUsedResult.data
                     if (loginMethod == GOOGLE) emailExist = false
-                    if (!emailExist){
-                        when(loginMethod){
-                            EMAIL ->{
-                                when(val createAccountResult = createAccountUseCase(userSignIn)){
-                                    is Resource.Error -> _showErrorDialog.value = Event(R.string.signin_network_error_description)
+                    if (!emailExist) {
+                        when (loginMethod) {
+                            EMAIL -> {
+                                when (val createAccountResult = createAccountUseCase(userSignIn)) {
+                                    is Resource.Error -> _showErrorDialog.value =
+                                        Event(R.string.signin_network_error_description)
+
                                     is Resource.Success -> {
                                         if (createAccountResult.data.isVerified) {
-                                            _navigateToMain.value = Event(createAccountResult.data.userUID)
-                                        }else{
-                                            if(createAccountResult.data.userUID == "AUTH ERROR"){
-                                                _showErrorDialog.value = Event(R.string.signin_network_error_description)
-                                            }else{
-                                                _navigateToVerifyEmail.value = Event(createAccountResult.data.userUID)
+                                            _navigateToMain.value =
+                                                Event(createAccountResult.data.userUID)
+                                        } else {
+                                            if (createAccountResult.data.userUID == "AUTH ERROR") {
+                                                _showErrorDialog.value =
+                                                    Event(R.string.signin_network_error_description)
+                                            } else {
+                                                _navigateToVerifyEmail.value =
+                                                    Event(createAccountResult.data.userUID)
                                             }
                                         }
                                     }
                                 }
                             }
-                            GOOGLE ->{
-                                when(val createUserTableResult = createUserTableUseCase(userSignIn)){
-                                    is Resource.Error -> _showErrorDialog.value = Event(R.string.signin_network_error_description)
+
+                            GOOGLE -> {
+                                when (val createUserTableResult =
+                                    createUserTableUseCase(userSignIn)) {
+                                    is Resource.Error -> _showErrorDialog.value =
+                                        Event(R.string.signin_network_error_description)
+
                                     is Resource.Success -> {
                                         _navigateToMain.value = Event(createUserTableResult.data)
                                     }
                                 }
                             }
                         }
-                    }else{
-                        _showErrorDialog.value = Event(R.string.signin_email_has_been_used_error_description)
-                        _viewState.value  = SignInViewState(isValidEmail = false)
+                    } else {
+                        _showErrorDialog.value =
+                            Event(R.string.signin_email_has_been_used_error_description)
+                        _viewState.value = SignInViewState(isValidEmail = false)
                     }
                 }
             }
@@ -122,8 +134,11 @@ class SignInViewModel @Inject constructor(
         _viewState.value = userSignIn.toSignInViewState(passwordConfirmation, loginMethod)
     }
 
-    private fun UserModel.toSignInViewState(passwordConfirmation: String, loginMethod: Int): SignInViewState {
-        return if (loginMethod == GOOGLE){
+    private fun UserModel.toSignInViewState(
+        passwordConfirmation: String,
+        loginMethod: Int
+    ): SignInViewState {
+        return if (loginMethod == GOOGLE) {
             SignInViewState(
                 isValidEmail = isValidOrEmptyEmail(email),
                 isValidFullName = isValidName(fullName),
@@ -133,8 +148,9 @@ class SignInViewModel @Inject constructor(
                 isValidAddress = isValidOrEmptyAddress(defaultAdress),
                 isValidPhone = isValidOrEmptyPhone(phoneNumber),
                 isValidPassword = true,
-                isValidPasswordConfirmation = true)
-        }else{
+                isValidPasswordConfirmation = true
+            )
+        } else {
             SignInViewState(
                 isValidEmail = isValidOrEmptyEmail(email),
                 isValidFullName = isValidName(fullName),
@@ -144,7 +160,10 @@ class SignInViewModel @Inject constructor(
                 isValidAddress = isValidOrEmptyAddress(defaultAdress),
                 isValidPhone = isValidOrEmptyPhone(phoneNumber),
                 isValidPassword = isValidOrEmptyPassword(password),
-                isValidPasswordConfirmation = isValidOrEmptyPasswordConfirmation(password, passwordConfirmation)
+                isValidPasswordConfirmation = isValidOrEmptyPasswordConfirmation(
+                    password,
+                    passwordConfirmation
+                )
             )
         }
     }
@@ -158,7 +177,10 @@ class SignInViewModel @Inject constructor(
     private fun isValidName(name: String): Boolean =
         name.length >= MIN_TEXT_CONTENT || name.isEmpty()
 
-    private fun isValidOrEmptyPasswordConfirmation(password: String,passwordConfirmation: String): Boolean =
+    private fun isValidOrEmptyPasswordConfirmation(
+        password: String,
+        passwordConfirmation: String
+    ): Boolean =
         password == passwordConfirmation || passwordConfirmation.isEmpty()
 
     private fun isValidOrEmptyDocument(document: String) =

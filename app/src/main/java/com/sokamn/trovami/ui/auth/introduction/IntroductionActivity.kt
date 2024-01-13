@@ -3,14 +3,11 @@ package com.sokamn.trovami.ui.auth.introduction
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -32,7 +29,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class IntroductionActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         fun create(context: Context): Intent =
             Intent(context, IntroductionActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -60,14 +57,17 @@ class IntroductionActivity : AppCompatActivity() {
     }
 
     private fun initDesign() {
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
     private fun initListeners() {
         with(binding) {
             btnLogInAI.setOnClickListener { introductionViewModel.onLoginSelected() }
             btnRegisterNowAI.setOnClickListener { introductionViewModel.onEmailSignInSelected() }
-            imvGoogleAI.setOnClickListener { introductionViewModel.onGoogleSignInSelected(this@IntroductionActivity)  }
+            imvGoogleAI.setOnClickListener { introductionViewModel.onGoogleSignInSelected(this@IntroductionActivity) }
             imvFacebookAI.setOnClickListener { toast("Facebook será implementado en próximas versiones") }
         }
     }
@@ -80,14 +80,14 @@ class IntroductionActivity : AppCompatActivity() {
             }
         })
 
-        introductionViewModel.navigateToMain.observe(this, Observer{
-            it.getContentIfNotHandled()?.let{ currentUserUid ->
+        introductionViewModel.navigateToMain.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { currentUserUid ->
                 goToMain(currentUserUid)
             }
         })
 
         introductionViewModel.navigateToSignIn.observe(this) {
-            it.getContentIfNotHandled()?.let { params->
+            it.getContentIfNotHandled()?.let { params ->
                 goToSignIn( // ULTRA NEGRADA MÁXIMA CORREGIR CON OBJETO EN ALGUN MOMENTO
                     loginMethod = params[0].toInt(),
                     lastActivity = params[1],
@@ -144,27 +144,27 @@ class IntroductionActivity : AppCompatActivity() {
         gMail: String,
         userUid: String
     ) {
-        startActivity(SignInActivity.create(this,loginMethod,lastActivity,nName,gMail,userUid))
+        startActivity(SignInActivity.create(this, loginMethod, lastActivity, nName, gMail, userUid))
     }
 
     private fun goToLogin() {
         startActivity(LoginActivity.create(this))
     }
 
-    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            result ->
-        if(result.resultCode == Activity.RESULT_OK){
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            if (task.isSuccessful) {
-                val account = task.result
-                if (account != null) {
-                    introductionViewModel.googleSignIn(task.result)
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                if (task.isSuccessful) {
+                    val account = task.result
+                    if (account != null) {
+                        introductionViewModel.googleSignIn(task.result)
+                    } else {
+                        toast("Ocurrió un error inesperado. Por favor, intentelo más tarde...")
+                    }
                 } else {
                     toast("Ocurrió un error inesperado. Por favor, intentelo más tarde...")
                 }
-            }else{
-                toast("Ocurrió un error inesperado. Por favor, intentelo más tarde...")
             }
         }
-    }
 }

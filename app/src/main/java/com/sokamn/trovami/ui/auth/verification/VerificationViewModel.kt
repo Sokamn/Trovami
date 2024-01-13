@@ -5,19 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.sokamn.trovami.core.Event
 import com.sokamn.trovami.data.source.datastore.DataStore
 import com.sokamn.trovami.domain.usecase.auth.IsUserVerifiedUseCase
 import com.sokamn.trovami.domain.usecase.auth.LogOutUseCase
 import com.sokamn.trovami.domain.usecase.auth.SendEmailVerificationUseCase
 import com.sokamn.trovami.domain.usecase.user.GetCurrentUserEmail
-import com.sokamn.trovami.domain.usecase.user.GetCurrentUserUidUseCase
 import com.sokamn.trovami.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -60,7 +56,7 @@ class VerificationViewModel @Inject constructor(
         _navigateToMain.value = Event(true)
     }
 
-    fun onSendEmail(){
+    fun onSendEmail() {
         _sendEmail.value = Event(true)
     }
 
@@ -68,35 +64,36 @@ class VerificationViewModel @Inject constructor(
         viewModelScope.launch { sendEmailVerificationUseCase() }
     }
 
-    private fun getCurrentEmail(){
+    private fun getCurrentEmail() {
         viewModelScope.launch {
-            when(val result = getCurrentUserEmailUseCase()){
+            when (val result = getCurrentUserEmailUseCase()) {
                 is Resource.Error -> Log.e("SOKIGETEMAIL", result.message)
                 is Resource.Success -> _emailVerified.value = Event(result.data)
             }
         }
     }
 
-    private fun verifyIfMailVerified(){
+    private fun verifyIfMailVerified() {
         viewModelScope.launch {
             isUserVerifiedUseCase()
                 .catch {
                     Log.e("SOKI", "Verification error: ${it.message}")
                 }
                 .collect { verification ->
-                    if(verification){
+                    if (verification) {
                         _showContinueButton.value = Event(true)
                     }
                 }
         }
     }
 
-    fun onGoToBackSelected(){
+    fun onGoToBackSelected() {
         viewModelScope.launch {
-            when(val result = logOutUseCase()){
+            when (val result = logOutUseCase()) {
                 is Resource.Error -> {
                     Log.e("SOKIERROR", result.message)
                 }
+
                 is Resource.Success -> {
                     dataStore.clearAllPreferences()
                     _navigateToBack.value = Event(true)

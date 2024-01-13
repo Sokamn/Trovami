@@ -3,13 +3,12 @@ package com.sokamn.trovami.ui.auth.login
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.sokamn.trovami.R
@@ -35,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
         fun create(context: Context): Intent =
             Intent(context, LoginActivity::class.java)
     }
+
     private lateinit var binding: ActivityLoginBinding
 
     private val loginViewModel: LoginViewModel by viewModels()
@@ -56,13 +56,16 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setUIComponents() {
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
     private fun initObservers() {
 
         loginViewModel.navigateToSignIn.observe(this) {
-            it.getContentIfNotHandled()?.let { params->
+            it.getContentIfNotHandled()?.let { params ->
                 goToSignIn( // ULTRA NEGRADA MÁXIMA CORREGIR CON OBJETO EN ALGUN MOMENTO
                     loginMethod = params[0].toInt(),
                     lastActivity = params[1],
@@ -73,8 +76,8 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        loginViewModel.navigateToMain.observe(this){
-            it.getContentIfNotHandled()?.let{ currentUserUid ->
+        loginViewModel.navigateToMain.observe(this) {
+            it.getContentIfNotHandled()?.let { currentUserUid ->
                 goToMain(currentUserUid)
             }
         }
@@ -86,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel.navigateToVerifyAccount.observe(this) {
-            it.getContentIfNotHandled()?.let {currentUserUid ->
+            it.getContentIfNotHandled()?.let { currentUserUid ->
                 goToVerify(currentUserUid)
             }
         }
@@ -96,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel.showNetworkErrorDialog.observe(this) {
-            it.getContentIfNotHandled()?.let{
+            it.getContentIfNotHandled()?.let {
                 showNetworkErrorDialog()
             }
         }
@@ -113,7 +116,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        with(binding){
+        with(binding) {
 
             txpEmailAL.setOnFocusChangeListener { view, hasFocus ->
                 if (hasFocus) scrollViewAL.smoothScrollTo(view.left, view.bottom)
@@ -122,7 +125,7 @@ class LoginActivity : AppCompatActivity() {
 
             txpPasswordAL.loseFocusAfterActionDone(scrollViewAL)
             txpPasswordAL.setOnFocusChangeListener { view, hasFocus ->
-                if (hasFocus) scrollViewAL.smoothScrollTo(view.left, view.bottom+150)
+                if (hasFocus) scrollViewAL.smoothScrollTo(view.left, view.bottom + 150)
                 onFieldChanged(hasFocus)
             }
             txpPasswordAL.onTextChanged { onFieldChanged() }
@@ -143,7 +146,7 @@ class LoginActivity : AppCompatActivity() {
                     txpPasswordAL.text.toString()
                 )
             }
-            txvRecoveryPassAL.setOnClickListener{ goToRecoveryPassword() }
+            txvRecoveryPassAL.setOnClickListener { goToRecoveryPassword() }
 
             imvBackAL.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         }
@@ -210,7 +213,7 @@ class LoginActivity : AppCompatActivity() {
         gMail: String,
         userUid: String
     ) {
-        startActivity(SignInActivity.create(this,loginMethod,lastActivity,nName,gMail,userUid))
+        startActivity(SignInActivity.create(this, loginMethod, lastActivity, nName, gMail, userUid))
     }
 
     private fun goToMain(currentUser: String) {
@@ -221,21 +224,21 @@ class LoginActivity : AppCompatActivity() {
         startActivity(VerificationActivity.create(this, currentUser))
     }
 
-    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            result ->
-        if(result.resultCode == Activity.RESULT_OK){
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            if (task.isSuccessful) {
-                val account = task.result
-                if (account != null) {
-                    loginViewModel.googleSignIn(task.result)
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                if (task.isSuccessful) {
+                    val account = task.result
+                    if (account != null) {
+                        loginViewModel.googleSignIn(task.result)
+                    } else {
+                        toast("Ocurrió un error inesperado. Por favor, intentelo más tarde...")
+                    }
                 } else {
                     toast("Ocurrió un error inesperado. Por favor, intentelo más tarde...")
                 }
-            }else{
-                toast("Ocurrió un error inesperado. Por favor, intentelo más tarde...")
             }
         }
-    }
 }
 

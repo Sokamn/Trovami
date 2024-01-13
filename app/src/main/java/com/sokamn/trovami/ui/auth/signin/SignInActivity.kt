@@ -2,7 +2,6 @@ package com.sokamn.trovami.ui.auth.signin
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -10,6 +9,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.sokamn.trovami.R
@@ -59,14 +59,21 @@ import javax.inject.Inject
 class SignInActivity : AppCompatActivity() {
 
     companion object {
-        fun create(context: Context, loginMethod: Int, lastActivity: String, nName: String, gMail: String, userUid: String): Intent {
+        fun create(
+            context: Context,
+            loginMethod: Int,
+            lastActivity: String,
+            nName: String,
+            gMail: String,
+            userUid: String
+        ): Intent {
             return Intent(context, SignInActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 putExtra(LAST_ACTIVITY_KEY_EXTRA, lastActivity)
                 putExtra(LOGIN_METHOD_KEY_EXTRA, loginMethod)
-                putExtra(NAME_KEY_EXTRA,nName)
-                putExtra(GMAIL_KEY_EXTRA,gMail)
+                putExtra(NAME_KEY_EXTRA, nName)
+                putExtra(GMAIL_KEY_EXTRA, gMail)
                 putExtra(CURRENT_USER_UID_KEY_EXTRA, userUid)
             }
         }
@@ -95,19 +102,22 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun setUIComponents() {
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
     private fun setDetails() {
-        when(intent.getIntExtra(LOGIN_METHOD_KEY_EXTRA, EMAIL)){
-            GOOGLE ->{
+        when (intent.getIntExtra(LOGIN_METHOD_KEY_EXTRA, EMAIL)) {
+            GOOGLE -> {
                 val nName = intent.getStringExtra(NAME_KEY_EXTRA)
                 val gMail = intent.getStringExtra(GMAIL_KEY_EXTRA)
 
-                if(!nName.isNullOrEmpty()){
+                if (!nName.isNullOrEmpty()) {
                     binding.txpFullNameASU.setText(nName)
                 }
-                if(!gMail.isNullOrEmpty()){
+                if (!gMail.isNullOrEmpty()) {
                     binding.txpEmailASU.setText(gMail)
                     binding.txpEmailASU.inputType = InputType.TYPE_NULL
                     binding.txpEmailASU.isEnabled = false
@@ -171,7 +181,7 @@ class SignInActivity : AppCompatActivity() {
 
     private fun initListeners() {
         var counter = 0
-        with(binding){
+        with(binding) {
 
             txpEmailASU.loseFocusAfterActionDone(scrollViewASU)
             txpEmailASU.setOnFocusChangeListener { _, hasFocus -> onFieldChanged(hasFocus) }
@@ -211,73 +221,78 @@ class SignInActivity : AppCompatActivity() {
 
             txvHaveAccountAR.setOnClickListener { signInViewModel.onLoginSelected() }
 
-            onBackPressedDispatcher.addCallback(this@SignInActivity, object: OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    when(counter){
-                        PASO1->{
-                            finish()
+            onBackPressedDispatcher.addCallback(
+                this@SignInActivity,
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        when (counter) {
+                            PASO1 -> {
+                                finish()
+                            }
+
+                            PASO2 -> {
+                                register1()
+                            }
+
+                            PASO3 -> {
+                                register2()
+                            }
+
+                            PASO4 -> {
+                                register3()
+                                btnContinueAR.text = resources.getText(R.string.next)
+                            }
                         }
-                        PASO2->{
-                            register1()
-                        }
-                        PASO3->{
-                            register2()
-                        }
-                        PASO4->{
-                            register3()
-                            btnContinueAR.text = resources.getText(R.string.next)
-                        }
+                        counter--
+                        scrollViewASU.scrollTo(0, 0)
                     }
-                    counter--
-                    scrollViewASU.scrollTo(0,0)
-                }
-            })
+                })
 
             btnContinueAR.setOnClickListener {
                 checkValue(counter)
-                if(counter < PASO4){
+                if (counter < PASO4) {
                     counter++
                 }
-                scrollViewASU.scrollTo(0,0)
+                scrollViewASU.scrollTo(0, 0)
             }
             imvBackASU.setOnClickListener {
                 onBackPressedDispatcher.onBackPressed()
             }
             imvNannyASU.setOnClickListener {
-                onJobClickFunction(NANNY,binding.imvNanny)
+                onJobClickFunction(NANNY, binding.imvNanny)
             }
             imvAirServiceASU.setOnClickListener {
-                onJobClickFunction(AIRSERVICE,binding.imvAirService)
+                onJobClickFunction(AIRSERVICE, binding.imvAirService)
             }
             imvGardenerASU.setOnClickListener {
-                onJobClickFunction(GARDENER,binding.imvGardener)
+                onJobClickFunction(GARDENER, binding.imvGardener)
             }
             imvCarpenterASU.setOnClickListener {
-                onJobClickFunction(CARPENTER,binding.imvCarpenter)
+                onJobClickFunction(CARPENTER, binding.imvCarpenter)
             }
             imvPlumberASU.setOnClickListener {
-                onJobClickFunction(PLUMBER,binding.imvPlumber)
+                onJobClickFunction(PLUMBER, binding.imvPlumber)
             }
             imvPainterASU.setOnClickListener {
-                onJobClickFunction(PAINTER,binding.imvPainter)
+                onJobClickFunction(PAINTER, binding.imvPainter)
             }
             imvElectricianASU.setOnClickListener {
-                onJobClickFunction(ELECTRICIAN,binding.imvElectrician)
+                onJobClickFunction(ELECTRICIAN, binding.imvElectrician)
             }
             imvTruckFreightASU.setOnClickListener {
-                onJobClickFunction(TRUCKFREIGHTER,binding.imvTruckFreight)
+                onJobClickFunction(TRUCKFREIGHTER, binding.imvTruckFreight)
             }
             imvTruckMovingASU.setOnClickListener {
-                onJobClickFunction(TRUCKMOVING,binding.imvTruckMoving)
+                onJobClickFunction(TRUCKMOVING, binding.imvTruckMoving)
             }
             imvMasonASU.setOnClickListener {
-                onJobClickFunction(MASON,binding.imvMason)
+                onJobClickFunction(MASON, binding.imvMason)
             }
             imvGasASU.setOnClickListener {
-                onJobClickFunction(GAS,binding.imvGas)
+                onJobClickFunction(GAS, binding.imvGas)
             }
             imvPCTechnicianASU.setOnClickListener {
-                onJobClickFunction(PCTECHNICIAN,binding.imvPCTechnician)
+                onJobClickFunction(PCTECHNICIAN, binding.imvPCTechnician)
             }
         }
     }
@@ -307,93 +322,115 @@ class SignInActivity : AppCompatActivity() {
     }
 
     internal fun onJobClickFunction(masterID: Int, imvMaster: ImageView) {
-        if(imvMaster.tag == SELECTED){
+        if (imvMaster.tag == SELECTED) {
             imvMaster.tag = UNSELECTED
-            when(masterID){
-                PAINTER ->{
+            when (masterID) {
+                PAINTER -> {
                     imvMaster.setImageResource(R.drawable.ic_painter)
                 }
-                CARPENTER ->{
+
+                CARPENTER -> {
                     imvMaster.setImageResource(R.drawable.ic_carpenter)
                 }
-                AIRSERVICE ->{
+
+                AIRSERVICE -> {
                     imvMaster.setImageResource(R.drawable.ic_air_service)
                 }
-                GARDENER ->{
+
+                GARDENER -> {
                     imvMaster.setImageResource(R.drawable.ic_gardener)
                 }
-                TRUCKMOVING ->{
+
+                TRUCKMOVING -> {
                     imvMaster.setImageResource(R.drawable.ic_truck_moving)
                 }
-                TRUCKFREIGHTER ->{
+
+                TRUCKFREIGHTER -> {
                     imvMaster.setImageResource(R.drawable.ic_truck_freight)
                 }
-                MASON ->{
+
+                MASON -> {
                     imvMaster.setImageResource(R.drawable.ic_mason)
                 }
-                NANNY ->{
+
+                NANNY -> {
                     imvMaster.setImageResource(R.drawable.ic_nanny)
                 }
-                GAS ->{
+
+                GAS -> {
                     imvMaster.setImageResource(R.drawable.ic_gas)
                 }
-                PCTECHNICIAN ->{
+
+                PCTECHNICIAN -> {
                     imvMaster.setImageResource(R.drawable.ic_pc_technician)
                 }
-                PLUMBER ->{
+
+                PLUMBER -> {
                     imvMaster.setImageResource(R.drawable.ic_plumber)
                 }
-                ELECTRICIAN ->{
+
+                ELECTRICIAN -> {
                     imvMaster.setImageResource(R.drawable.ic_electrician)
                 }
             }
             masterList.removeIf { it.id == masterID }
-        }else{
+        } else {
             showMasterDialog(masterID, imvMaster)
             imvMaster.tag = SELECTED
-            when(masterID){
-                PAINTER ->{
+            when (masterID) {
+                PAINTER -> {
                     imvMaster.setImageResource(R.drawable.ic_painter_selected)
                 }
-                CARPENTER ->{
+
+                CARPENTER -> {
                     imvMaster.setImageResource(R.drawable.ic_carpenter_selected)
                 }
-                AIRSERVICE ->{
+
+                AIRSERVICE -> {
                     imvMaster.setImageResource(R.drawable.ic_air_service_selected)
                 }
-                GARDENER ->{
+
+                GARDENER -> {
                     imvMaster.setImageResource(R.drawable.ic_gardener_selected)
                 }
-                TRUCKMOVING ->{
+
+                TRUCKMOVING -> {
                     imvMaster.setImageResource(R.drawable.ic_truck_moving_selected)
                 }
-                TRUCKFREIGHTER ->{
+
+                TRUCKFREIGHTER -> {
                     imvMaster.setImageResource(R.drawable.ic_truck_freight_selected)
                 }
-                MASON ->{
+
+                MASON -> {
                     imvMaster.setImageResource(R.drawable.ic_mason_selected)
                 }
-                NANNY ->{
+
+                NANNY -> {
                     imvMaster.setImageResource(R.drawable.ic_nanny_selected)
                 }
-                GAS ->{
+
+                GAS -> {
                     imvMaster.setImageResource(R.drawable.ic_gas_selected)
                 }
-                PCTECHNICIAN ->{
+
+                PCTECHNICIAN -> {
                     imvMaster.setImageResource(R.drawable.ic_pc_technician_selected)
                 }
-                PLUMBER ->{
+
+                PLUMBER -> {
                     imvMaster.setImageResource(R.drawable.ic_plumber_selected)
                 }
-                ELECTRICIAN ->{
+
+                ELECTRICIAN -> {
                     imvMaster.setImageResource(R.drawable.ic_electrician_selected)
                 }
             }
         }
     }
 
-    private fun checkValue(count: Int){
-        when(count){
+    private fun checkValue(count: Int) {
+        when (count) {
             PASO1 -> register2()
             PASO2 -> register3()
             PASO3 -> register4()
@@ -421,7 +458,8 @@ class SignInActivity : AppCompatActivity() {
                 it.dismiss()
             },
             positiveAction = ErrorDialog.Action(getString(R.string.login_error_dialog_positive_action)) {
-                val finalUserModel = UserModel(intent.getStringExtra(CURRENT_USER_UID_KEY_EXTRA).toString(),
+                val finalUserModel = UserModel(
+                    intent.getStringExtra(CURRENT_USER_UID_KEY_EXTRA).toString(),
                     fullName = binding.txpFullNameASU.text.toString(),
                     "",
                     document = binding.txpDocumentASU.text.toString(),
@@ -431,7 +469,8 @@ class SignInActivity : AppCompatActivity() {
                     defaultAdress = binding.txpAddressASU.text.toString(),
                     province = binding.txpProvinceASU.text.toString(),
                     municipality = binding.txpMunicipalityASU.text.toString(),
-                    masterList = masterList)
+                    masterList = masterList
+                )
                 signInWithFinalUserModel(finalUserModel)
                 it.dismiss()
             }
@@ -450,7 +489,8 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun finishButton() {
-        val finalUserModel = UserModel(intent.getStringExtra(CURRENT_USER_UID_KEY_EXTRA).toString(),
+        val finalUserModel = UserModel(
+            intent.getStringExtra(CURRENT_USER_UID_KEY_EXTRA).toString(),
             fullName = binding.txpFullNameASU.text.toString(),
             "",
             document = binding.txpDocumentASU.text.toString(),
@@ -460,17 +500,22 @@ class SignInActivity : AppCompatActivity() {
             defaultAdress = binding.txpAddressASU.text.toString(),
             province = binding.txpProvinceASU.text.toString(),
             municipality = binding.txpMunicipalityASU.text.toString(),
-            masterList = masterList)
+            masterList = masterList
+        )
 
         signInWithFinalUserModel(finalUserModel)
     }
 
     private fun signInWithFinalUserModel(finalUserModel: UserModel) {
-        when(intent.getIntExtra(LOGIN_METHOD_KEY_EXTRA, EMAIL)){
-            EMAIL ->{
-                signInViewModel.onEmailSignInSelected(finalUserModel, binding.txpRepeatPasswordASU.text.toString())
+        when (intent.getIntExtra(LOGIN_METHOD_KEY_EXTRA, EMAIL)) {
+            EMAIL -> {
+                signInViewModel.onEmailSignInSelected(
+                    finalUserModel,
+                    binding.txpRepeatPasswordASU.text.toString()
+                )
             }
-            GOOGLE ->{
+
+            GOOGLE -> {
                 signInViewModel.onGoogleSignInSelected(finalUserModel)
             }
             /*FACEBOOK ->{
@@ -479,8 +524,8 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun register1(){
-        with(binding){
+    private fun register1() {
+        with(binding) {
             //Paso 1
             txvSubtitleASU.setText(R.string.registerDescr)
             tilEmailASU.visibility = View.VISIBLE
@@ -512,8 +557,9 @@ class SignInActivity : AppCompatActivity() {
             imvPCTechnicianASU.visibility = View.GONE
         }
     }
-    private fun register2(){
-        with(binding){
+
+    private fun register2() {
+        with(binding) {
             //Paso 1
             txvSubtitleASU.setText(R.string.registerDescr)
             tilEmailASU.visibility = View.INVISIBLE
@@ -545,8 +591,9 @@ class SignInActivity : AppCompatActivity() {
             imvPCTechnicianASU.visibility = View.GONE
         }
     }
-    private fun register3(){
-        with(binding){
+
+    private fun register3() {
+        with(binding) {
             //Paso 1
             txvSubtitleASU.setText(R.string.registerDescr)
             tilEmailASU.visibility = View.INVISIBLE
@@ -578,8 +625,9 @@ class SignInActivity : AppCompatActivity() {
             imvPCTechnicianASU.visibility = View.GONE
         }
     }
-    private fun register4(){
-        with(binding){
+
+    private fun register4() {
+        with(binding) {
             //Paso 1
             tilEmailASU.visibility = View.INVISIBLE
             tilFullNameASU.visibility = View.INVISIBLE
@@ -614,20 +662,23 @@ class SignInActivity : AppCompatActivity() {
 
     internal fun onFieldChanged(hasFocus: Boolean = false) {
         if (!hasFocus) {
-            signInViewModel.onFieldsChanged(userSignIn = UserModel(
-                intent.getStringExtra(CURRENT_USER_UID_KEY_EXTRA).toString(),
-                fullName = binding.txpFullNameASU.text.toString(),
-                "",
-                document = binding.txpDocumentASU.text.toString(),
-                phoneNumber = binding.txpPhoneASU.text.toString(),
-                password = binding.txpPasswordASU.text.toString(),
-                email = binding.txpEmailASU.text.toString(),
-                defaultAdress = binding.txpAddressASU.text.toString(),
-                province = binding.txpProvinceASU.text.toString(),
-                municipality = binding.txpMunicipalityASU.text.toString(),
-                masterList = masterList),
+            signInViewModel.onFieldsChanged(
+                userSignIn = UserModel(
+                    intent.getStringExtra(CURRENT_USER_UID_KEY_EXTRA).toString(),
+                    fullName = binding.txpFullNameASU.text.toString(),
+                    "",
+                    document = binding.txpDocumentASU.text.toString(),
+                    phoneNumber = binding.txpPhoneASU.text.toString(),
+                    password = binding.txpPasswordASU.text.toString(),
+                    email = binding.txpEmailASU.text.toString(),
+                    defaultAdress = binding.txpAddressASU.text.toString(),
+                    province = binding.txpProvinceASU.text.toString(),
+                    municipality = binding.txpMunicipalityASU.text.toString(),
+                    masterList = masterList
+                ),
                 passwordConfirmation = binding.txpRepeatPasswordASU.text.toString(),
-                loginMethod = intent.getIntExtra(LOGIN_METHOD_KEY_EXTRA, EMAIL))
+                loginMethod = intent.getIntExtra(LOGIN_METHOD_KEY_EXTRA, EMAIL)
+            )
         }
     }
 
@@ -637,10 +688,10 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun goToLogin(lastActivity: String) {
-        if(lastActivity == INTRODUCTION_ACTIVITY){
+        if (lastActivity == INTRODUCTION_ACTIVITY) {
             startActivity(LoginActivity.create(this))
             finish()
-        }else{
+        } else {
             onBackPressedDispatcher.onBackPressed()
             finish()
         }

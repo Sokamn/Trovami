@@ -12,6 +12,7 @@ data class SignInViewState(
     val isValidAddress: Boolean = true,
     val isValidPhone: Boolean = true,
 
-    ){
-    fun userValidated() = isValidEmail && isValidFullName && isValidDocument && isValidProvince && isValidMunicipality && isValidAddress && isValidPhone && isValidPassword && isValidPasswordConfirmation
+    ) {
+    fun userValidated() =
+        isValidEmail && isValidFullName && isValidDocument && isValidProvince && isValidMunicipality && isValidAddress && isValidPhone && isValidPassword && isValidPasswordConfirmation
 }

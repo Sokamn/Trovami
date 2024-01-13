@@ -56,15 +56,16 @@ class SplashViewModel @Inject constructor(
                 }
                 .collect { isVerificated ->
                     delay(3000)
-                    when(val result = getCurrentUserUidUseCase()){
+                    when (val result = getCurrentUserUidUseCase()) {
                         is Resource.Error -> {
                             Log.e("SOKINULL", result.message)
                             _navigateToIntroduction.value = Event(true)
                         }
+
                         is Resource.Success -> {
-                            if (isVerificated){
+                            if (isVerificated) {
                                 _navigateToMain.value = Event(result.data)
-                            }else{
+                            } else {
                                 _navigateToVerification.value = Event(result.data)
                             }
                         }

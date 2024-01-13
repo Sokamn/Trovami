@@ -9,9 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.sokamn.trovami.R
 import com.sokamn.trovami.core.Event
-import com.sokamn.trovami.domain.model.UserLogin
 import com.sokamn.trovami.domain.usecase.auth.GoogleLoginUseCase
 import com.sokamn.trovami.domain.usecase.user.GetUserModelByUidUseCase
 import com.sokamn.trovami.ui.auth.login.LoginViewState
@@ -64,33 +62,38 @@ class IntroductionViewModel @Inject constructor(
     val googleClient: LiveData<GoogleSignInClient>
         get() = _googleClient
 
-    fun googleSignIn(account: GoogleSignInAccount){
+    fun googleSignIn(account: GoogleSignInAccount) {
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
-            when(val googleLoginResult = googleLoginUseCase(account)){
+            when (val googleLoginResult = googleLoginUseCase(account)) {
                 is Resource.Error ->
                     _showNetworkErrorDialog.value = Event(true)
+
                 is Resource.Success -> {
-                    if (googleLoginResult.data.userUID != "AUTH ERROR"){
-                        when(val getUserModelByUidResult = getUserModelByUidUseCase(googleLoginResult.data.userUID)){
+                    if (googleLoginResult.data.userUID != "AUTH ERROR") {
+                        when (val getUserModelByUidResult =
+                            getUserModelByUidUseCase(googleLoginResult.data.userUID)) {
                             is Resource.Error -> {
-                                if(getUserModelByUidResult.message == "null"){
-                                    _navigateToSignIn.value = Event(arrayOf(
-                                        GOOGLE.toString(),
-                                        LOGIN_ACTIVITY,
-                                        account.displayName.toString(),
-                                        account.email.toString(),
-                                        googleLoginResult.data.userUID)
+                                if (getUserModelByUidResult.message == "null") {
+                                    _navigateToSignIn.value = Event(
+                                        arrayOf(
+                                            GOOGLE.toString(),
+                                            LOGIN_ACTIVITY,
+                                            account.displayName.toString(),
+                                            account.email.toString(),
+                                            googleLoginResult.data.userUID
+                                        )
                                     )
-                                }else{
+                                } else {
                                     _showNetworkErrorDialog.value = Event(true)
                                 }
                             }
+
                             is Resource.Success -> {
                                 _navigateToMain.value = Event(googleLoginResult.data.userUID)
                             }
                         }
-                    }else{
+                    } else {
                         _showNetworkErrorDialog.value = Event(true)
                     }
                 }
@@ -99,7 +102,7 @@ class IntroductionViewModel @Inject constructor(
         }
     }
 
-    fun onGoogleSignInSelected(activity: Activity){
+    fun onGoogleSignInSelected(activity: Activity) {
         _googleClient.value = GoogleSignIn.getClient(activity, gso)
     }
 
@@ -108,7 +111,8 @@ class IntroductionViewModel @Inject constructor(
     }
 
     fun onEmailSignInSelected() {
-        _navigateToSignIn.value = Event(arrayOf(EMAIL.toString(), INTRODUCTION_ACTIVITY, "", "", ""))
+        _navigateToSignIn.value =
+            Event(arrayOf(EMAIL.toString(), INTRODUCTION_ACTIVITY, "", "", ""))
     }
 
 }

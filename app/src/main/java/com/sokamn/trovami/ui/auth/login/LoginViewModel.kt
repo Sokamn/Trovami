@@ -1,7 +1,6 @@
 package com.sokamn.trovami.ui.auth.login
 
 import android.app.Activity
-import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,8 +10,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.sokamn.trovami.core.Event
 import com.sokamn.trovami.domain.model.UserLogin
 import com.sokamn.trovami.domain.usecase.auth.EmailLoginUseCase
@@ -84,33 +81,38 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun googleSignIn(account: GoogleSignInAccount){
+    fun googleSignIn(account: GoogleSignInAccount) {
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
-            when(val googleLoginResult = googleLoginUseCase(account)){
+            when (val googleLoginResult = googleLoginUseCase(account)) {
                 is Resource.Error ->
                     _showNetworkErrorDialog.value = Event(true)
+
                 is Resource.Success -> {
-                    if (googleLoginResult.data.userUID != "AUTH ERROR"){
-                        when(val getUserModelByUidResult = getUserModelByUidUseCase(googleLoginResult.data.userUID)){
+                    if (googleLoginResult.data.userUID != "AUTH ERROR") {
+                        when (val getUserModelByUidResult =
+                            getUserModelByUidUseCase(googleLoginResult.data.userUID)) {
                             is Resource.Error -> {
-                                if(getUserModelByUidResult.message == "null"){
-                                    _navigateToSignIn.value = Event(arrayOf(
-                                        GOOGLE.toString(),
-                                        LOGIN_ACTIVITY,
-                                        account.displayName.toString(),
-                                        account.email.toString(),
-                                        googleLoginResult.data.userUID
-                                    ))
-                                }else{
+                                if (getUserModelByUidResult.message == "null") {
+                                    _navigateToSignIn.value = Event(
+                                        arrayOf(
+                                            GOOGLE.toString(),
+                                            LOGIN_ACTIVITY,
+                                            account.displayName.toString(),
+                                            account.email.toString(),
+                                            googleLoginResult.data.userUID
+                                        )
+                                    )
+                                } else {
                                     _showNetworkErrorDialog.value = Event(true)
                                 }
                             }
+
                             is Resource.Success -> {
                                 _navigateToMain.value = Event(googleLoginResult.data.userUID)
                             }
                         }
-                    }else{
+                    } else {
                         _showNetworkErrorDialog.value = Event(true)
                     }
                 }
@@ -123,11 +125,13 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             _viewState.value = LoginViewState(isLoading = true)
             when (val result = emailLoginUseCase(email, password)) {
-                is Resource.Error -> _showErrorDialog.value = UserLogin(email = email, password = password, showErrorDialog = true)
-                is Resource.Success ->{
-                    if(result.data.userUID == "AUTH ERROR"){
+                is Resource.Error -> _showErrorDialog.value =
+                    UserLogin(email = email, password = password, showErrorDialog = true)
+
+                is Resource.Success -> {
+                    if (result.data.userUID == "AUTH ERROR") {
                         _showNetworkErrorDialog.value = Event(true)
-                    }else{
+                    } else {
                         if (result.data.isVerified) {
                             _navigateToMain.value = Event(result.data.userUID)
                         } else {
@@ -151,11 +155,11 @@ class LoginViewModel @Inject constructor(
         _navigateToForgotPassword.value = Event(true)
     }
 
-    fun onEmailSignInSelected(){
-        _navigateToSignIn.value = Event(arrayOf(EMAIL.toString(), LOGIN_ACTIVITY,"","",""))
+    fun onEmailSignInSelected() {
+        _navigateToSignIn.value = Event(arrayOf(EMAIL.toString(), LOGIN_ACTIVITY, "", "", ""))
     }
 
-    fun onGoogleSignInSelected(activity: Activity){
+    fun onGoogleSignInSelected(activity: Activity) {
         _googleClient.value = GoogleSignIn.getClient(activity, gso)
     }
 
