@@ -51,7 +51,7 @@ class RecoverPasswordViewModel @Inject constructor(
         _navigateToLogin.value= Event(true)
     }
 
-    fun isValidOrEmptyEmail(email: String) = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    fun isValidOrEmptyEmail(email: String) = email.isEmpty() || Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     private fun sendPasswordLink(email: String) {
         viewModelScope.launch {

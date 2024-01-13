@@ -57,7 +57,13 @@ class SignInViewModel @Inject constructor(
 
     fun onGoogleSignInSelected(userSignIn: UserModel) {
         val viewState = userSignIn.toSignInViewState("", GOOGLE)
-        signUpUser(userSignIn, GOOGLE)
+        if (viewState.userValidated() && userSignIn.isNotEmpty()){
+            signUpUser(userSignIn, GOOGLE)
+        }else{
+            onFieldsChanged(userSignIn, "", EMAIL)
+            _showErrorInputs.value = true
+        }
+
     }
 
     fun onEmailSignInSelected(userSignIn: UserModel, passwordConfirmation: String) {
