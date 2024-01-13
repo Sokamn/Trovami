@@ -19,17 +19,11 @@ import javax.inject.Inject
 
 class UserService @Inject constructor(private val firebase: FirebaseClient) {
 
-    val currentUserUID: Flow<String> = flow {
-        do {
-            val userUID = firebase.auth.currentUser?.uid
-            if (userUID != null) {
-                emit(userUID)
-            }
-            delay(1000)
-        } while (userUID == null)
+    val currentUserUID: Resource<String> = if (firebase.auth.currentUser != null){
+        Resource.Success(firebase.auth.currentUser!!.uid)
+    }else{
+        Resource.Error(NULL_ERROR)
     }
-
-    val existsUserConnected: Boolean = firebase.auth.currentUser != null
 
     val currentUserEmail: Resource<String> = if (firebase.auth.currentUser != null){
         Resource.Success(firebase.auth.currentUser!!.email.toString())

@@ -11,12 +11,11 @@ import com.sokamn.trovami.data.source.datastore.DataStore
 import com.sokamn.trovami.domain.model.UserModel
 import com.sokamn.trovami.domain.usecase.auth.IsUserVerifiedUseCase
 import com.sokamn.trovami.domain.usecase.network.CheckInternetConnectionUseCase
-import com.sokamn.trovami.domain.usecase.user.ExistsUserConnectedUseCase
 import com.sokamn.trovami.domain.usecase.user.GetCurrentUserUidUseCase
+import com.sokamn.trovami.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +24,6 @@ class SplashViewModel @Inject constructor(
     private val isUserVerifiedUseCase: IsUserVerifiedUseCase,
     private val checkNetworkConnectionUseCase: CheckInternetConnectionUseCase,
     private val getCurrentUserUidUseCase: GetCurrentUserUidUseCase,
-    private val existsUserConnectedUseCase: ExistsUserConnectedUseCase,
     private val dataStore: DataStore
 ) : ViewModel() {
 
@@ -43,10 +41,8 @@ class SplashViewModel @Inject constructor(
 
     init {
         if (checkNetworkConnectionUseCase()) { // There is Connection
-            Log.e("SOKI", "HAY INTERNET")
             verifyEmail()
         } else { // There is not Connection
-            Log.e("SOKI", "NO HAY INTERNET")
             getCurrentUserWithoutConnection()
         }
     }
@@ -58,24 +54,19 @@ class SplashViewModel @Inject constructor(
                 .catch {
                     Log.e("SOKI", "Verification error: ${it.message}")
                 }
-                .collect { verificated ->
+                .collect { isVerificated ->
                     delay(3000)
-                    if (verificated){
-                        getCurrentUserUidUseCase().catch {
-
-                        }.collect{ userUID ->
-                            _navigateToMain.value = Event(userUID)
-                        }
-
-                    }else{
-                        if (existsUserConnectedUseCase()) {
-                            getCurrentUserUidUseCase().catch {
-
-                            }.collect{ userUID ->
-                                _navigateToVerification.value = Event(userUID)
-                            }
-                        } else {
+                    when(val result = getCurrentUserUidUseCase()){
+                        is Resource.Error -> {
+                            Log.e("SOKINULL", result.message)
                             _navigateToIntroduction.value = Event(true)
+                        }
+                        is Resource.Success -> {
+                            if (isVerificated){
+                                _navigateToMain.value = Event(result.data)
+                            }else{
+                                _navigateToVerification.value = Event(result.data)
+                            }
                         }
                     }
                 }
@@ -86,7 +77,7 @@ class SplashViewModel @Inject constructor(
     private fun getCurrentUserWithoutConnection() {
         viewModelScope.launch {
             dataStore.getCurrentUser().catch {
-
+                Log.e("SOKIERROR", it.message.toString())
             }.collect { currentUserDS ->
                 delay(3000)
                 navigateIfExistsStoredUser(currentUserDS)

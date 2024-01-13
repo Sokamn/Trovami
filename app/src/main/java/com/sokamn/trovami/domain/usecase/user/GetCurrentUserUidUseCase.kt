@@ -1,9 +1,9 @@
 package com.sokamn.trovami.domain.usecase.user
 
 import com.sokamn.trovami.data.network.UserService
-import kotlinx.coroutines.flow.Flow
+import com.sokamn.trovami.utils.Resource
 import javax.inject.Inject
 
 class GetCurrentUserUidUseCase @Inject constructor(private val userService: UserService) {
-    operator fun invoke(): Flow<String> = userService.currentUserUID
+    operator fun invoke(): Resource<String> = userService.currentUserUID
 }
