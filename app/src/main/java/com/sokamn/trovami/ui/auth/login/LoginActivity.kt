@@ -22,6 +22,7 @@ import com.sokamn.trovami.core.ex.toast
 import com.sokamn.trovami.databinding.ActivityLoginBinding
 import com.sokamn.trovami.domain.model.UserLogin
 import com.sokamn.trovami.ui.MainActivity
+import com.sokamn.trovami.ui.auth.recover_password.RecoverPasswordActivity
 import com.sokamn.trovami.ui.auth.signin.SignInActivity
 import com.sokamn.trovami.ui.auth.verification.VerificationActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -203,7 +204,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToRecoveryPassword() {
-        //startActivity(PasswordRecoveryActivity.create(this))
+        startActivity(RecoverPasswordActivity.create(this))
     }
 
     private fun goToSignIn(

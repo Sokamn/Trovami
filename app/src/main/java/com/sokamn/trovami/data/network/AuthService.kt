@@ -58,7 +58,6 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
-
     }
 
     suspend fun loginGoogle(account: GoogleSignInAccount) = runCatching {
