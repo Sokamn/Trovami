@@ -10,6 +10,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.sokamn.trovami.core.Event
+import com.sokamn.trovami.data.network.FirebaseConstants.AUTH_ERROR
+import com.sokamn.trovami.data.network.FirebaseConstants.NULL_ERROR
 import com.sokamn.trovami.domain.usecase.auth.GoogleLoginUseCase
 import com.sokamn.trovami.domain.usecase.user.GetUserModelByUidUseCase
 import com.sokamn.trovami.ui.auth.login.LoginViewState
@@ -70,11 +72,11 @@ class IntroductionViewModel @Inject constructor(
                     _showNetworkErrorDialog.value = Event(true)
 
                 is Resource.Success -> {
-                    if (googleLoginResult.data.userUID != "AUTH ERROR") {
+                    if (googleLoginResult.data.userUID != AUTH_ERROR) {
                         when (val getUserModelByUidResult =
                             getUserModelByUidUseCase(googleLoginResult.data.userUID)) {
                             is Resource.Error -> {
-                                if (getUserModelByUidResult.message == "null") {
+                                if (getUserModelByUidResult.message == NULL_ERROR) {
                                     _navigateToSignIn.value = Event(
                                         arrayOf(
                                             GOOGLE.toString(),

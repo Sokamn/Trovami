@@ -48,8 +48,6 @@ class VerificationViewModel @Inject constructor(
 
     init {
         getCurrentEmail()
-        sendEmailVerification()
-        verifyIfMailVerified()
     }
 
     fun onGoToMainSelected() {
@@ -67,8 +65,14 @@ class VerificationViewModel @Inject constructor(
     private fun getCurrentEmail() {
         viewModelScope.launch {
             when (val result = getCurrentUserEmailUseCase()) {
-                is Resource.Error -> Log.e("SOKIGETEMAIL", result.message)
-                is Resource.Success -> _emailVerified.value = Event(result.data)
+                is Resource.Error -> {
+                    Log.e("SOKI", "Verification error: ${result.message}")
+                }
+                is Resource.Success -> {
+                    _emailVerified.value = Event(result.data)
+                    sendEmailVerification()
+                    verifyIfMailVerified()
+                }
             }
         }
     }

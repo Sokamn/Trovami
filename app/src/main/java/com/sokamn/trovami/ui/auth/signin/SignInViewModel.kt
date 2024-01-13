@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sokamn.trovami.R
 import com.sokamn.trovami.core.Event
+import com.sokamn.trovami.data.network.FirebaseConstants.AUTH_ERROR
 import com.sokamn.trovami.domain.model.UserModel
 import com.sokamn.trovami.domain.usecase.auth.CreateAccountUseCase
 import com.sokamn.trovami.domain.usecase.auth.HasBeenEmailUsedUseCase
@@ -91,7 +92,7 @@ class SignInViewModel @Inject constructor(
                                             _navigateToMain.value =
                                                 Event(createAccountResult.data.userUID)
                                         } else {
-                                            if (createAccountResult.data.userUID == "AUTH ERROR") {
+                                            if (createAccountResult.data.userUID == AUTH_ERROR) {
                                                 _showErrorDialog.value =
                                                     Event(R.string.signin_network_error_description)
                                             } else {

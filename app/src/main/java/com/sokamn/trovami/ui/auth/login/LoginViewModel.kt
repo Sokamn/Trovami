@@ -11,6 +11,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.sokamn.trovami.core.Event
+import com.sokamn.trovami.data.network.FirebaseConstants.AUTH_ERROR
+import com.sokamn.trovami.data.network.FirebaseConstants.NULL_ERROR
 import com.sokamn.trovami.domain.model.UserLogin
 import com.sokamn.trovami.domain.usecase.auth.EmailLoginUseCase
 import com.sokamn.trovami.domain.usecase.auth.GoogleLoginUseCase
@@ -89,11 +91,11 @@ class LoginViewModel @Inject constructor(
                     _showNetworkErrorDialog.value = Event(true)
 
                 is Resource.Success -> {
-                    if (googleLoginResult.data.userUID != "AUTH ERROR") {
+                    if (googleLoginResult.data.userUID != AUTH_ERROR) {
                         when (val getUserModelByUidResult =
                             getUserModelByUidUseCase(googleLoginResult.data.userUID)) {
                             is Resource.Error -> {
-                                if (getUserModelByUidResult.message == "null") {
+                                if (getUserModelByUidResult.message == NULL_ERROR) {
                                     _navigateToSignIn.value = Event(
                                         arrayOf(
                                             GOOGLE.toString(),
@@ -129,7 +131,7 @@ class LoginViewModel @Inject constructor(
                     UserLogin(email = email, password = password, showErrorDialog = true)
 
                 is Resource.Success -> {
-                    if (result.data.userUID == "AUTH ERROR") {
+                    if (result.data.userUID == AUTH_ERROR) {
                         _showNetworkErrorDialog.value = Event(true)
                     } else {
                         if (result.data.isVerified) {
