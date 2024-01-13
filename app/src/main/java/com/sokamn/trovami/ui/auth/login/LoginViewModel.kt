@@ -11,6 +11,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.sokamn.trovami.core.Event
 import com.sokamn.trovami.domain.model.UserLogin
 import com.sokamn.trovami.domain.usecase.auth.EmailLoginUseCase

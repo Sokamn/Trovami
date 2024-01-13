@@ -14,5 +14,4 @@ class FirebaseClient @Inject constructor(){
     val dbFirestore = Firebase.firestore
     val dbRealtime  = FirebaseDatabase.getInstance().reference
     val dbStorage = FirebaseStorage.getInstance().reference
-    val currentUser = auth.currentUser
 }

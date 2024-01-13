@@ -66,7 +66,9 @@ class VerificationActivity : AppCompatActivity() {
 
         verificationViewModel.showContinueButton.observe(this) {
             it.getContentIfNotHandled()?.let { isEnabled ->
-                binding.btnConfirmVerification.show()
+                if(isEnabled){
+                    binding.btnConfirmVerification.show()
+                }
             }
         }
 

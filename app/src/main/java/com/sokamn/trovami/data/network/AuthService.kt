@@ -73,13 +73,13 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
     }.toResourceResponse()
 
     suspend fun sendVerificationEmail() = runCatching {
-        firebase.currentUser?.sendEmailVerification()?.await() ?: false
+        firebase.auth.currentUser?.sendEmailVerification()?.await() ?: false
     }.isSuccess
 
 
     private suspend fun verifyEmailIsVerified(): Boolean {
-        firebase.currentUser?.reload()?.await()
-        return firebase.currentUser?.isEmailVerified ?: false
+        firebase.auth.currentUser?.reload()?.await()
+        return firebase.auth.currentUser?.isEmailVerified ?: false
     }
 
     private fun Result<AuthResult>.toResourceResponse() = when (val result = getOrNull()) {

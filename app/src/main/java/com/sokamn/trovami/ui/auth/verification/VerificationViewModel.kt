@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.sokamn.trovami.core.Event
 import com.sokamn.trovami.data.source.datastore.DataStore
 import com.sokamn.trovami.domain.usecase.auth.IsUserVerifiedUseCase
@@ -12,6 +14,7 @@ import com.sokamn.trovami.domain.usecase.auth.LogOutUseCase
 import com.sokamn.trovami.domain.usecase.auth.SendEmailVerificationUseCase
 import com.sokamn.trovami.domain.usecase.user.GetCurrentUserEmail
 import com.sokamn.trovami.domain.usecase.user.GetCurrentUserUidUseCase
+import com.sokamn.trovami.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -67,10 +70,9 @@ class VerificationViewModel @Inject constructor(
 
     private fun getCurrentEmail(){
         viewModelScope.launch {
-            getCurrentUserEmailUseCase().catch {
-
-            }.collect{ emailVerified ->
-                _emailVerified.value = Event(emailVerified)
+            when(val result = getCurrentUserEmailUseCase()){
+                is Resource.Error -> Log.e("SOKIGETEMAIL", result.message)
+                is Resource.Success -> _emailVerified.value = Event(result.data)
             }
         }
     }
@@ -84,19 +86,22 @@ class VerificationViewModel @Inject constructor(
                 .collect { verification ->
                     if(verification){
                         _showContinueButton.value = Event(true)
-                    }else{
-                        Log.e("SOKIEAAA", "No anda po wn")
                     }
                 }
         }
     }
 
     fun onGoToBackSelected(){
-        // BORRAR DATASTORE
         viewModelScope.launch {
-            dataStore.clearAllPreferences()
-            logOutUseCase()
-            _navigateToBack.value = Event(true)
+            when(val result = logOutUseCase()){
+                is Resource.Error -> {
+                    Log.e("SOKIERROR", result.message)
+                }
+                is Resource.Success -> {
+                    dataStore.clearAllPreferences()
+                    _navigateToBack.value = Event(true)
+                }
+            }
         }
     }
 }

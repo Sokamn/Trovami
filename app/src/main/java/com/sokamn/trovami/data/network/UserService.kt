@@ -19,24 +19,20 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
 
     val currentUserUID: Flow<String> = flow {
         do {
-            val userUID = firebase.currentUser?.uid
+            val userUID = firebase.auth.currentUser?.uid
             if (userUID != null) {
                 emit(userUID)
             }
             delay(1000)
-        } while (firebase.currentUser?.uid == null)
+        } while (userUID == null)
     }
 
-    val existsUserConnected: Boolean = firebase.currentUser != null
+    val existsUserConnected: Boolean = firebase.auth.currentUser != null
 
-    val currentUserEmail: Flow<String> = flow {
-        do {
-            val email = firebase.currentUser?.email
-            if (email != null) {
-                emit(email)
-            }
-            delay(1000)
-        } while (firebase.currentUser?.email == null)
+    val currentUserEmail: Resource<String> = if (firebase.auth.currentUser != null){
+        Resource.Success(firebase.auth.currentUser!!.email.toString())
+    }else{
+        Resource.Error("NULL")
     }
 
     suspend fun getUserName(uid: String): Resource<String>{
@@ -57,7 +53,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             return if(userNameResponse != null){
                 Resource.Success(userNameResponse!!)
             }else{
-                Resource.Error("null")
+                Resource.Error("NULL")
             }
         }catch (e: Exception){
             return Resource.Error(e.toString())
@@ -79,7 +75,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             if (isSuccesful){
                 Resource.Success(userSignUp.uid)
             }else{
-                Resource.Error("Network Error")
+                Resource.Error("NETWORK_ERROR")
             }
         }catch (e: Exception){
             Resource.Error(e.message.toString())
@@ -87,7 +83,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
     }
 
     suspend fun getUserByUid(uid: String): Resource<UserModel> {
-        firebase.currentUser?.reload()?.await()
+        firebase.auth.currentUser?.reload()?.await()
         var userResponse: UserModel? = null
         try{
             firebase.dbRealtime
@@ -105,7 +101,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             return if (userResponse != null){
                 Resource.Success(userResponse!!)
             }else{
-                Resource.Error("null")
+                Resource.Error("NULL")
             }
         }catch (e: Exception){
             return Resource.Error(e.toString())
@@ -113,12 +109,12 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
     }
 
     suspend fun getCurrentUser(): Resource<UserModel> {
-        firebase.currentUser?.reload()?.await()
+        firebase.auth.currentUser?.reload()?.await()
         var userResponse: UserModel? = null
         try{
             firebase.dbRealtime
                 .child(USER_REFERENCE)
-                .child(firebase.currentUser!!.uid)
+                .child(firebase.auth.currentUser!!.uid)
                 .get()
                 .addOnCompleteListener {
                     userResponse = if (it.isSuccessful){
@@ -130,7 +126,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             return if (userResponse != null){
                 Resource.Success(userResponse!!)
             }else{
-                Resource.Error("null")
+                Resource.Error("NULL")
             }
         }catch (e: Exception){
             return Resource.Error(e.toString())
@@ -147,7 +143,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             if (isSuccessful){
                 Resource.Success(Unit)
             }else{
-                Resource.Error("Network Error")
+                Resource.Error("NETWORK_ERROR")
             }
         }catch (e: Exception){
             Resource.Error(e.message.toString())
@@ -184,7 +180,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             return if(profilePictureResponse != null){
                 Resource.Success(profilePictureResponse!!)
             }else{
-                Resource.Error("null")
+                Resource.Error("NULL")
             }
 
         }catch (e: Exception){

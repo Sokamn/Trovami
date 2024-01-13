@@ -9,4 +9,6 @@ object FirebaseConstants {
     const val FULLNAME_REFERENCE = "fullName"
     const val PROFILE_PICTURE_JPG = "profile.jpg"
 
+    const val NETWORK_ERROR = "NETWORK_ERROR"
+    const val NULL_ERROR = "NULL_ERROR"
 }
