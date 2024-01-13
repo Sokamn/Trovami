@@ -3,6 +3,8 @@ package com.sokamn.trovami.data.network
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.GoogleAuthProvider
+import com.sokamn.trovami.data.network.FirebaseConstants.AUTH_ERROR
+import com.sokamn.trovami.data.network.FirebaseConstants.NULL_ERROR
 import com.sokamn.trovami.domain.model.UserResponse
 import com.sokamn.trovami.utils.Resource
 import kotlinx.coroutines.delay
@@ -83,14 +85,14 @@ class AuthService @Inject constructor(private val firebase: FirebaseClient){
     }
 
     private fun Result<AuthResult>.toResourceResponse() = when (val result = getOrNull()) {
-        null -> Resource.Error("Null Pointer Exception")
+        null -> Resource.Error(NULL_ERROR)
         else -> {
             val userId = result.user
             checkNotNull(userId)
             Resource.Success(
                 UserResponse(
                     result.user?.isEmailVerified ?: false,
-                    result.user?.uid ?: "AUTH ERROR"
+                    result.user?.uid ?: AUTH_ERROR
                 )
             )
         }

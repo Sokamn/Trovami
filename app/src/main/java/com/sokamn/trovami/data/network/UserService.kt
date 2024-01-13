@@ -5,6 +5,8 @@ import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.sokamn.trovami.data.network.FirebaseConstants.FULLNAME_REFERENCE
+import com.sokamn.trovami.data.network.FirebaseConstants.NETWORK_ERROR
+import com.sokamn.trovami.data.network.FirebaseConstants.NULL_ERROR
 import com.sokamn.trovami.data.network.FirebaseConstants.PROFILE_PICTURE_JPG
 import com.sokamn.trovami.data.network.FirebaseConstants.USER_REFERENCE
 import com.sokamn.trovami.domain.model.UserModel
@@ -32,7 +34,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
     val currentUserEmail: Resource<String> = if (firebase.auth.currentUser != null){
         Resource.Success(firebase.auth.currentUser!!.email.toString())
     }else{
-        Resource.Error("NULL")
+        Resource.Error(NULL_ERROR)
     }
 
     suspend fun getUserName(uid: String): Resource<String>{
@@ -53,7 +55,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             return if(userNameResponse != null){
                 Resource.Success(userNameResponse!!)
             }else{
-                Resource.Error("NULL")
+                Resource.Error(NETWORK_ERROR)
             }
         }catch (e: Exception){
             return Resource.Error(e.toString())
@@ -75,7 +77,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             if (isSuccesful){
                 Resource.Success(userSignUp.uid)
             }else{
-                Resource.Error("NETWORK_ERROR")
+                Resource.Error(NETWORK_ERROR)
             }
         }catch (e: Exception){
             Resource.Error(e.message.toString())
@@ -101,7 +103,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             return if (userResponse != null){
                 Resource.Success(userResponse!!)
             }else{
-                Resource.Error("NULL")
+                Resource.Error(NULL_ERROR)
             }
         }catch (e: Exception){
             return Resource.Error(e.toString())
@@ -126,7 +128,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             return if (userResponse != null){
                 Resource.Success(userResponse!!)
             }else{
-                Resource.Error("NULL")
+                Resource.Error(NULL_ERROR)
             }
         }catch (e: Exception){
             return Resource.Error(e.toString())
@@ -143,7 +145,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             if (isSuccessful){
                 Resource.Success(Unit)
             }else{
-                Resource.Error("NETWORK_ERROR")
+                Resource.Error(NETWORK_ERROR)
             }
         }catch (e: Exception){
             Resource.Error(e.message.toString())
@@ -180,7 +182,7 @@ class UserService @Inject constructor(private val firebase: FirebaseClient) {
             return if(profilePictureResponse != null){
                 Resource.Success(profilePictureResponse!!)
             }else{
-                Resource.Error("NULL")
+                Resource.Error(NULL_ERROR)
             }
 
         }catch (e: Exception){

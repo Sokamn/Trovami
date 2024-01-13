@@ -11,4 +11,5 @@ object FirebaseConstants {
 
     const val NETWORK_ERROR = "NETWORK_ERROR"
     const val NULL_ERROR = "NULL_ERROR"
+    const val AUTH_ERROR = "AUTH_ERROR"
 }
