@@ -1,15 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.bottom_nav.profile.ProfileFragment">
+    tools:context=".ui.bottom_nav.profile.ProfileFragment"
+    android:background="@color/bg">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/imvAirFP"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginEnd="-5dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/air_profile"
+        app:layout_constraintBottom_toBottomOf="@+id/imvProfilePictureFP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imvProfilePictureFP" />
+
+    <Button
+        android:id="@+id/btnEditProfileFP"
+        style="@style/PrimaryButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="PROFILE FRAGMENT" />
+        android:layout_height="45dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/editProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvBiographyFP" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/txvUserNameFP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/extrabold"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColor"
+        android:textSize="24sp"
+        tools:text="Matías Alzú"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imvProfilePictureFP" />
+
+    <TextView
+        android:id="@+id/txvUbicationUserFP"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/medium"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="11sp"
+        tools:text="Ituzaingó, Buenos Aires"
+        app:layout_constraintBottom_toBottomOf="@+id/imvBorderAEP"
+        app:layout_constraintStart_toEndOf="@+id/imvBorderAEP"
+        app:layout_constraintTop_toTopOf="@+id/imvBorderAEP" />
+
+    <TextView
+        android:id="@+id/txvBiographyFP"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/semibold"
+        android:textAlignment="textStart"
+        android:textColor="@color/textColor"
+        android:textSize="14sp"
+        tools:text="Creador de la aplicación\nRecién graduado con titulo de técnico en informática"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvUbicationUserFP" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imvProfilePictureFP"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="35dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_picture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundImageProfile20dp" />
+
+    <ImageView
+        android:id="@+id/imvVerifiedFP"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="-20dp"
+        android:layout_marginEnd="-20dp"
+        tools:src="@drawable/verify"
+        app:layout_constraintEnd_toEndOf="@+id/imvProfilePictureFP"
+        app:layout_constraintTop_toTopOf="@+id/imvProfilePictureFP" />
+
+    <ImageView
+        android:id="@+id/imvBorderAEP"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/gps_black"
+        app:layout_constraintBottom_toBottomOf="@+id/txvUserNameFP"
+        app:layout_constraintStart_toStartOf="@+id/txvUserNameFP"
+        app:layout_constraintTop_toBottomOf="@+id/txvUserNameFP" />
+
+    <ImageView
+        android:id="@+id/imvLogOutFP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/ic_close_sesion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imvProfilePictureFP" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/bg_tablayout_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditProfileFP"
+        app:tabGravity="fill"
+        app:tabIndicator="@drawable/tab_indicator"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorColor="@null"
+        app:tabIndicatorGravity="stretch"
+        app:tabRippleColor="#E4E4E4"
+        app:tabSelectedTextColor="@color/textColor"
+        app:tabTextAppearance="@style/TabFont"
+        app:tabTextColor="@color/textColor">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/specialties"
+            app:tabTextColor="@color/textColor" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/jobs"
+            app:tabTextColor="@color/textColor" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/valoration"
+            app:tabTextColor="@color/textColor" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vwpProfileFP"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/imvBGWhiteJI"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imvJobJI"
+        app:shapeAppearanceOverlay="@style/roundImageBottom40pcg">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imvUbicationJI"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="15dp"
+                android:elevation="1dp"
+                tools:src="@drawable/gps_black"
+                app:layout_constraintBottom_toBottomOf="@+id/txvUbicationJI"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txvUbicationJI" />
+
+            <TextView
+                android:id="@+id/txvKindJobJI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:elevation="1dp"
+                android:fontFamily="@font/bold"
+                android:textAlignment="textStart"
+                android:textColor="@color/primaryColor"
+                android:textSize="11sp"
+                tools:text="Pinturería"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txvUbicationJI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="1dp"
+                android:fontFamily="@font/medium"
+                android:textAlignment="textStart"
+                android:textColor="@color/primaryColor"
+                android:textSize="11sp"
+                tools:text="Recoleta, CABA"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imvUbicationJI" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imvJobJI"
+        android:layout_width="230dp"
+        android:layout_height="110dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/women"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundImageTop20dp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/quaternaryColor"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/imvBGWhiteJI"
+        app:layout_constraintEnd_toEndOf="@+id/imvJobJI"
+        app:layout_constraintTop_toTopOf="@+id/imvBGWhiteJI">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/crdPayment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txvPriceJI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:elevation="1dp"
+                android:fontFamily="@font/extrabold"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                tools:text="$450"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txvPaymentPeriod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="-5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="1dp"
+                android:fontFamily="@font/light"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                tools:text="/hora"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txvPriceJI" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

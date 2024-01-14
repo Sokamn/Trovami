@@ -2,7 +2,7 @@ package com.sokamn.trovami.domain.model
 
 import com.sokamn.trovami.R
 
-sealed class MasterInfo(val name: Int, val imageProfile: Int, val imageOutlined: Int, val isSelected: Boolean){
+sealed class MasterInfo(val name: Int, val imageProfile: Int, val imageOutlined: Int, var isSelected: Boolean){
     data object Mason: MasterInfo(R.string.mason,R.drawable.profile_mason, R.drawable.ic_mason, false)
     data object Carpenter: MasterInfo(R.string.carpenter, R.drawable.profile_carpenter, R.drawable.ic_carpenter, false)
     data object Electrician: MasterInfo(R.string.electrician, R.drawable.profile_electrician, R.drawable.ic_electrician, false)

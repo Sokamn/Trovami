@@ -32,9 +32,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initUI()
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -53,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initListeners() {
         findViewById<BottomNavigationView>(R.id.bottomNav).apply {
-            homeSelected(this)
+            homeSelected()
             navController.let { navController ->
                 NavigationUI.setupWithNavController(
                     this,
@@ -61,13 +59,13 @@ class MainActivity : AppCompatActivity() {
                 )
                 navController.addOnDestinationChangedListener(){ _, dest, _ ->
                     when(dest.id){
-                        R.id.homeFragment-> homeSelected(this)
-                        //R.id.searchFragment-> homeSelected(this)
-                        R.id.collectionFragment-> savedSelected(this)
-                        //R.id.masterSavedFragment-> savedSelected(this)
-                        R.id.messageFragment-> messageSelected(this)
-                        R.id.profileFragment-> profileSelected(this)
-                        //R.id.makeJobFragment-> makeJobSelected(this)
+                        R.id.homeFragment-> homeSelected()
+                        //R.id.searchFragment-> homeSelected()
+                        R.id.collectionFragment-> savedSelected()
+                        //R.id.masterSavedFragment-> savedSelected()
+                        R.id.messageFragment-> messageSelected()
+                        R.id.profileFragment-> profileSelected()
+                        //R.id.makeJobFragment-> makeJobSelected()
                     }
                     /*aux = if(dest.id == R.id.masterSavedFragment){
                         1
@@ -89,21 +87,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun profileSelected(bottomNav: BottomNavigationView) {
+    private fun profileSelected() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = getColor(R.color.bg)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 
-    private fun messageSelected(bottomNav: BottomNavigationView) {
+    private fun messageSelected() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = getColor(R.color.tertiaryColor)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
     }
 
-    private fun savedSelected(bottomNav: BottomNavigationView) {
+    private fun savedSelected() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = getColor(R.color.bg)
@@ -111,14 +109,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun homeSelected(bottomNav: BottomNavigationView) {
+    private fun homeSelected() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = getColor(R.color.bg)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 
-    private fun makeJobSelected(bottomNav: BottomNavigationView) {
+    private fun makeJobSelected() {
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
     }

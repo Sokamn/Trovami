@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="0dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txvNotificationCI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:elevation="1dp"
+            android:fontFamily="@font/semibold"
+            android:text="26"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/imvNotificationCI"
+            app:layout_constraintEnd_toEndOf="@+id/imvNotificationCI"
+            app:layout_constraintStart_toStartOf="@+id/imvNotificationCI"
+            app:layout_constraintTop_toTopOf="@+id/imvNotificationCI" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imvNotificationCI"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@color/secundaryColor"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/txvMessageCI"
+            app:layout_constraintEnd_toEndOf="@+id/txvHourPostCI"
+            app:layout_constraintStart_toStartOf="@+id/txvHourPostCI"
+            app:layout_constraintTop_toTopOf="@+id/txvMessageCI"
+            app:shapeAppearanceOverlay="@style/circle"
+            app:strokeColor="@color/white" />
+
+        <TextView
+            android:id="@+id/txvUserNameCI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/bold"
+            android:text="Diego Alegre"
+            android:textAlignment="textStart"
+            android:textColor="@color/primaryColor"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/imvProfileCI"
+            app:layout_constraintTop_toTopOf="@+id/imvProfileCI" />
+
+        <TextView
+            android:id="@+id/txvMessageCI"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/medium"
+            android:maxLines="1"
+            android:text="@string/jobChat"
+            android:textAlignment="textStart"
+            android:textColor="@color/textColor"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toStartOf="@+id/txvHourPostCI"
+            app:layout_constraintStart_toEndOf="@+id/imvProfileCI"
+            app:layout_constraintTop_toBottomOf="@+id/txvUserNameCI" />
+
+        <TextView
+            android:id="@+id/txvHourPostCI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/medium"
+            android:text="17:50"
+            android:textAlignment="textStart"
+            android:textColor="@color/textColor"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imvProfileCI"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/profile_picture"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circle"
+            app:strokeColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/imvSeenCI"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_unseen"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/txvMessageCI"
+            app:layout_constraintEnd_toEndOf="@+id/txvHourPostCI"
+            app:layout_constraintStart_toStartOf="@+id/txvHourPostCI"
+            app:layout_constraintTop_toTopOf="@+id/txvMessageCI" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
