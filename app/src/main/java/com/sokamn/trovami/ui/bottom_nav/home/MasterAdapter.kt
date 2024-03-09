@@ -13,7 +13,9 @@ import com.sokamn.trovami.R
 import com.sokamn.trovami.databinding.ItemMasterBinding
 import com.sokamn.trovami.domain.model.MasterInfo
 
-class MasterAdapter(private val activity: String) : ListAdapter<MasterInfo, MasterAdapter.MasterViewHolder>(DiffCallBack){
+class MasterAdapter(private val activity: String,
+        private var horoscopeList: List<MasterInfo> = emptyList()
+) : ListAdapter<MasterInfo, MasterAdapter.MasterViewHolder>(DiffCallBack){
 
     inner class MasterViewHolder (view: View): RecyclerView.ViewHolder(view) {
         val binding = ItemMasterBinding.bind(view)
@@ -24,6 +26,41 @@ class MasterAdapter(private val activity: String) : ListAdapter<MasterInfo, Mast
                 .into(binding.imvMasterJobKJI)
             binding.txvMasterJobKJI.setText(master.name)
 
+            when(activity){
+                "MKJobActivity"->{
+                    if (master.isSelected){
+                        onItemSelectedListener?.let { click ->
+                            click(master)
+                        }
+                        setItemSelectedStyle(this)
+                    }else{
+                        setItemNonselectedStyle(this)
+                    }
+                    itemView.setOnClickListener {
+                        currentList.forEach {
+                            if (it.isSelected && master.name != it.name){
+                                it.isSelected = false
+                                notifyItemChanged(it.id)
+                            }
+                        }
+                        master.isSelected = !master.isSelected
+                        if (!master.isSelected){
+                            onItemSelectedListener?.let { click ->
+                                click(master)
+                            }
+                        }
+                        notifyItemChanged(position)
+                    }
+                }
+                "MainActivity"->{
+                    itemView.setOnClickListener {
+                        onItemClickListener?.let { click ->
+                            click(master)
+                        }
+                    }
+                }
+            }
+
             itemView.setOnLongClickListener {
                 Toast.makeText(itemView.context, master.name, Toast.LENGTH_SHORT).show()
                 true
@@ -31,10 +68,21 @@ class MasterAdapter(private val activity: String) : ListAdapter<MasterInfo, Mast
         }
     }
 
+    protected var onItemClickListener : ((MasterInfo) -> Unit)? = null
+    protected var onItemSelectedListener: ((MasterInfo) -> Unit)? = null
+    protected var onItemDeselectedListener: ((MasterInfo) -> Unit)? = null
 
-    lateinit var onItemClickListener: (MasterInfo) -> Unit
-    lateinit var onItemSelectedListener: (MasterInfo) -> Unit
-    lateinit var onItemDeselectedListener: (MasterInfo) -> Unit
+    fun setItemClickListener(listener: (MasterInfo) -> Unit){
+        onItemClickListener = listener
+    }
+
+    fun setItemSelectedListener(listener: (MasterInfo) -> Unit){
+        onItemSelectedListener = listener
+    }
+
+    fun setItemDeselectedListener(listener: (MasterInfo) -> Unit){
+        onItemDeselectedListener = listener
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MasterViewHolder {
@@ -46,40 +94,6 @@ class MasterAdapter(private val activity: String) : ListAdapter<MasterInfo, Mast
 
     override fun onBindViewHolder(holder: MasterViewHolder, position: Int) {
         val item = getItem(position)
-        when(activity){
-            "MKJobActivity"->{
-                if (item.isSelected){
-                    if (::onItemSelectedListener.isInitialized){
-                        onItemSelectedListener(item)
-                    }
-                    setItemSelectedStyle(holder)
-                }else{
-                    setItemNonselectedStyle(holder)
-                }
-                holder.itemView.setOnClickListener {
-                    currentList.forEach {
-                        if (it.isSelected && item.name != it.name){
-                            it.isSelected = false
-                            notifyItemChanged(it.id)
-                        }
-                    }
-                    item.isSelected = !item.isSelected
-                    if (!item.isSelected){
-                        if (::onItemSelectedListener.isInitialized){
-                            onItemDeselectedListener(item)
-                        }
-                    }
-                    notifyItemChanged(position)
-                }
-            }
-            "MainActivity"->{
-                holder.itemView.setOnClickListener {
-                    if (::onItemClickListener.isInitialized){
-                        onItemClickListener(item)
-                    }
-                }
-            }
-        }
         holder.render(item)
     }
 

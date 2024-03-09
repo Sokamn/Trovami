@@ -12,7 +12,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     masterProvider: MasterProvider,
-
 ) : ViewModel(){
 
     private var _masters = MutableStateFlow<List<MasterInfo>>(emptyList())

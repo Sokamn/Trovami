@@ -16,7 +16,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sokamn.trovami.R
 import com.sokamn.trovami.core.ex.toast
 import com.sokamn.trovami.data.source.datastore.DataStoreConstants.USER_KEY_PREFS
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     companion object {
