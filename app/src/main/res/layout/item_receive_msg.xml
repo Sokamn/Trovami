@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="start"
+    android:layout_gravity="start">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llLinearReceived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/receive_drawable"
+        android:maxWidth="350dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txvHourReceive"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/regular"
+            android:text="10:25 AM"
+            android:maxLines="1"
+            android:textAlignment="textEnd"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold|normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvTextReceived" />
+
+        <TextView
+            android:id="@+id/txvTextReceived"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/regular"
+            android:maxWidth="320dp"
+            android:text="Hola que tal todo bien?, yo ahora voy a hacer algo que hojala salga bien"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold|normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imvOImage"
+        android:layout_width="200dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image_placeholder"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llLinearReceived"
+        app:shapeAppearanceOverlay="@style/roundImage15dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

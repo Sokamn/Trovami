@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llLinearSent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/sent_drawable"
+        android:minWidth="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txvTextSent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="9dp"
+            android:fontFamily="@font/regular"
+            android:maxWidth="280dp"
+            android:text="Hola"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txvHourSent"
+            app:layout_constraintEnd_toStartOf="@+id/imvSeenMsg"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/txvHourSent"
+            android:layout_width="wrap_content"
+            android:layout_height="12dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/medium"
+            android:text="10:25 AM"
+            android:textAlignment="textEnd"
+            android:textColor="@color/secundaryColor"
+            android:textSize="9sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imvSeenMsg" />
+
+        <ImageView
+            android:id="@+id/imvSeenMsg"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txvHourSent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txvHourSent"
+            app:srcCompat="@drawable/ic_unseen" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imvOImage"
+        android:layout_width="200dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image_placeholder"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llLinearSent"
+        app:shapeAppearanceOverlay="@style/roundImage15dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

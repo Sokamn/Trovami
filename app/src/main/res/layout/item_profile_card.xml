@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/white"
+    android:layout_marginTop="20dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txvTitlePCI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/desc"
+            android:textAlignment="center"
+            android:textColor="@color/primaryColor"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/imvPhotoPCI"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txvValorationPCI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:elevation="1dp"
+            android:fontFamily="@font/semibold"
+            android:text="5"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imvStarPCI"
+            app:layout_constraintEnd_toEndOf="@+id/imvStarPCI"
+            app:layout_constraintStart_toStartOf="@+id/imvStarPCI"
+            app:layout_constraintTop_toTopOf="@+id/imvStarPCI" />
+
+        <TextView
+            android:id="@+id/txvDescriptionPCI"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="-4dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/medium"
+            android:text="@string/desc"
+            android:textAlignment="textStart"
+            android:textColor="@color/textColor"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imvPhotoPCI"
+            app:layout_constraintTop_toBottomOf="@+id/txvTitlePCI" />
+
+        <TextView
+            android:id="@+id/txvUbicationPCI"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/light"
+            android:text="Ituzaingó, Buenos Aires"
+            android:textAlignment="textStart"
+            android:textColor="@color/textColor"
+
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imvPhotoPCI"
+            app:layout_constraintStart_toEndOf="@+id/imvUbicationPCI"
+            app:layout_constraintTop_toTopOf="@+id/imvUbicationPCI" />
+
+        <TextView
+            android:id="@+id/txvPaymentPCI"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/light"
+            android:text="250/hora"
+            android:textAlignment="textStart"
+            android:textColor="@color/textColor"
+            android:textSize="10sp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/imvPhotoPCI"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imvUbicationPCI"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/txvDollarPCI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/extrabold"
+            android:text="@string/dollar"
+
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txvPaymentPCI"
+            app:layout_constraintTop_toTopOf="@+id/txvPaymentPCI"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imvPhotoPCI"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:adjustViewBounds="true"
+            android:background="@color/bg"
+            android:scaleType="centerCrop"
+            android:src="@drawable/no_load_photo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/roundImage10dp" />
+
+        <ImageView
+            android:id="@+id/imvStarPCI"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_marginEnd="-8dp"
+            android:layout_marginBottom="-8dp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/imvPhotoPCI"
+            app:layout_constraintEnd_toEndOf="@+id/imvPhotoPCI"
+            app:srcCompat="@drawable/star" />
+
+        <ImageView
+            android:id="@+id/imvUbicationPCI"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="10dp"
+
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imvPhotoPCI"
+            app:srcCompat="@drawable/gps_black" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

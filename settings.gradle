@@ -1,0 +1,27 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    resolutionStrategy{
+        eachPlugin{
+            if(requested.id.id == 'dagger.hilt.android.plugin'){
+                useModule("com.google.dagger:hilt-android-gradle-plugin:2.42")
+            }
+            if(requested.id.id == 'com.google.gms.google-services'){
+                useModule("com.google.gms:google-services:4.3.15")
+            }
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+rootProject.name = "Trovami"
+include ':app'

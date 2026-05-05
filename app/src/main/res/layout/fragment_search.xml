@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    tools:context=".presentation.search.SearchFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvJobsSH"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:clipToPadding="false"
+        android:nestedScrollingEnabled="true"
+        android:paddingBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcvMasterSH"
+        tools:listitem="@layout/item_show_job" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvMasterSH"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txpSearchSH"
+        tools:listitem="@layout/item_master_job" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imbFilterSH"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/quaternaryColor"
+        android:rotation="90"
+        android:src="@drawable/ic_filter"
+        app:layout_constraintDimensionRatio="1:1"
+        app:contentPadding="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txpSearchSH"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txpSearchSH"
+        app:shapeAppearanceOverlay="@style/roundImage10dp" />
+
+    <EditText
+        android:id="@+id/txpSearchSH"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:padding="0dp"
+        android:paddingStart="35dp"
+        android:background="@drawable/bg_searchview"
+        android:ems="10"
+        android:fontFamily="@font/medium"
+        android:hint="@string/searchJob"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/textColor"
+        android:textColorHint="#ADAEB6"
+        android:textSize="14sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/imbFilterSH"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvTitleSH" />
+
+    <TextView
+        android:id="@+id/txvTitleSH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="35dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/search"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColor"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imvSearchIconFSH"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toBottomOf="@+id/txpSearchSH"
+        app:layout_constraintStart_toStartOf="@+id/txpSearchSH"
+        app:layout_constraintTop_toTopOf="@+id/txpSearchSH" />
+
+    <ProgressBar
+        android:id="@+id/pgbJobs"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

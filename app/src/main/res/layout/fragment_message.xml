@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tertiaryColor"
+    tools:context=".presentation.bottom_nav.message.MessageFragment">
+
+    <EditText
+        android:id="@+id/txpSearchFM"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/bg_searchchatview"
+        android:ems="10"
+        android:fontFamily="@font/medium"
+        android:hint="@string/searchUser"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        android:padding="0dp"
+        android:paddingStart="35dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/dividerColor"
+        android:textSize="14sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvTitleChatFM" />
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvUserChatFM"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txpSearchFM"
+        tools:listitem="@layout/item_user_chat" />
+
+    <TextView
+        android:id="@+id/txvTitleChatFM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/jobChat"
+        android:textAlignment="textStart"
+        android:textColor="@color/secundaryColor"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/job_chat_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcvUserChatFM">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvChatFM"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:clipToPadding="false"
+            android:paddingBottom="30dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_chat" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imvConfigChatFM"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/config_chat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

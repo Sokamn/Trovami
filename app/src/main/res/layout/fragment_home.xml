@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.bottom_nav.home.HomeFragment"
+    android:background="@color/bg">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnMakePublication"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/semibold"
+            android:text="@string/mkPublication"
+            style="@style/SecundaryButton"
+            app:rippleColor="@color/textColor"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rcvRecommendedPublications" />
+
+        <TextView
+            android:id="@+id/txvWelcomeFH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="35dp"
+            android:fontFamily="@font/semibold"
+            android:text="@string/welcome"
+            android:textColor="#C9C9C9"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txvNameSurnameFH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="-10dp"
+            android:fontFamily="@font/semibold"
+            android:textColor="@color/tertiaryColor"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvWelcomeFH" />
+
+        <TextView
+            android:id="@+id/txvTitleAR15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:elevation="1dp"
+            android:fontFamily="@font/semibold"
+            android:text="3"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imvNotificationFH"
+            app:layout_constraintEnd_toEndOf="@+id/imvNotificationFH"
+            app:layout_constraintStart_toStartOf="@+id/imvNotificationFH"
+            app:layout_constraintTop_toTopOf="@+id/imvNotificationFH" />
+
+        <TextView
+            android:id="@+id/txvTitleAR12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/kindJob"
+            android:textColor="@color/tertiaryColor"
+            android:textSize="11sp"
+            android:elevation="1dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imvFFJWhiteFH"
+            app:layout_constraintStart_toStartOf="@+id/imvFFJWhiteFH"
+            app:layout_constraintTop_toBottomOf="@+id/imvFindFirstJobFH" />
+
+        <TextView
+            android:id="@+id/txvFindFirstJobFH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/findJob"
+            android:textColor="@color/primaryColor"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imvProfileFH" />
+
+        <TextView
+            android:id="@+id/txvRecommends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/recommendation"
+            android:textAlignment="textStart"
+            android:textColor="@color/primaryColor"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rcvJobs" />
+
+        <TextView
+            android:id="@+id/txvSeeAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/semibold"
+            android:text="@string/seeAll"
+            android:textAlignment="textEnd"
+            android:textColor="@color/quaternaryColor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txvRecommends"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txvRecommends" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imvProfileFH"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="30dp"
+            android:adjustViewBounds="true"
+            android:padding="1dp"
+            android:src="@drawable/profile_picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circle"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imvNotificationFH"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:padding="1dp"
+            android:background="@color/secundaryColor"
+            app:shapeAppearanceOverlay="@style/circle"
+            app:layout_constraintBottom_toBottomOf="@+id/imvProfileFH"
+            app:layout_constraintStart_toStartOf="@+id/imvProfileFH"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imvFindFirstJobFH"
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="30dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/women"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvFindFirstJobFH"
+            app:shapeAppearanceOverlay="@style/roundImageTop20dp" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imvFFJWhiteFH"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:adjustViewBounds="true"
+            android:background="@color/white"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imvFindFirstJobFH"
+            app:shapeAppearanceOverlay="@style/roundImageBottom20dp" />
+
+        <ImageView
+            android:id="@+id/imvSearchJob"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/btn_search"
+            app:layout_constraintBottom_toBottomOf="@+id/imvFFJWhiteFH"
+            app:layout_constraintEnd_toEndOf="@+id/imvFFJWhiteFH"
+            app:layout_constraintTop_toBottomOf="@+id/imvFindFirstJobFH" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvJobs"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="30dp"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_master_job"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imvFFJWhiteFH" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvRecommendedPublications"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:paddingStart="15dp"
+            android:paddingEnd="30dp"
+            android:nestedScrollingEnabled="true"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_job"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvRecommends" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    tools:context=".presentation.introduction.IntroductionActivity">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imvBGAI"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/primaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/bototom40percent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imvLogoAI"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toBottomOf="@+id/imvBGAI"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imvBGAI"
+        app:shapeAppearanceOverlay="@style/circle" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/crdGoogleAI"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/google"
+        android:scaleType="fitCenter"
+        android:src="@drawable/google"
+        android:focusable="true"
+        android:clickable="true"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/crdFacebookAI"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/textColor"
+        app:strokeColor="@color/textColor"
+        app:strokeWidth="1dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:src="@drawable/google" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/crdFacebookAI"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/google"
+        android:src="@drawable/google"
+        android:focusable="true"
+        android:clickable="true"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/crdGoogleAI"
+        app:rippleColor="@color/textColor"
+        app:strokeColor="@color/textColor"
+        app:strokeWidth="1dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="9dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/facebook" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRegisterNowAI"
+        style="@style/PrimaryButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/semibold"
+        android:text="@string/registerNow"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogInAI"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/textColor" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogInAI"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/semibold"
+        android:text="@string/login"
+        style="@style/PrimaryOutlinedButton"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/crdGoogleAI"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/textColor" />
+
+    <TextView
+        android:id="@+id/txvAppDescriptionAI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/light"
+        android:text="@string/appDesc"
+        android:textColor="@color/primaryColor"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imvAppName" />
+
+    <ImageView
+        android:id="@+id/imvAppName"
+        android:layout_width="190dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_name_app"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imvLogoAI" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
 {
   "project_info": {
     "project_number": "250852353586",
-    "firebase_url": "https://trovami-dac10-default-rtdb.firebaseio.com",
     "project_id": "trovami-dac10",
     "storage_bucket": "trovami-dac10.appspot.com"
   },
@@ -14,14 +13,6 @@
         }
       },
       "oauth_client": [
-        {
-          "client_id": "250852353586-obetgv6o3t20o1j38l5nh7o27eg1tb7l.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.sokamn.trovami",
-            "certificate_hash": "b716cd73a3b21af9579553f9a7afaf4a3b777ef0"
-          }
-        },
         {
           "client_id": "250852353586-ocuoefabfk8fl5luokcpq0h1uksa60ta.apps.googleusercontent.com",
           "client_type": 3

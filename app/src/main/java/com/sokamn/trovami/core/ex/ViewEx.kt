@@ -10,12 +10,3 @@ fun View.dismissKeyboard(completed: () -> Unit = {}) {
     val wasOpened = inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     if (!wasOpened) completed()
 }
-fun View.hide(){
-    visibility = View.GONE
-}
-fun View.invisible(){
-    visibility = View.INVISIBLE
-}
-fun View.show(){
-    visibility = View.VISIBLE
-}

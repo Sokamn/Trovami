@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/secundaryColor">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imvBackgroundSJI"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sofa"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imvBottomShadowSJI"
+            android:layout_width="match_parent"
+            android:layout_height="115dp"
+            android:elevation="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/bg_gradient" />
+
+        <ImageView
+            android:id="@+id/imvTopShadowSJI"
+            android:layout_width="match_parent"
+            android:layout_height="115dp"
+            android:elevation="20dp"
+            android:rotation="180"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bg_gradient" />
+
+        <TextView
+            android:id="@+id/txvKindJobSJI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:elevation="20dp"
+            android:fontFamily="@font/semibold"
+            android:text="Pinturería"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imvShareSJI"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:elevation="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/share" />
+
+        <ImageView
+            android:id="@+id/imvResendSJI"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="15dp"
+            android:elevation="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imvShareSJI"
+            app:layout_constraintEnd_toStartOf="@+id/imvShareSJI"
+            app:layout_constraintTop_toTopOf="@+id/imvShareSJI"
+            app:srcCompat="@drawable/send" />
+
+        <ImageView
+            android:id="@+id/imvSaveSJI"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="15dp"
+            android:elevation="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imvShareSJI"
+            app:layout_constraintEnd_toStartOf="@+id/imvResendSJI"
+            app:layout_constraintTop_toTopOf="@+id/imvShareSJI"
+            app:srcCompat="@drawable/ic_save" />
+
+        <TextView
+            android:id="@+id/txvPublishedBySJI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:elevation="20dp"
+            android:fontFamily="@font/light"
+            android:text="Publicado por Diego Alegre"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="@+id/txvKindJobSJI"
+            app:layout_constraintTop_toBottomOf="@+id/txvKindJobSJI" />
+
+        <TextView
+            android:id="@+id/txvDescriptionSJI"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/medium"
+            android:text="Necesito pintar el living de mi hogar, para ello tengo todas las herramientas, precio por hora discutible."
+            android:textAlignment="textStart"
+            android:justificationMode="inter_word"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:elevation="20dp"
+            android:maxLines="5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imvUbicationSJI"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="5dp"
+            android:elevation="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/txvDescriptionSJI"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/gps_white" />
+
+        <TextView
+            android:id="@+id/txvUbicationSJI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:elevation="20dp"
+            android:fontFamily="@font/light"
+            android:text="Recoleta, CABA"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imvUbicationSJI"
+            app:layout_constraintStart_toEndOf="@+id/imvUbicationSJI"
+            app:layout_constraintTop_toTopOf="@+id/imvUbicationSJI" />
+
+        <TextView
+            android:id="@+id/txvPaymentSJI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="20dp"
+            android:elevation="20dp"
+            android:fontFamily="@font/light"
+            android:text="450 por hora"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textAlignment="textEnd"
+            app:layout_constraintBottom_toBottomOf="@+id/imvUbicationSJI"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imvUbicationSJI" />
+
+        <TextView
+            android:id="@+id/txvDollarSJI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:elevation="20dp"
+            android:fontFamily="@font/extrabold"
+            android:text="$"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txvPaymentSJI"
+            app:layout_constraintEnd_toStartOf="@+id/txvPaymentSJI"
+            app:layout_constraintTop_toTopOf="@+id/txvPaymentSJI" />
+
+        <TextView
+            android:id="@+id/txvYearSJI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:elevation="20dp"
+            android:fontFamily="@font/semibold"
+            android:maxLines="1"
+            android:text="2022"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/txvMonthSJI"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/txvMonthSJI"
+            app:layout_constraintTop_toBottomOf="@+id/txvMonthSJI" />
+
+        <TextView
+            android:id="@+id/txvMonthSJI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            android:fontFamily="@font/medium"
+            android:maxLines="1"
+            android:text="DEC 09"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@+id/imvProfileTopSJI"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/imvProfileTopSJI"
+            app:layout_constraintTop_toBottomOf="@+id/imvProfileTopSJI" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imvProfileTopSJI"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:elevation="20dp"
+            android:padding="1dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txvPublishedBySJI"
+            app:shapeAppearanceOverlay="@style/circle"
+            app:srcCompat="@drawable/profile_picture"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
