@@ -1,3 +1,7 @@
+# 📸 Trovami Preview
+
+<img src="https://github.com/Sokamn/Trovami/blob/main/demo.gif?raw=true" width="100%" />
+
 # 🔧 Trovami 
 
 <a href="https://www.figma.com/design/mVFIvvMgp12m99d9VtGZwJ/Trovami-Workplace?t=xY9Dnf1yKjLwGzt2-1" target="_blank">
