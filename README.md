@@ -107,3 +107,10 @@ The design approach focused on:
     <img src="https://img.shields.io/badge/View%20Figma%20Design-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
   </a>
 </p>
+
+---
+
+# 👨‍💻 Author
+
+Matías Alzú
+Android Developer
