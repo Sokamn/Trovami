@@ -1,4 +1,8 @@
-# 🔧 Trovami
+# 🔧 Trovami 
+
+<a href="https://www.figma.com/design/mVFIvvMgp12m99d9VtGZwJ/Trovami-Workplace?t=xY9Dnf1yKjLwGzt2-1" target="_blank">
+  <img src="https://img.shields.io/badge/View%20Figma%20Design-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
+</a>
 
 Trovami is a social job marketplace Android application focused on connecting people who need help with people looking for small jobs and income opportunities.
 
